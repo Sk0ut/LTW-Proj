@@ -2,6 +2,7 @@ CREATE TABLE IF NOT EXISTS Users (
 	id INTEGER,
 	username VARCHAR,
 	password VARCHAR,
+	email VARCHAR, 
 	session VARCHAR,
 
 	CONSTRAINT pk_Users PRIMARY KEY (id)
