@@ -23,7 +23,7 @@
 <body>
     <!-- Login Form -->
     <div id="formDiv">
-        <form id="form" method="POST">
+        <form id="form">
             <label for="username">Username:</label>
             <input type="text" id="username" /> <br>
 
@@ -42,10 +42,9 @@
             <input type="submit" value="Login" />
         </form>
     </div>
-    <span id="message"></span>
 
     <!-- Scripts -->
-    <script src="//code.jquery.com/jquery-1.11.3.min.js" type="text/javascript"></script>
+    <script src="js/jquery-1.11.3.min.js" type="text/javascript"></script>
     <script src="js/login.js" type="text/javascript"></script>
 </body>
 </html>

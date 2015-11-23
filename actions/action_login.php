@@ -1,4 +1,10 @@
 <?php
+function printResponse($value) {
+    $data = ["login" => $value];
+    header('Content-Type: application/json');
+    echo json_encode($data);
+}
+
 // Check parameters
 $params = ['username', 'password', 'remember'];
 foreach ($params as $param) {
@@ -9,18 +15,16 @@ foreach ($params as $param) {
     }
 
     // Error message
-    $data = [ "login" => "fail" ];
-    header('Content-Type: application/json');
-    echo json_encode($data);
+    printResponse("fail");
     return;
 }
+printResponse("fail");
+return;
 
 // Validate login
 $validLogin = validLogin($params['username'], $params['password']);
 if(!validLogin) {
-    $data = [ "login" => "fail" ];
-    header('Content-Type: application/json');
-    echo json_encode($data);
+    printResponse("fail");
     return;
 }
 
@@ -40,7 +44,5 @@ setcookie('username', $params['username'], $expireTimeCookie);
 setcookie('session', $sessionId, $expireTimeCookie);
 
 // Response
-$data = [ "login" => "success" ];
-header('Content-Type: application/json');
-echo json_encode($data);
+printResponse("success");
 ?>
