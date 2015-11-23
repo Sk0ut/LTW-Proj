@@ -13,7 +13,7 @@
     <meta name="description" content="Yet another event manager.">
     <meta name="author" content="LTW - MIEIC">
 
-    <link rel="stylesheet" href="css/styles.css">
+    <link rel="stylesheet" href="css/login.css">
 
     <!--[if lt IE 9]>
     <script src="http://html5shiv.googlecode.com/svn/trunk/html5.js"></script>
@@ -22,28 +22,42 @@
 
 <body>
     <!-- Login Form -->
-    <div id="formDiv">
-        <form id="form">
-            <label for="username">Username:</label>
-            <input type="text" id="username" /> <br>
+    <div id="formDiv" class="form">
+        <form id="loginForm">
+            <div class="formDiv">
+                <label for="username">Username:</label>
+                <input type="text" id="username" class="input" />
+            </div>
 
-            <label for="email">Email:</label>
-            <input type="text" id="email"/> <br>
+            <div id="emailDiv" class="formDiv">
+                <label for="email">Email:</label>
+                <input type="text" id="email" class="input"/>
+            </div>
 
-            <label for="password">Password:</label>
-            <input type="password" id="password" /> <br>
+            <div class="formDiv">
+                <label for="password">Password:</label>
+                <input type="password" id="password" class="input"/>
+            </div>
 
-            <input type="checkbox" id="remember" />
-            <label for="checkbox">Remember Me</label> <br>
+            <div class="formDiv">
+                <input type="checkbox" id="remember" />
+                <label for="checkbox">Remember Me</label>
+            </div>
 
-            <label for="typeLogin">Login in my account!</label>
-            <input type="radio" id="typeLogin" checked="checked" value="login" name="type"/> <br>
+            <div class="formDiv">
+                <label for="typeLogin">Login in my account</label>
+                <input type="radio" id="typeLogin" checked="checked" value="login" name="type"/>
+            </div>
 
-            <label for="typeRegister">Register new account!</label>
-            <input type="radio" id="typeRegister" value="register" name="type"/> <br>
+            <div class="formDiv">
+                <label for="typeRegister">Register new account</label>
+                <input type="radio" id="typeRegister" value="register" name="type"/>
+            </div>
 
-            <input type="submit" id="submit" />
+            <input type="submit" id="submit" class="button" />
         </form>
+
+        <div id="status" class="" style="display:none"></div>
     </div>
 
     <!-- Scripts -->

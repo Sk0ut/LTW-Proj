@@ -2,7 +2,7 @@
  * Function called when the document is ready
  */
 function onReady() {
-    $('#form').submit(onFormSubmit);
+    $('#loginForm').submit(onFormSubmit);
     $('input#typeLogin').click(onTypeChange);
     $('input#typeRegister').click(onTypeChange);
     onTypeChange();
@@ -13,8 +13,10 @@ function onReady() {
  * @param message message to be displayed
  */
 function displayError(message) {
-    $('#formDiv').after('<span class="errorMessage">' + message + '</span>');
-    $('span.errorMessage').fadeOut(5 * 1000, function() { $(this).remove(); });
+    var status = $("#status");
+    status.show();
+    status.text(message);
+    status.attr('class', 'notifyError');
 }
 
 /**
@@ -22,8 +24,10 @@ function displayError(message) {
  * @param message message to be displayed
  */
 function displaySuccess(message) {
-    $('#formDiv').after('<span class="successfulMessage">' + message + '</span>');
-    $('span.successfulMessage').fadeOut(5 * 1000, function() { $(this).remove(); });
+    var status = $("#status");
+    status.show();
+    status.text(message);
+    status.attr('class', 'notifySuccess');
 }
 
 /**
@@ -66,10 +70,10 @@ function login() {
                 var response = data['login'];
                 switch(response) {
                     case 'fail':
-                        displayError("Invalid username or password!");
+                        displayError("Invalid username or password");
                         break;
                     case 'success':
-                        displaySuccess("Login successfull!");
+                        displaySuccess("Login successfull");
                         break;
                     default:
                         displayError("Error while processing the login...");
@@ -105,22 +109,22 @@ function register() {
                 var response = data['register'];
                 switch(response) {
                     case 'fail':
-                        displayError("Failed to register the account!");
+                        displayError("Failed to register the account");
                         break;
                     case 'taken_user':
-                        displayError("Username already taken!");
+                        displayError("Username already taken");
                         break;
                     case 'invalid_username':
-                        displayError("Username does not meet the requirements!");
+                        displayError("Username does not meet the requirements (3 < size < 16)");
                         break;
                     case 'invalid_password':
-                        displayError("Password does not meet the requirements!");
+                        displayError("Password does not meet the requirements (length > 4)");
                         break;
                     case 'invalid_email':
-                        displayError("Please use a valid email!");
+                        displayError("Please use a valid email");
                         break;
                     case 'success':
-                        displaySuccess("Register was successfull!");
+                        displaySuccess("Register was successfull");
                         break;
                     default:
                         displayError("Error while processing the register...");
@@ -138,21 +142,14 @@ function register() {
  * @param event click event
  */
 function onTypeChange(event) {
-    if(!$('input#typeLogin').exists())
-        return;
-
     var typeLogin = $('input#typeLogin').is(':checked');
     var typeRegister = $('input#typeRegister').is(':checked');
     if(typeLogin) {
         $('input#submit').val('Login');
-        $('input#email').prev().hide();
-        $('input#email').hide();
-        $('input#email').next().hide();
+        $('div#emailDiv').hide();
     } else if(typeRegister) {
         $('input#submit').val('Register');
-        $('input#email').prev().show();
-        $('input#email').show();
-        $('input#email').next().show();
+        $('div#emailDiv').show();
     }
 }
 
