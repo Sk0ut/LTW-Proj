@@ -54,7 +54,9 @@
                 <input type="radio" id="typeRegister" value="register" name="type"/>
             </div>
 
-            <input type="submit" id="submit" class="button" />
+            <div class="formDiv">
+                <input type="submit" id="submit" class="button" />
+            </div>
         </form>
 
         <div id="status" class="" style="display:none"></div>

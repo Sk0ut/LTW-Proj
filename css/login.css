@@ -29,15 +29,16 @@ body {
     font-size: 16px;
 }
 
-#loginForm input[type="radio"]{
-    padding: 0;
-    margin: 0;
+#loginForm input[type="radio"], #loginForm input[type="checkbox"]{
+    margin: 0em;
+    padding: 0em;
     float:right;
 }
 
 .formDiv {
-    margin-top: 1em;
-    margin-bottom: 0.2em;
+    line-height:100%;
+    margin-top: 0.2em;
+    margin-bottom: 1em;
     padding: 0;
 }
 
@@ -51,6 +52,10 @@ body {
     box-sizing: border-box;
     -moz-box-sizing: border-box;
     -webkit-box-sizing: border-box;
+
+    font-family: "Open Sans", Times, serif;
+    font-size: 16px;
+    color:white;
 }
 
 .button {
@@ -65,7 +70,6 @@ body {
 
     font-family: "Open Sans", Times, serif;
     font-size: 16px;
-
     color:white;
 
     display:block;
