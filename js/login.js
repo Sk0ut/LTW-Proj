@@ -16,7 +16,11 @@ function displayError(message) {
     var status = $("#status");
     status.show();
     status.text(message);
+    status.append('<span id="close" class="closeButton">&#x274c;</span>');
     status.attr('class', 'notifyError');
+
+    // Add listener
+    $('span#close').click(closeMessage);
 }
 
 /**
@@ -27,7 +31,18 @@ function displaySuccess(message) {
     var status = $("#status");
     status.show();
     status.text(message);
+    status.append('<span id="close" class="closeButton">&#x274c;</span>');
     status.attr('class', 'notifySuccess');
+
+    // Add listener
+    $('span#close').click(closeMessage);
+}
+
+/**
+ * Close the message displayed by the login
+ */
+function closeMessage() {
+    $(this).parent().fadeOut(500);
 }
 
 /**

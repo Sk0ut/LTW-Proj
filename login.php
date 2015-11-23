@@ -24,42 +24,42 @@
     <!-- Login Form -->
     <div id="formDiv" class="form">
         <form id="loginForm">
-            <div class="formDiv">
+            <div class="inputDiv">
                 <label for="username">Username:</label>
-                <input type="text" id="username" class="input" />
+                <input type="text" id="username" class="inputText" />
             </div>
 
-            <div id="emailDiv" class="formDiv">
+            <div id="emailDiv" class="inputDiv">
                 <label for="email">Email:</label>
-                <input type="text" id="email" class="input"/>
+                <input type="text" id="email" class="inputText"/>
             </div>
 
-            <div class="formDiv">
+            <div class="inputDiv">
                 <label for="password">Password:</label>
-                <input type="password" id="password" class="input"/>
+                <input type="password" id="password" class="inputText"/>
             </div>
 
-            <div class="formDiv">
+            <div class="inputDiv">
                 <input type="checkbox" id="remember" />
                 <label for="checkbox">Remember Me</label>
             </div>
 
-            <div class="formDiv">
+            <div class="inputDiv">
                 <label for="typeLogin">Login in my account</label>
                 <input type="radio" id="typeLogin" checked="checked" value="login" name="type"/>
             </div>
 
-            <div class="formDiv">
+            <div class="inputDiv">
                 <label for="typeRegister">Register new account</label>
                 <input type="radio" id="typeRegister" value="register" name="type"/>
             </div>
 
-            <div class="formDiv">
-                <input type="submit" id="submit" class="button" />
+            <div class="inputDiv">
+                <input type="submit" id="submit" class="submitButton" />
             </div>
-        </form>
 
-        <div id="status" class="" style="display:none"></div>
+            <div id="status" class="" style="display:none"></div>
+        </form>
     </div>
 
     <!-- Scripts -->
