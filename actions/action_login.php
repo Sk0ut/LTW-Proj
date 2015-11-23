@@ -1,9 +1,17 @@
 <?php
+/**
+ * Print a response
+ * @param value value of the login response
+ */
 function printResponse($value) {
     $data = ["login" => $value];
     header('Content-Type: application/json');
     echo json_encode($data);
 }
+
+// Need error responses
+$fail_login = "fail";
+$success_login = "success";
 
 // Check parameters
 $params = ['username', 'password', 'remember'];
@@ -15,16 +23,16 @@ foreach ($params as $param) {
     }
 
     // Error message
-    printResponse("fail");
+    printResponse($fail_login);
     return;
 }
-printResponse("fail");
+printResponse($fail_login);
 return;
 
 // Validate login
 $validLogin = validLogin($params['username'], $params['password']);
 if(!validLogin) {
-    printResponse("fail");
+    printResponse($fail_login);
     return;
 }
 
@@ -39,10 +47,10 @@ $expireTimeCookie = 0;
 if($remember)
     $expireTimeCookie = 2147483647;
 else
-    $expireTimeCookie = 30 * 60; // Expire in 30 seconds
+    $expireTimeCookie = 30 * 60; // Expire in 30 minutes
 setcookie('username', $params['username'], $expireTimeCookie);
 setcookie('session', $sessionId, $expireTimeCookie);
 
 // Response
-printResponse("success");
+printResponse($success_login);
 ?>
