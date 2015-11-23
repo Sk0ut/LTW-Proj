@@ -27,6 +27,9 @@
             <label for="username">Username:</label>
             <input type="text" id="username" /> <br>
 
+            <label for="email">Email:</label>
+            <input type="text" id="email"/> <br>
+
             <label for="password">Password:</label>
             <input type="password" id="password" /> <br>
 
@@ -39,7 +42,7 @@
             <label for="typeRegister">Register new account!</label>
             <input type="radio" id="typeRegister" value="register" name="type"/> <br>
 
-            <input type="submit" value="Login" />
+            <input type="submit" id="submit" />
         </form>
     </div>
 

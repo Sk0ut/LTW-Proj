@@ -1,0 +1,76 @@
+<?php
+/**
+ * Print a response
+ * @param value value of the login response
+ */
+function printResponse($value) {
+    $data = ["register" => $value];
+    header('Content-Type: application/json');
+    echo json_encode($data);
+}
+
+// Need error responses
+$taken_user = "taken_user";
+$invalid_username = "invalid_username";
+$invalid_email = "invalid_email";
+$invalid_password = "invalid_password";
+$fail_register = "fail";
+$success_register = "success";
+
+// Check parameters
+$params = ['username', 'email', 'password', 'remember'];
+foreach ($params as $param) {
+    // Create variables
+    if(isset($_POST[$param])) {
+        $params[$param] = $_POST[$param];
+        continue;
+    }
+
+    // Error message
+    printResponse($fail_register);
+    return;
+}
+
+// Validate parameters
+if(!filter_var($params['email'], FILTER_VALIDATE_EMAIL)) {
+    printResponse($invalid_email);
+    return;
+}
+if(strlen($params['password']) < 4) {
+    printResponse($invalid_password);
+    return;
+}
+if(strlen($params['username']) < 3 || strlen($params['username']) > 16) {
+    printResponse($invalid_username);
+    return;
+}
+if(userExists($params['username'])) {
+    printResponse($taken_user);
+    return;
+}
+
+// Validate login
+$registerSuccess = createRegister($params['username'], $params['password'], $params['email']);
+if(!registerSuccess) {
+    printResponse($fail_register);
+    return;
+}
+
+// Update session
+$sessionId = generateSessionId();
+updateSessionId($params['username'], $sessionId);
+$_SESSION['username'] = $params['username'];
+$_SESSION['sessionId'] = $sessionId;
+
+// Cookies
+$expireTimeCookie = 0;
+if($remember)
+    $expireTimeCookie = 2147483647;
+else
+    $expireTimeCookie = 30 * 60; // Expire in 30 minutes
+setcookie('username', $params['username'], $expireTimeCookie);
+setcookie('session', $sessionId, $expireTimeCookie);
+
+// Response
+printResponse($success_register);
+?>

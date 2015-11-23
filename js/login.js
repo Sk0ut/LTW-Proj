@@ -1,10 +1,11 @@
 /**
  * Function called when the document is ready
  */
-function docReady() {
-    $('#form').submit(formSubmit);
-    $('input#typeLogin').click(updateLoginRegister);
-    $('input#typeRegister').click(updateLoginRegister);
+function onReady() {
+    $('#form').submit(onFormSubmit);
+    $('input#typeLogin').click(onTypeChange);
+    $('input#typeRegister').click(onTypeChange);
+    onTypeChange();
 }
 
 /**
@@ -31,14 +32,15 @@ function displaySuccess(message) {
  * if login was not successfull.
  * @param event submit event
  */
-function formSubmit(event) {
+function onFormSubmit(event) {
     event.preventDefault();
 
     // Login / Register
     var typeLogin = $('input#typeLogin').is(':checked');
+    var typeRegister = $('input#typeRegister').is(':checked');
     if(typeLogin)
         login();
-    else
+    else if(typeRegister)
         register();
 }
 
@@ -61,12 +63,17 @@ function login() {
             },
             function(data)
             {
-                if(data['login'] == 'fail') {
-                    displayError("Invalid username or password!");
-                } else if(data['login'] == 'success') {
-                    displaySuccess("Login successfull!");
-                } else {
-                    displayError("Error while processing the login...");
+                var response = data['login'];
+                switch(response) {
+                    case 'fail':
+                        displayError("Invalid username or password!");
+                        break;
+                    case 'success':
+                        displaySuccess("Login successfull!");
+                        break;
+                    default:
+                        displayError("Error while processing the login...");
+                        break;
                 }
             })
             .fail(function(error) {
@@ -75,7 +82,7 @@ function login() {
 }
 
 /**
- * Send register request to the action login.
+ * Send register request to the action register.
  */
 function register() {
     // Variables
@@ -95,16 +102,29 @@ function register() {
             },
             function(data)
             {
-                if(data['register'] == 'taken_user') {
-                    displayError("Username already taken!");
-                } else if(data['register'] == 'invalid_username') {
-                    displayError("Username does not meet the requirements!");
-                } else if(data['register'] == 'invalid_password') {
-                    displayError("Password does not meet the requirements!");
-                } else if(data['register'] == 'success') {
-                    displaySuccess("Register was successfull!");
-                } else {
-                    displayError("Error while processing the register...");
+                var response = data['register'];
+                switch(response) {
+                    case 'fail':
+                        displayError("Failed to register the account!");
+                        break;
+                    case 'taken_user':
+                        displayError("Username already taken!");
+                        break;
+                    case 'invalid_username':
+                        displayError("Username does not meet the requirements!");
+                        break;
+                    case 'invalid_password':
+                        displayError("Password does not meet the requirements!");
+                        break;
+                    case 'invalid_email':
+                        displayError("Please use a valid email!");
+                        break;
+                    case 'success':
+                        displaySuccess("Register was successfull!");
+                        break;
+                    default:
+                        displayError("Error while processing the register...");
+                        break;
                 }
             })
             .fail(function(error) {
@@ -117,22 +137,22 @@ function register() {
  * Will update the ID of the form and add / remove inputs.
  * @param event click event
  */
-function updateLoginRegister(event) {
+function onTypeChange(event) {
     if(!$('input#typeLogin').exists())
         return;
 
-    var login = $('input#typeLogin').is(':checked');
-    if(login) {
-        if(!$('input#email').exists())
-            return;
-        $('input#email').next().remove(); // <br>
-        $('input#email').prev().remove(); // <label>
-        $('input#email').remove(); // <input>
-    } else {
-        $('input#username').next().after(
-                '<label for="email">Email:</label>' +
-                '<input type="text" id="email"/>' +
-                '<br>');
+    var typeLogin = $('input#typeLogin').is(':checked');
+    var typeRegister = $('input#typeRegister').is(':checked');
+    if(typeLogin) {
+        $('input#submit').val('Login');
+        $('input#email').prev().hide();
+        $('input#email').hide();
+        $('input#email').next().hide();
+    } else if(typeRegister) {
+        $('input#submit').val('Register');
+        $('input#email').prev().show();
+        $('input#email').show();
+        $('input#email').next().show();
     }
 }
 
@@ -144,4 +164,4 @@ jQuery.fn.exists = function(){ return this.length > 0; }
 /**
  * Call function when document is ready
  */
-$(document).ready(docReady);
+$(document).ready(onReady);
