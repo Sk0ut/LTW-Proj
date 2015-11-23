@@ -21,10 +21,9 @@
 </head>
 
 <body>
-    <!-- Register / Login Form -->
-    <div id="login_form">
-        <!-- Login Form -->
-        <form id="login" method="POST" action="action_login.php">
+    <!-- Login Form -->
+    <div id="formDiv">
+        <form id="form" method="POST">
             <label for="username">Username:</label>
             <input type="text" id="username" /> <br>
 
@@ -32,40 +31,22 @@
             <input type="password" id="password" /> <br>
 
             <input type="checkbox" id="remember" />
-            <label for"checkbox">Remember Me.</label> <br>
+            <label for="checkbox">Remember Me</label> <br>
 
-            <label for="login_existing">Login in my account!</label>
-            <input type="radio" id="login_existing" checked="checked" value="login" name="logreg"/> <br>
+            <label for="typeLogin">Login in my account!</label>
+            <input type="radio" id="typeLogin" checked="checked" value="login" name="type"/> <br>
 
-            <label for="new_account">Register new account!</label>
-            <input type="radio" id="new_account" value="register" name="logreg"/> <br>
+            <label for="typeRegister">Register new account!</label>
+            <input type="radio" id="typeRegister" value="register" name="type"/> <br>
 
-            <input type="submit" value="Submit" />
-        </form>
-
-        <!-- Register Form -->
-        <form id="register" method="POST" action="action_register.php">
-            <label for="username">Username:</label>
-            <input type="text" id="username" /> <br>
-
-            <label for="email">Email:</label>
-            <input type="email" id="email" /> <br>
-
-            <label for="password">Password:</label>
-            <input type="password" id="password" /> <br>
-
-            <label for="login_existing">Login in my account!</label>
-            <input type="radio" id="login_existing" value="login" name="logreg"/> <br>
-
-            <label for="new_account">Register new account!</label>
-            <input type="radio" id="new_account" checked="checked" value="register" name="logreg"/> <br>
-
-            <input type="submit" value="Submit" />
+            <input type="submit" value="Login" />
         </form>
     </div>
+    <span id="message"></span>
 
     <!-- Scripts -->
-    <script src="js/scripts.js"></script>
+    <script src="//code.jquery.com/jquery-1.11.3.min.js" type="text/javascript"></script>
+    <script src="js/login.js" type="text/javascript"></script>
 </body>
 </html>
 

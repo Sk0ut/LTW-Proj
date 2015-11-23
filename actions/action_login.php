@@ -1,18 +1,22 @@
 <?php
 // Check parameters
-if(!isset($_POST['username']) || !isset($_POST['password']) || !isset($_POST['remember'])) {
+$params = ['username', 'password', 'remember'];
+foreach ($params as $param) {
+    // Create variables
+    if(isset($_POST[$param])) {
+        $params[$param] = $_POST[$param];
+        continue;
+    }
+
+    // Error message
     $data = [ "login" => "fail" ];
     header('Content-Type: application/json');
     echo json_encode($data);
     return;
 }
 
-$username = $_POST['username'];
-$password = $_POST['password'];
-$remember = $_POST['remember'];
-
 // Validate login
-$validLogin = validLogin($username, $password);
+$validLogin = validLogin($params['username'], $params['password']);
 if(!validLogin) {
     $data = [ "login" => "fail" ];
     header('Content-Type: application/json');
@@ -22,8 +26,8 @@ if(!validLogin) {
 
 // Update session
 $sessionId = generateSessionId();
-updateSessionId($username, $sessionId);
-$_SESSION['username'] = $username;
+updateSessionId($params['username'], $sessionId);
+$_SESSION['username'] = $params['username'];
 $_SESSION['sessionId'] = $sessionId;
 
 // Cookies
@@ -31,9 +35,12 @@ $expireTimeCookie = 0;
 if($remember)
     $expireTimeCookie = 2147483647;
 else
-    $expireTimeCookie = 30 * 60 * 60;
-setcookie('username', $username, $expireTimeCookie);
+    $expireTimeCookie = 30 * 60; // Expire in 30 seconds
+setcookie('username', $params['username'], $expireTimeCookie);
 setcookie('session', $sessionId, $expireTimeCookie);
 
-header('Location: ../userpage.php');
+// Response
+$data = [ "login" => "success" ];
+header('Content-Type: application/json');
+echo json_encode($data);
 ?>
