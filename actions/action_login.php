@@ -44,7 +44,7 @@ $_SESSION['sessionId'] = $sessionId;
 
 // Cookies
 $expireTimeCookie = 0;
-if($remember)
+if($params['remember'])
     $expireTimeCookie = 2147483647;
 else
     $expireTimeCookie = 30 * 60; // Expire in 30 minutes

@@ -33,7 +33,7 @@ foreach ($params as $param) {
 }
 
 // Validate parameters
-if(strlen($params['username']) < 3 || strlen($params['username']) > 16) {
+if(strlen($params['username']) < 4 || strlen($params['username']) > 15) {
     printResponse($invalid_username);
     return;
 }
@@ -54,7 +54,7 @@ if(strlen($params['password']) < 4) {
     return;
 }
 
-// Validate login
+// Validate register
 $registerSuccess = createRegister($params['username'], $params['password'], $params['email']);
 if(!registerSuccess) {
     printResponse($fail_register);
@@ -69,7 +69,7 @@ $_SESSION['sessionId'] = $sessionId;
 
 // Cookies
 $expireTimeCookie = 0;
-if($remember)
+if($params['remember'])
     $expireTimeCookie = 2147483647;
 else
     $expireTimeCookie = 30 * 60; // Expire in 30 minutes

@@ -2,11 +2,37 @@
  * Function called when the document is ready
  */
 function onReady() {
+    setupListeners();
+    onTypeChange();
+    loadImages();
+}
+
+/**
+ * Setup all the listeners
+ */
+function setupListeners() {
     $('#loginForm').submit(onFormSubmit);
     $('input#typeLogin').click(onTypeChange);
     $('input#typeRegister').click(onTypeChange);
-    onTypeChange();
+    $('input#username').keyup(validateUsername);
+    $('input#email').keyup(validateEmail);
+    $('input#password').keyup(validatePassword);
+    $('input#confirmPassword').keyup(validateConfirmPassword);
 }
+
+/**
+ * Load all the images of the website
+ */
+function loadImages() {
+    $('.form').css('background', 'url(assets/bluePaperPattern.png)');
+    $('body').css('background', 'url(assets/city.gif) no-repeat center center fixed');
+}
+
+/**
+ * ===========================================================================
+ *                          DISPLAY MESSAGES
+ * ===========================================================================
+ */
 
 /**
  * Display a error message because the login
@@ -41,29 +67,112 @@ function displaySuccess(message) {
 }
 
 /**
- * Close the message displayed by the login
+ * ===========================================================================
+ *                          VALIDATION ON THE FLY
+ * ===========================================================================
  */
-function closeMessage() {
-    $(this).parent().fadeOut(500);
+
+/**
+ * Validate a username while user is writing it
+ */
+function validateUsername() {
+    var typeRegister = $('input#typeRegister').is(':checked');
+    if(!typeRegister)
+        return;
+
+    if(!validUsername()) {
+        $('input#username').addClass('inputText-Invalid');
+        return;
+    } else {
+        $('input#username').removeClass('inputText-Invalid');
+    }
 }
 
 /**
- * Called when user click on submit button
- * Will use AJAX to login and show an error message
- * if login was not successfull.
- * @param event submit event
+ * Validate a email while user is writing it
  */
-function onFormSubmit(event) {
-    event.preventDefault();
-
-    // Login / Register
-    var typeLogin = $('input#typeLogin').is(':checked');
+function validateEmail() {
     var typeRegister = $('input#typeRegister').is(':checked');
-    if(typeLogin)
-        login();
-    else if(typeRegister)
-        register();
+    if(!typeRegister)
+        return;
+
+    if(!validEmail()) {
+        $('input#email').addClass('inputText-Invalid');
+        return;
+    } else {
+        $('input#email').removeClass('inputText-Invalid');
+    }
 }
+
+/**
+ * Validate a password while user is writing it
+ */
+function validatePassword() {
+    var typeRegister = $('input#typeRegister').is(':checked');
+    if(!typeRegister)
+        return;
+
+    if(!validPassword()) {
+        $('input#password').addClass('inputText-Invalid');
+    } else {
+        $('input#password').removeClass('inputText-Invalid');
+    }
+}
+
+/**
+ * Validate a password confirmation while user is writing it
+ */
+function validateConfirmPassword() {
+    var typeRegister = $('input#typeRegister').is(':checked');
+    if(!typeRegister)
+        return;
+
+    if(!passwordMatches()) {
+        $('input#confirmPassword').addClass('inputText-Invalid');
+    } else {
+        $('input#confirmPassword').removeClass('inputText-Invalid');
+    }
+}
+
+/**
+ * Check if a username is valid
+ */
+function validUsername() {
+    var username = $('input#username').val();
+    return username.length < 16 && username.length > 3;
+}
+
+/**
+ * Check if a email is valid
+ */
+function validEmail() {
+    var emailRegex = /\S+@\S+\.\S+/;
+    var email = $('input#email').val();
+    return emailRegex.test(email);
+}
+
+/**
+ * Check if a password is valid
+ */
+function validPassword() {
+    var password = $('input#password').val();
+    return password.length > 3;
+}
+
+/**
+ * Check if password and confirmation password match
+ */
+function passwordMatches() {
+    var password = $('input#password').val();
+    var confirmPassword = $('input#confirmPassword').val();
+    return password == confirmPassword;
+}
+
+/**
+ * ===========================================================================
+ *                          REQUESTS TO PHP
+ * ===========================================================================
+ */
 
 /**
  * Send login request to the action login.
@@ -164,6 +273,30 @@ function register() {
 }
 
 /**
+ * ===========================================================================
+ *                          EVENT HANDLERS
+ * ===========================================================================
+ */
+
+/**
+ * Called when user click on submit button
+ * Will use AJAX to login and show an error message
+ * if login was not successfull.
+ * @param event submit event
+ */
+function onFormSubmit(event) {
+    event.preventDefault();
+
+    // Login / Register
+    var typeLogin = $('input#typeLogin').is(':checked');
+    var typeRegister = $('input#typeRegister').is(':checked');
+    if(typeLogin)
+        login();
+    else if(typeRegister)
+        register();
+}
+
+/**
  * Called when a user changes from login to register or vice-versa
  * Will update the ID of the form and add / remove inputs.
  * @param event click event
@@ -173,13 +306,26 @@ function onTypeChange(event) {
     var typeRegister = $('input#typeRegister').is(':checked');
     if(typeLogin) {
         $('input#submit').val('Login');
+        $('input#username').prev().text('Username / Email:');
         $('div#emailDiv').hide();
         $('div#confirmPasswordDiv').hide();
+
+        // Remove red borders if needed
+        $('input#username').removeClass('inputText-Invalid');
+        $('input#password').removeClass('inputText-Invalid');
     } else if(typeRegister) {
         $('input#submit').val('Register');
+        $('input#username').prev().text('Username:');
         $('div#emailDiv').show();
         $('div#confirmPasswordDiv').show();
     }
+}
+
+/**
+ * Close the message displayed by the login
+ */
+function closeMessage() {
+    $(this).parent().fadeOut(500);
 }
 
 /**

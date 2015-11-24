@@ -44,8 +44,7 @@ body {
 
     margin: auto;
 
-
-     background: url(../assets/city.gif) no-repeat center center fixed; 
+    background: #DEDEDE;
     -webkit-background-size: cover;
     -moz-background-size: cover;
     -o-background-size: cover;
@@ -53,8 +52,7 @@ body {
 }
 
 .form {
-    /* background-image: url("../assets/paper.png"); */
-    background-image: url("../assets/bluePaperPattern.png");
+    background: #01528A;
 
     padding: 5em;
 
@@ -71,6 +69,7 @@ body {
     margin: 0em;
     padding: 0em;
     float:right;
+    cursor: pointer;
 }
 
 #loginForm div {
@@ -92,12 +91,11 @@ body {
 .inputText {
     width: 100%;
     margin: 0.5em 0em 0em 0em;
-    padding: 1em;
-    /*background: #383838;*/
+    padding: 0.8em;
     background: #EEEBC2;
 
     outline: 0;
-    border: 0;
+    border: 0.2em solid #EEEBC2;
     border-radius: 0.5em;
     box-sizing: border-box;
     -moz-box-sizing: border-box;
@@ -106,6 +104,10 @@ body {
     font-family: "Open Sans", Times, serif;
     font-size: 16px;
     color:black;
+}
+
+.inputText-Invalid {
+    border-color:#D8000C;
 }
 
 .submitButton {
@@ -124,9 +126,11 @@ body {
 
     display:block;
 }
+
 .submitButton:active {
     background: #C7BFAA;
 }
+
 .submitButton::-moz-focus-inner {
   border: 0;
 }
