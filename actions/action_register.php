@@ -11,6 +11,7 @@ function printResponse($value) {
 
 // Need error responses
 $taken_user = "taken_user";
+$taken_email = "taken_email";
 $invalid_username = "invalid_username";
 $invalid_email = "invalid_email";
 $invalid_password = "invalid_password";
@@ -32,20 +33,24 @@ foreach ($params as $param) {
 }
 
 // Validate parameters
-if(!filter_var($params['email'], FILTER_VALIDATE_EMAIL)) {
-    printResponse($invalid_email);
-    return;
-}
-if(strlen($params['password']) < 4) {
-    printResponse($invalid_password);
-    return;
-}
 if(strlen($params['username']) < 3 || strlen($params['username']) > 16) {
     printResponse($invalid_username);
     return;
 }
 if(userExists($params['username'])) {
     printResponse($taken_user);
+    return;
+}
+if(!filter_var($params['email'], FILTER_VALIDATE_EMAIL)) {
+    printResponse($invalid_email);
+    return;
+}
+if(emailExists($params['email'])) {
+    printResponse($taken_email);
+    return;
+}
+if(strlen($params['password']) < 4) {
+    printResponse($invalid_password);
     return;
 }
 

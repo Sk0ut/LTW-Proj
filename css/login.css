@@ -1,58 +1,60 @@
 @import url('http://fonts.googleapis.com/css?family=Open+Sans');
 
-@media (min-width: 1600px) {
-    body {
-        width: 25%;
-        height: 70%;
-
-        position: absolute;
-        top:0;
-        bottom: 0;
-        left: 0;
-        right: 0;
-
-        margin: auto;
-
-        background-color: #DEDEDE;
-    }
-}
-
-@media (max-width: 1600px) {
-    body {
-        width: 50%;
-        height: 70%;
-
-        position: absolute;
-        top:0;
-        bottom: 0;
-        left: 0;
-        right: 0;
-
-        margin: auto;
-
-        background-color: #DEDEDE;
-    }
-}
-
-@media (max-width: 800px) {
+@media screen and (max-width:640px) {
     body {
         width: 100%;
         height: 100%;
-
-        position: absolute;
-        top:0;
-        bottom: 0;
-        left: 0;
-        right: 0;
-
-        margin: auto;
-
-        background-color: #DEDEDE;
     }
 }
 
+@media (min-width:640px) and (max-width:960px){
+    body {
+        width: 70%;
+        height: 80%;
+    }
+}
+
+@media (min-width:960px) and (max-width:1200px){
+    body {
+        width: 50%;
+        height: 80%;
+    }
+}
+
+@media (min-width:1200px) and (max-width:1920px){
+    body {
+        width: 35%;
+        height: 80%;
+    }
+}
+
+@media (min-width:1920px) and (max-width:2400px){
+    body {
+        width: 25%;
+        height: 80%;
+    }
+}
+
+body {
+    position: absolute;
+    top:0;
+    bottom: 0;
+    left: 0;
+    right: 0;
+
+    margin: auto;
+
+
+     background: url(../assets/city.gif) no-repeat center center fixed; 
+    -webkit-background-size: cover;
+    -moz-background-size: cover;
+    -o-background-size: cover;
+    background-size: cover;
+}
+
 .form {
-    background-image: url("../assets/paper.png");
+    /* background-image: url("../assets/paper.png"); */
+    background-image: url("../assets/bluePaperPattern.png");
 
     padding: 5em;
 
@@ -91,8 +93,10 @@
     width: 100%;
     margin: 0.5em 0em 0em 0em;
     padding: 1em;
-    background: #383838;
+    /*background: #383838;*/
+    background: #EEEBC2;
 
+    outline: 0;
     border: 0;
     border-radius: 0.5em;
     box-sizing: border-box;
@@ -101,13 +105,14 @@
 
     font-family: "Open Sans", Times, serif;
     font-size: 16px;
-    color:white;
+    color:black;
 }
 
 .submitButton {
+    outline: 0;
     border: 0;
     padding: 5% 20%;
-    background: #383838;
+    background: #EEEBC2;
 
     margin-top: 2em;
     margin-left:auto;
@@ -115,24 +120,38 @@
 
     font-family: "Open Sans", Times, serif;
     font-size: 16px;
-    color:white;
+    color:black;
 
     display:block;
 }
 .submitButton:active {
-    background: #606060;
+    background: #C7BFAA;
+}
+.submitButton::-moz-focus-inner {
+  border: 0;
 }
 
 .closeButton {
     color: #A8A8A8;
-    float: right;
+    cursor: pointer;
+}
+
+.errorDiv, .closeButton {
+    display: table-cell;
+    vertical-align: middle;
 }
 
 .notifyInfo, .notifySuccess, .notifyWarning, .notifyError {
+    display: table;
+    width: 100%;
     text-align: center;
     margin: 2em 0em 0em 0em;
     padding: 1em;
     border-radius: 0.5em;
+
+    box-sizing: border-box;
+    -moz-box-sizing: border-box;
+    -webkit-box-sizing: border-box;
 }
 
 .notifyInfo {

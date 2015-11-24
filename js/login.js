@@ -15,12 +15,13 @@ function onReady() {
 function displayError(message) {
     var status = $("#status");
     status.show();
-    status.text(message);
-    status.append('<span id="close" class="closeButton">&#x274c;</span>');
+    status.text('');
+    status.append('<div class="errorDiv">' + message + "</div>");
+    status.append('<div id="close" class="closeButton">&#x274c;</div>');
     status.attr('class', 'notifyError');
 
     // Add listener
-    $('span#close').click(closeMessage);
+    $('div#close').click(closeMessage);
 }
 
 /**
@@ -30,12 +31,13 @@ function displayError(message) {
 function displaySuccess(message) {
     var status = $("#status");
     status.show();
-    status.text(message);
-    status.append('<span id="close" class="closeButton">&#x274c;</span>');
+    status.text('');
+    status.append('<div class="errorDiv">' + message + "</div>");
+    status.append('<div id="close" class="closeButton">&#x274c;</div>');
     status.attr('class', 'notifySuccess');
 
     // Add listener
-    $('span#close').click(closeMessage);
+    $('div#close').click(closeMessage);
 }
 
 /**
@@ -108,7 +110,14 @@ function register() {
     var username = $('input#username').val();
     var email = $('input#email').val();
     var password = $('input#password').val();
+    var confirmPassword = $('input#confirmPassword').val();
     var remember = $('input#remember').is(':checked');
+
+    // Check if password matches password confirmation
+    if(password !== confirmPassword) {
+        displayError("Passwords do not match");
+        return;
+    }
 
     // Async call to register
     $.post(
@@ -128,6 +137,9 @@ function register() {
                         break;
                     case 'taken_user':
                         displayError("Username already taken");
+                        break;
+                    case 'taken_email':
+                        displayError("Email already in use");
                         break;
                     case 'invalid_username':
                         displayError("Username does not meet the requirements (3 < size < 16)");
@@ -162,9 +174,11 @@ function onTypeChange(event) {
     if(typeLogin) {
         $('input#submit').val('Login');
         $('div#emailDiv').hide();
+        $('div#confirmPasswordDiv').hide();
     } else if(typeRegister) {
         $('input#submit').val('Register');
         $('div#emailDiv').show();
+        $('div#confirmPasswordDiv').show();
     }
 }
 

@@ -39,6 +39,11 @@
                 <input type="password" id="password" class="inputText"/>
             </div>
 
+            <div id="confirmPasswordDiv" class="inputDiv">
+                <label for="confirmPassword">Confirm Password:</label>
+                <input type="password" id="confirmPassword" class="inputText"/>
+            </div>
+
             <div class="inputDiv">
                 <input type="checkbox" id="remember" />
                 <label for="checkbox">Remember Me</label>
