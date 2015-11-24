@@ -222,8 +222,17 @@ function register() {
     var confirmPassword = $('input#confirmPassword').val();
     var remember = $('input#remember').is(':checked');
 
-    // Check if password matches password confirmation
-    if(password !== confirmPassword) {
+    // Checkers
+    if(!validUsername()) {
+        displayError("Username does not meet the requirements (3 < size < 16)");
+        return;
+    } else if(!validEmail()) {
+        displayError("Please use a valid email");
+        return;
+    } else if(!validPassword()) {
+        displayError("Password does not meet the requirements (length > 4)");
+        return;
+    } else if(!passwordMatches()) {
         displayError("Passwords do not match");
         return;
     }
