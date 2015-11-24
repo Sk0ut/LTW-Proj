@@ -5,7 +5,9 @@ CREATE TABLE IF NOT EXISTS Users (
 	email VARCHAR, 
 	session VARCHAR,
 
-	CONSTRAINT pk_Users PRIMARY KEY (id)
+	CONSTRAINT pk_Users PRIMARY KEY (id),
+	CONSTRAINT uv_Username UNIQUE (username),
+	CONSTRAINT uv_Email UNIQUE (email)
 );
 
 CREATE TABLE IF NOT EXISTS EventType (
