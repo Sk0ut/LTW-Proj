@@ -12,7 +12,7 @@
 	}
 	
 	function getEventPicture() {
-		return ""
+		return "not_available";
 	}
 	
 	function getEventDescription() {
