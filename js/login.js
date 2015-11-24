@@ -40,7 +40,7 @@ function loadImages() {
  */
 function displayError(message) {
     var status = $("#status");
-    status.show();
+    status.fadeIn(200);
     status.text('');
     status.append('<div class="errorDiv">' + message + "</div>");
     status.append('<div id="close" class="closeButton">&#x274c;</div>');
@@ -56,7 +56,7 @@ function displayError(message) {
  */
 function displaySuccess(message) {
     var status = $("#status");
-    status.show();
+    status.fadeIn(200);
     status.text('');
     status.append('<div class="errorDiv">' + message + "</div>");
     status.append('<div id="close" class="closeButton">&#x274c;</div>');
@@ -336,11 +336,6 @@ function onTypeChange(event) {
 function closeMessage() {
     $(this).parent().fadeOut(500);
 }
-
-/**
- * Return if a given element exists or not
- */
-jQuery.fn.exists = function(){ return this.length > 0; }
 
 /**
  * Call function when document is ready

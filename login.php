@@ -24,6 +24,10 @@
     <!-- Login Form -->
     <div id="formDiv" class="form">
         <form id="loginForm">
+            <div class="logo">
+                Event Manager
+            </div>
+
             <div class="inputDiv">
                 <label for="username">Username:</label>
                 <input type="text" id="username" class="inputText" />
