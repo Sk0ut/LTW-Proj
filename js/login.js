@@ -195,6 +195,9 @@ function login() {
             {
                 var response = data['login'];
                 switch(response) {
+                    case 'missing_params':
+                        displayError("Missing input parameters");
+                        break;
                     case 'fail':
                         displayError("Invalid username or password");
                         break;
@@ -250,6 +253,9 @@ function register() {
             {
                 var response = data['register'];
                 switch(response) {
+                    case 'missing_params':
+                        displayError("Missing input parameters");
+                        break;
                     case 'fail':
                         displayError("Failed to register the account");
                         break;

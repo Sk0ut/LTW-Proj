@@ -65,6 +65,10 @@ body {
     font-size: 16px;
 }
 
+.formFields {
+    border: 0;
+}
+
 .logo {
     width:80%;
     margin:auto;

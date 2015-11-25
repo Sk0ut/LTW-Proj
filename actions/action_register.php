@@ -10,6 +10,7 @@ function printResponse($value) {
 }
 
 // Need error responses
+$missing_params = "missing_params";
 $taken_user = "taken_user";
 $taken_email = "taken_email";
 $invalid_username = "invalid_username";
@@ -28,7 +29,7 @@ foreach ($params as $param) {
     }
 
     // Error message
-    printResponse($fail_register);
+    printResponse($missing_params);
     return;
 }
 
