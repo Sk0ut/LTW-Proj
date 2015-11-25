@@ -3,7 +3,7 @@ CREATE TABLE IF NOT EXISTS Users (
 	username VARCHAR,
 	password VARCHAR,
 	email VARCHAR, 
-	session VARCHAR,
+	token VARCHAR,
 
 	CONSTRAINT pk_Users PRIMARY KEY (id),
 	CONSTRAINT uv_Username UNIQUE (username),

@@ -37,26 +37,29 @@ foreach ($params as $param) {
 }
 
 // Validate login
-if(!validLogin($params['username'], $params['password'])) {
+if(!isValidLogin($params['username'], $params['password'])) {
     printResponse($fail_login);
     return;
 }
 
 // Update session
-// $sessionId = generateSessionId();
-// updateSessionId($params['username'], $sessionId);
-// $_SESSION['username'] = $params['username'];
-// $_SESSION['sessionId'] = $sessionId;
-//
-// // Cookies
-// $expireTimeCookie = 0;
-// if($params['remember'])
-//     $expireTimeCookie = 2147483647;
-// else
-//     $expireTimeCookie = 30 * 60; // Expire in 30 minutes
-// setcookie('username', $params['username'], $expireTimeCookie);
-// setcookie('session', $sessionId, $expireTimeCookie);
-//
-// // Response
+$token = generateToken(256);
+if(!updateToken($params['username'], $token)) {
+    printResponse($fail_login);
+    return;
+}
+$_SESSION['username'] = $params['username'];
+$_SESSION['sessionId'] = $token;
+
+// Cookies
+$expireTimeCookie = 0;
+if($params['remember'])
+    $expireTimeCookie = 2147483647;
+else
+    $expireTimeCookie = 30 * 60; // Expire in 30 minutes
+setcookie('username', $params['username'], $expireTimeCookie);
+setcookie('session', $token, $expireTimeCookie);
+
+// Response
 printResponse($success_login);
 ?>

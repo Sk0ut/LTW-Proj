@@ -25,7 +25,7 @@ function setupListeners() {
  */
 function loadImages() {
     $('.form').css('background', 'url(assets/bluePaperPattern.png)');
-    $('body').css('background', 'url(assets/city.gif) no-repeat center center fixed');
+    $('body').css('background-image', 'url(assets/meeting.jpg)');
 }
 
 /**
