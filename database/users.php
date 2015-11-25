@@ -1,23 +1,21 @@
 <?php
+
+require_once('utils.php');
+
 function getUserInfoFromName($username) {
-    global $db;
-    $stmt = $db->prepare('SELECT * FROM Users WHERE username = :username');
-    if(!$stmt)
-        return false;
-    $stmt->bindParam(":username", $username, PDO::PARAM_STR);
-    if(!$stmt->execute())
-        return NULL;
-    return $stmt->fetch();
+    $query = "SELECT * FROM Users WHERE username = ?";
+    $params = [ $username ];
+    $types = [ PDO::PARAM_STR ];
+    $result = executeQuery($query, $params, $types);
+    return $result;
 }
 
 function getUserInfoFromEmail($email) {
-    global $db;
-    $stmt = $db->prepare('SELECT * FROM Users WHERE email = :email');
-    if(!$stmt)
-        return false;
-    $stmt->bindParam(':email', $email, PDO::PARAM_STR);
-    $stmt->execute();
-    return $stmt->fetch();
+    $query = "SELECT * FROM Users WHERE email = ?";
+    $params = [ $email ];
+    $types = [ PDO::PARAM_STR ];
+    $result = executeQuery($query, $params, $types);
+    return $result;
 }
 
 /**
@@ -40,19 +38,14 @@ function userExists($username) {
  * @return true if is a valid login combination, false otherwise
  */
 function isValidLogin($username, $password) {
-    global $db;
-    $stmt = $db->prepare("SELECT password FROM Users WHERE username = :username");
-    if(!$stmt)
-        return false;
-    $stmt->bindParam(":username", $username, PDO::PARAM_STR);
-    if(!$stmt->execute())
-        return false;
-
-    $result = $stmt->fetch();
-    if(count($result) == 0)
+    $query = "SELECT password FROM Users WHERE username = ?";
+    $params = [ $username ];
+    $types = [ PDO::PARAM_STR ];
+    $result = executeQuery($query, $params, $types);
+    if($result == NULL)
         return false;
 
-    return password_verify($password, $result['password']);
+    return password_verify($password, $result[0]['password']);
 }
 
 /**
@@ -63,15 +56,11 @@ function isValidLogin($username, $password) {
  * @return true if was successfull, false otherwise
  */
 function createUser($username, $password, $email) {
-    global $db;
-
-    $stmt = $db->prepare("INSERT INTO Users (username, password, email) VALUES (:username, :password, :email)");
-    if(!$stmt)
-        return false;
-    $stmt->bindParam(":username", $username, PDO::PARAM_STR);
-    $stmt->bindParam(":password", $password, PDO::PARAM_STR);
-    $stmt->bindParam(":email", $email, PDO::PARAM_STR);
-    return $stmt->execute();
+    $query = "INSERT INTO Users(username, password, email) VALUES (?, ?, ?)";
+    $params = [ $username, $password, $email ];
+    $types = [ PDO::PARAM_STR, PDO::PARAM_STR, PDO::PARAM_STR ];
+    $result = executeQuery($query, $params, $types);
+    return $result > 0;
 }
 
 /**
@@ -81,21 +70,18 @@ function createUser($username, $password, $email) {
  * @return true if successfull, false otherwise
  */
 function updateToken($username, $token) {
-    global $db;
-
-    $stmt = $db->prepare("UPDATE Users SET token = :token WHERE username = :username");
-    if(!$stmt)
-        return false;
-    $stmt->bindParam(":token", $token, PDO::PARAM_STR);
-    $stmt->bindParam(":username", $username, PDO::PARAM_STR);
-    return $stmt->execute();
+    $query = "UPDATE Users SET token = ? WHERE username = ?";
+    $params = [ $token, $username ];
+    $types = [ PDO::PARAM_STR, PDO::PARAM_STR ];
+    $result = executeQuery($query, $params, $types);
+    return $result > 0;
 }
 
 /**
  * Generate a random and secure number between a minimum and a maximum
  * @param min   minumum value
  * @param max   maximum value
- * @credits http://us1.php.net/manual/en/function.openssl-random-pseudo-bytes.php#104322
+ * @author http://us1.php.net/manual/en/function.openssl-random-pseudo-bytes.php#104322
  */
 function cryptoRandomSecure($min, $max) {
     $range = $max - $min;
@@ -114,7 +100,7 @@ function cryptoRandomSecure($min, $max) {
 /**
  * Generate a secure token
  * @param length length of the token
- * @credits http://us1.php.net/manual/en/function.openssl-random-pseudo-bytes.php#104322
+ * @author http://us1.php.net/manual/en/function.openssl-random-pseudo-bytes.php#104322
  */
 function generateToken($length) {
     $token = "";

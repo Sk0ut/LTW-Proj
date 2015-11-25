@@ -112,7 +112,7 @@ body {
     background: #EEEBC2;
 
     outline: 0;
-    border: 0.2em solid #EEEBC2;
+    border: 0.15em solid #EEEBC2;
     border-radius: 0.5em;
     box-sizing: border-box;
     -moz-box-sizing: border-box;
@@ -130,6 +130,7 @@ body {
 .submitButton {
     outline: 0;
     border: 0;
+    border-radius: 0.5em;
     padding: 5% 20%;
     background: #EEEBC2;
 

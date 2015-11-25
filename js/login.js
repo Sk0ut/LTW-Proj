@@ -15,9 +15,13 @@ function setupListeners() {
     $('input#typeLogin').click(onTypeChange);
     $('input#typeRegister').click(onTypeChange);
     $('input#username').keyup(validateUsername);
+    $('input#username').click(validateUsername);
     $('input#email').keyup(validateEmail);
+    $('input#email').click(validateEmail);
     $('input#password').keyup(validatePassword);
+    $('input#password').click(validatePassword);
     $('input#confirmPassword').keyup(validateConfirmPassword);
+    $('input#confirmPassword').click(validateConfirmPassword);
 }
 
 /**
