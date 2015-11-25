@@ -15,6 +15,14 @@ function getUserInfoFromEmail($email) {
 	return $stmt->fetch();
 }
 
+function getUserFromId($id) {
+	global $db;
+	$stmt = $db->prepare("SELECT * FROM Users WHERE id = :id");
+	$stmt->bindParam(":id", $id, PDO::PARAM_INT);
+	$stmt->execute();
+	return $stmt->fetch();
+}
+
 function validLogin($username, $password) {
 	global $db;
 	$stmt = $db->prepare("SELECT COUNT(*) AS count FROM Users WHERE username = :username AND password = :password");
