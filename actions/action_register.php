@@ -19,6 +19,13 @@ $invalid_password = "invalid_password";
 $fail_register = "fail";
 $success_register = "success";
 
+// Includes
+if((require_once('../database/connection.php')) == -1) {
+    printResponse($fail_register);
+    return;
+}
+require_once('../database/users.php');
+
 // Check parameters
 $params = ['username', 'email', 'password', 'remember'];
 foreach ($params as $param) {
@@ -56,8 +63,8 @@ if(strlen($params['password']) < 4) {
 }
 
 // Validate register
-$registerSuccess = createRegister($params['username'], $params['password'], $params['email']);
-if(!registerSuccess) {
+if(!createRegister($params['username'], $params['password'], $params['email'])) {
+    echo "HERE";
     printResponse($fail_register);
     return;
 }

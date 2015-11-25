@@ -5,7 +5,8 @@ function getUserInfoFromName($username) {
     if(!$stmt)
         return false;
     $stmt->bindParam(":username", $username, PDO::PARAM_STR);
-    $stmt->execute();
+    if(!$stmt->execute())
+        return NULL;
     return $stmt->fetch();
 }
 
@@ -17,6 +18,18 @@ function getUserInfoFromEmail($email) {
     $stmt->bindParam(':email', $email, PDO::PARAM_STR);
     $stmt->execute();
     return $stmt->fetch();
+}
+
+/**
+ * Check if a user exists
+ * @param username username to check if exists
+ * @return true if exists, false otherwise
+ */
+function userExists($username) {
+    $result = getUserInfoFromName($username);
+    if($result == NULL)
+        return false;
+    return count($result) > 0;
 }
 
 /**
@@ -32,7 +45,8 @@ function isValidLogin($username, $password) {
     if(!$stmt)
         return false;
     $stmt->bindParam(":username", $username, PDO::PARAM_STR);
-    $stmt->execute();
+    if(!$stmt->execute())
+        return false;
 
     $result = $stmt->fetch();
     if(count($result) == 0)

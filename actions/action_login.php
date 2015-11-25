@@ -15,11 +15,11 @@ $fail_login = "fail";
 $success_login = "success";
 
 // Includes
-if((include_once('../database/connection.php')) == -1) {
+if((require_once('../database/connection.php')) == -1) {
     printResponse($fail_login);
     return;
 }
-include_once('../database/users.php');
+require_once('../database/users.php');
 
 
 // Check parameters
@@ -49,7 +49,7 @@ if(!updateToken($params['username'], $token)) {
     return;
 }
 $_SESSION['username'] = $params['username'];
-$_SESSION['sessionId'] = $token;
+$_SESSION['token'] = $token;
 
 // Cookies
 $expireTimeCookie = 0;
@@ -58,7 +58,7 @@ if($params['remember'])
 else
     $expireTimeCookie = 30 * 60; // Expire in 30 minutes
 setcookie('username', $params['username'], $expireTimeCookie);
-setcookie('session', $token, $expireTimeCookie);
+setcookie('token', $token, $expireTimeCookie);
 
 // Response
 printResponse($success_login);
