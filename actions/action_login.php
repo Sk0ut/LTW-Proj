@@ -39,8 +39,8 @@ function updateToken($username, $token, $remember) {
         $expireTimeCookie = 2147483647;
     else
         $expireTimeCookie = time() + 30 * 60; // Expire in 30 minutes
-    setcookie('username', $username, $expireTimeCookie);
-    setcookie('token', $token, $expireTimeCookie);
+    setcookie('username', $username, $expireTimeCookie, "/", false);
+    setcookie('token', $token, $expireTimeCookie, "/", false);
 }
 
 // Need error responses
