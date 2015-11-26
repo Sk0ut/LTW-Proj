@@ -44,6 +44,25 @@ function getCurrentUser() {
 }
 
 /**
+ * Get a user from his id
+ * @param id id of the user
+ * @return user with that id or NULL
+ */
+function getUserFromId($id) {
+    global $database;
+
+    $query = "SELECT * FROM Users WHERE id = ?";
+    $params = [ $id ];
+    $types = [ PDO::PARAM_INT ];
+    $result = $database->executeQuery($query, $params, $types);
+
+    if(!$result || count($result) <= 0)
+        return NULL;
+
+    return new User($result[0]['id'], $result[0]['username'], $result[0]['password'], $result[0]['email'], $result[0]['token'], $result[0]['ipAddress']);
+}
+
+/**
  * Get a user from his username
  * @param username username of the user
  * @return user with that username or NULL
@@ -59,7 +78,7 @@ function getUserFromUsername($username) {
     if(!$result || count($result) <= 0)
         return NULL;
 
-    return new User($result[0]['username'], $result[0]['password'], $result[0]['email'], $result[0]['token'], $result[0]['ipAddress']);
+    return new User($result[0]['id'], $result[0]['username'], $result[0]['password'], $result[0]['email'], $result[0]['token'], $result[0]['ipAddress']);
 }
 
 /**
@@ -78,7 +97,7 @@ function getUserFromEmail($email) {
     if(!$result || count($result) <= 0)
         return NULL;
 
-    return new User($result[0]['username'], $result[0]['password'], $result[0]['email'], $result[0]['token'], $result[0]['ipAddress']);
+    return new User($result[0]['id'], $result[0]['username'], $result[0]['password'], $result[0]['email'], $result[0]['token'], $result[0]['ipAddress']);
 }
 
 /**

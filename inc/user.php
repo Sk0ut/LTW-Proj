@@ -4,6 +4,12 @@
  * User object
  */
 class User {
+
+    /**
+     * Id of the user
+     */
+    private $_id;
+
     /**
      * Username of the user
      */
@@ -31,19 +37,28 @@ class User {
 
     /**
      * Constructor of User
+     * @param id id of the user
      * @param username username of the user
      * @param password password of the user
      * @param email email of the user
      * @param token token of the user
      * @param ipAddress ip address of the user
      */
-    public function __construct($username, $password, $email, $token, $ipAddress) {
+    public function __construct($id, $username, $password, $email, $token, $ipAddress) {
+        $this->_id = $id;
         $this->_username = $username;
         $this->_password = $password;
         $this->_email = $email;
         $this->_token = $token;
         $this->_ipAddress = $ipAddress;
     }
+
+    /**
+     * Get the id of the user
+     * @return id of the user
+     */
+    public function getId() {
+        return $this->_id;
 
     /**
      * Get the username of the user
