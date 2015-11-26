@@ -108,6 +108,24 @@ function isValidToken($username, $token) {
 }
 
 /**
+ * Check if a user with a username exists
+ * @param username username to check if has user associated
+ * @return true if a user exists with that username
+ */
+function usernameExists($username) {
+    return getUserFromUsername($username) != NULL;
+}
+
+/**
+ * Check if a user with a email exists
+ * @param email email to check if has user associated
+ * @return true if a user exists with that email
+ */
+function emailExists($email) {
+    return getUserFromEmail($email) != NULL;
+}
+
+/**
  * Regenerate a user's login token and save the ip address associated
  * with that token
  * @param username username to be regen
