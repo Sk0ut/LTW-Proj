@@ -61,7 +61,7 @@ class Database {
         // Bind parameters
         $index = 0;
         foreach($params as $param)
-            $statement->bindParam($index + 1, $param, $types[$index++]);
+            $statement->bindValue($index + 1, $param, $types[$index++]);
 
         // Execute update
         $statement->execute();
@@ -91,8 +91,10 @@ class Database {
 
         // Bind parameters
         $index = 0;
-        foreach($params as $param)
-            $statement->bindParam($index + 1, $param, $types[$index++]);
+        foreach($params as $param) {
+            $statement->bindValue($index + 1, $param, $types[$index]);
+            $index++;
+        }
 
         // Execute update
         $statement->execute();

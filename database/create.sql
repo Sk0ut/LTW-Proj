@@ -2,8 +2,9 @@ CREATE TABLE IF NOT EXISTS Users (
 	id INTEGER,
 	username VARCHAR,
 	password VARCHAR,
-	email VARCHAR, 
+	email VARCHAR,
 	token VARCHAR,
+    ipAddress VARCHAR,
 
 	CONSTRAINT pk_Users PRIMARY KEY (id),
 	CONSTRAINT uv_Username UNIQUE (username),

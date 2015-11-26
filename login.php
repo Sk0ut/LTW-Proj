@@ -1,6 +1,6 @@
 <?php
 
-// Includes
+require_once 'templates/header.php';
 
 ?>
 

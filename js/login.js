@@ -206,7 +206,7 @@ function login() {
                         displayError("Invalid username or password");
                         break;
                     case 'success':
-                        displaySuccess("Login successfull");
+                        displaySuccess("Login successful");
                         break;
                     default:
                         displayError("Error while processing the login...");
@@ -279,7 +279,7 @@ function register() {
                         displayError("Please use a valid email");
                         break;
                     case 'success':
-                        displaySuccess("Register was successfull");
+                        displaySuccess("Register was successful");
                         break;
                     default:
                         displayError("Error while processing the register...");

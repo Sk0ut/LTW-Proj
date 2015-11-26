@@ -27,20 +27,20 @@ function fillParameters(&$params) {
  * Update the token id of the username
  * @param username username to be updated
  * @param token new token value
- * @param expire true if cookie expires, false otherwise
+ * @param remember true if cookie never expires, false otherwise
  */
-function updateToken($username, $token, $expire) {
+function updateToken($username, $token, $remember) {
     $_SESSION['username'] = $username;
     $_SESSION['token'] = $token;
 
     // Cookies
     $expireTimeCookie = 0;
-    if($expire)
+    if($remember == "true")
         $expireTimeCookie = 2147483647;
     else
-        $expireTimeCookie = 30 * 60; // Expire in 30 minutes
-    setcookie('username', $username, $expireTimeCookie);
-    setcookie('token', $token, $expireTimeCookie);
+        $expireTimeCookie = time() + 30 * 60; // Expire in 30 minutes
+    setcookie('username', $username, $expireTimeCookie, "/", false);
+    setcookie('token', $token, $expireTimeCookie, "/", false);
 }
 
 // Need error responses
@@ -53,6 +53,16 @@ $params = ['username' => '', 'password' => '', 'remember' => ''];
 if(!fillParameters($params)) {
     printResponse($missing_params);
     return false;
+}
+
+// Convert email to username
+if(filter_var($params['username'], FILTER_VALIDATE_EMAIL)) {
+    $user = getUserFromEmail($params['username']);
+    if($user == NULL) {
+        printResponse($fail_login);
+        return;
+    }
+    $params['username'] = $user->getUsername();
 }
 
 // Validate login

@@ -37,7 +37,10 @@ function getCurrentUser() {
         return NULL;
     }
 
-    return getUserFromUsername($cookies['username']);
+    $user = getUserFromUsername($cookies['username']);
+    if($user->tokenMatch($cookies['token']))
+        return $user;
+    return NULL;
 }
 
 /**
@@ -56,7 +59,7 @@ function getUserFromUsername($username) {
     if(!$result || count($result) <= 0)
         return NULL;
 
-    return new User($result[0]['username'], $result[0]['password'], $result[0]['email'], $result[0]['token']);
+    return new User($result[0]['username'], $result[0]['password'], $result[0]['email'], $result[0]['token'], $result[0]['ipAddress']);
 }
 
 /**
@@ -75,7 +78,7 @@ function getUserFromEmail($email) {
     if(!$result || count($result) <= 0)
         return NULL;
 
-    return new User($result[0]['username'], $result[0]['password'], $result[0]['email'], $result[0]['token']);
+    return new User($result[0]['username'], $result[0]['password'], $result[0]['email'], $result[0]['token'], $result[0]['ipAddress']);
 }
 
 /**
@@ -92,7 +95,39 @@ function isValidLogin($username, $password) {
 }
 
 /**
- * Regenerate a user's login token
+ * Check if a token is valid
+ * @param username username to check the token
+ * @param token token of the current user
+ * @return true if is a valid token, false otherwise
+ */
+function isValidToken($username, $token) {
+    $user = getUserFromUsername($username);
+    if($user == NULL)
+        return false;
+    return $user->tokenMatch($token);
+}
+
+/**
+ * Check if a user with a username exists
+ * @param username username to check if has user associated
+ * @return true if a user exists with that username
+ */
+function usernameExists($username) {
+    return getUserFromUsername($username) != NULL;
+}
+
+/**
+ * Check if a user with a email exists
+ * @param email email to check if has user associated
+ * @return true if a user exists with that email
+ */
+function emailExists($email) {
+    return getUserFromEmail($email) != NULL;
+}
+
+/**
+ * Regenerate a user's login token and save the ip address associated
+ * with that token
  * @param username username to be regen
  * @return new token of the user, false otherwise
  */
@@ -100,9 +135,10 @@ function regenToken($username) {
     $token = generateToken(256);
 
     global $database;
-    $query = "UPDATE Users SET token = ? WHERE username = ?";
-    $params = [ $token, $username ];
-    $types = [ PDO::PARAM_STR, PDO::PARAM_STR ];
+
+    $query = "UPDATE Users SET token = ?, ipAddress = ? WHERE username = ?";
+    $params = [ $token, $_SERVER['REMOTE_ADDR'], $username ];
+    $types = [ PDO::PARAM_STR, PDO::PARAM_STR, PDO::PARAM_STR ];
     $result = $database->executeUpdate($query, $params, $types);
     if($result <= 0)
         return false;
