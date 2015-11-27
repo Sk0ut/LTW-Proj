@@ -1,9 +1,8 @@
 <?php
 	require_once(".." . DIRECTORY_SEPARATOR . "config" . DIRECTORY_SEPARATOR . "config.php");
-	
 	require_once(ROOT . DS . "application" . DS . "models" . DS . "event.class.php");
 	
-	$event = new Event("Event name", "Event Owner", "Event Type", "Event description", "10/12/2015 19:30", "not_available");
+	$event = new Event(1, "Event name", "Event Owner", "Event Type", "Event description", "10/12/2015 19:30", "not_available");
 	
 	$PageTitle=$event->getName();
 	require_once("header.php");

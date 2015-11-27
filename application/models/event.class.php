@@ -1,63 +1,76 @@
 <?php
+
+require_once("database.php");
+require_once("user.php");
+
 class Event {
-	private $_name;
-	private $_owner;
-	private $_type;
-	private $_description;
-	private $_date;
-	private $_picture;
-	private $_albums;
-	private $_forum;
+	private $id;
+	private $name;
+	private $owner;
+	private $type;
+	private $description;
+	private $date;
+	private $picture;
+	private $albums;
+	private $forum;
 	
-	public function __construct($name, $owner, $type, $description, $date, $picture) {
-		$this->_name = $name;
-		$this->_owner = $owner;
-		$this->_type = $type;
-		$this->_description = $description;
-		$this->_date = $date;
-		$this->_picture = $picture;
-		$this->_albums = array();
-		$this->_forum = array();
+	public function __construct($id, $name, $owner, $type, $description, $date, $picture) {
+		$this->id = $id;
+		$this->name = $name;
+		$this->owner = $owner;
+		$this->type = $type;
+		$this->description = $description;
+		$this->date = $date;
+		$this->picture = $picture;
+		$this->albums = array();
+		$this->forum = array();
 	}
 	
 	public function addAlbum($album) {
-		$this->_albums[] = $album;
+		$this->albums[] = $album;
 	}
 	
 	public function addThread($thread) {
-		$this->_forum[] = $thread;
+		$this->forum[] = $thread;
 	}
 	
 	public function getName() {
-		return $this->_name;
+		return $this->name;
 	}
 	
 	public function getOwner() {
-		return $this->_owner;
+		return $this->owner;
 	}
 	
 	public function getType() {
-		return $this->_date;
+		return $this->date;
 	}
 
 	public function getDescription() {
-		return $this->_description;
+		return $this->description;
 	}
 	
 	public function getPicture() {
-		return $this->_picture;
+		return $this->picture;
 	}
 	
 	public function getDate() {
-		return $this->_date;
+		return $this->date;
 	}
 	
 	public function getAlbums() {
-		return $this->_albums;
+		return $this->albums;
 	}
 	
 	public function getForum() {
-		return $this->_forum;
+		return $this->forum;
+	}
+	
+	public static function find($id) {
+		global $database;
+		$data = $database->executeQuery("SELECT * FROM Events WHERE id = ?", [$id], [PDO::PARAM_STR])[0];
+		
+		$event = new Event($data['id'], $data['name'], $owner, $type, $description, $date, $picture);
 	}
 }
 ?>
