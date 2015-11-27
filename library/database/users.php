@@ -1,7 +1,9 @@
 <?php
-require_once 'database.php';
-require_once 'user.php';
-require_once 'security.php';
+require_once dirname(dirname(__DIR__)) . DIRECTORY_SEPARATOR . 'config' . DIRECTORY_SEPARATOR . 'config.php';
+
+require_once ROOT . DS . 'application' . DS . 'models' . DS . 'database.php';
+require_once ROOT . DS . 'application' . DS . 'models' . DS . 'user.php';
+require_once ROOT . DS . 'library' . DS . 'security.php';
 
 /**
  * Create a new username on the events manager
@@ -27,7 +29,7 @@ function createNewUser($username, $password, $email) {
  */
 function getCurrentUser() {
     // Check cookies
-    $cookies = [ 'username', 'token' ];
+    $cookies = [ 'em_username', 'em_token' ];
     foreach ($cookies as $cookie) {
         if(isset($_COOKIE[$cookie])) {
             $cookies[$cookie] = $_COOKIE[$cookie];
@@ -37,8 +39,8 @@ function getCurrentUser() {
         return NULL;
     }
 
-    $user = getUserFromUsername($cookies['username']);
-    if($user->tokenMatch($cookies['token']))
+    $user = getUserFromUsername($cookies['em_username']);
+    if($user->tokenMatch($cookies['em_token']))
         return $user;
     return NULL;
 }

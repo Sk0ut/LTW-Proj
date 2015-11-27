@@ -59,6 +59,7 @@ class User {
      */
     public function getId() {
         return $this->_id;
+    }
 
     /**
      * Get the username of the user

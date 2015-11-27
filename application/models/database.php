@@ -27,9 +27,11 @@ class Database {
     public function openConnection($fileName) {
         $path = $fileName;
         if(!file_exists($path))
-            $path = '../database/'.$fileName;
+            $path = '../../db/'.$fileName;
         if(!file_exists($path))
-            $path = 'database/'.$fileName;
+            $path = '../db/'.$fileName;
+        if(!file_exists($path))
+            $path = 'db/'.$fileName;
         if(!file_exists($path))
             return false;
 
@@ -108,5 +110,5 @@ class Database {
 
 // Create database
 $database = new Database();
-$database->openConnection('events.db');
+$database->openConnection(DBPATH);
 ?>

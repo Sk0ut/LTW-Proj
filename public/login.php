@@ -1,6 +1,6 @@
 <?php
-  $PageTitle = "Event Manager Login";
-  function customPageHeader() {
+    $PageTitle = "Event Manager Login";
+    function customPageHeader() {
 ?>
     <meta name="description" content="Yet another event manager.">
     <meta name="author" content="LTW - MIEIC">
@@ -12,8 +12,10 @@
     <![endif]-->
 <?php
   }
-  
-  include_once("header.php");
-  include_once("login_form.php");
-  include_once("footer.php");
+    require_once dirname(__DIR__) . DIRECTORY_SEPARATOR . 'config' . DIRECTORY_SEPARATOR . 'config.php';
+
+    include_once(ROOT . DS . 'public' . DS . 'headerSession.php');
+    include_once(ROOT . DS . 'public' . DS . 'header.php');
+    include_once(ROOT . DS . 'public' . DS . 'login_form.php');
+    include_once(ROOT . DS . 'public' . DS . 'footer.php');
 ?>
