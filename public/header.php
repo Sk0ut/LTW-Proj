@@ -1,8 +1,3 @@
-<?php
-  define('DS', DIRECTORY_SEPARATOR);
-  define('ROOT', dirname(dirname(__FILE__)));
-?>
-
 <!DOCTYPE html>
 <html lang="en">
   <head>
