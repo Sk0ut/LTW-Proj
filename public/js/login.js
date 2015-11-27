@@ -49,7 +49,6 @@ function displayError(message) {
     status.attr('class', 'notifyError');
 
     $("#statusMsg").text(message);
-
     $('#statusClose').click(closeMessage);
 }
 
@@ -63,7 +62,6 @@ function displaySuccess(message) {
     status.attr('class', 'notifySuccess');
 
     $("#statusMsg").text(message);
-
     $('#statusClose').click(closeMessage);
 }
 
@@ -82,10 +80,10 @@ function validateUsername() {
         return;
 
     if(!validUsername()) {
-        $('#username').addClass('inputText-Invalid');
+        $('#username').addClass('input-text-invalid');
         return;
     } else {
-        $('#username').removeClass('inputText-Invalid');
+        $('#username').removeClass('input-text-invalid');
     }
 }
 
@@ -98,10 +96,10 @@ function validateEmail() {
         return;
 
     if(!validEmail()) {
-        $('#email').addClass('inputText-Invalid');
+        $('#email').addClass('input-text-invalid');
         return;
     } else {
-        $('#email').removeClass('inputText-Invalid');
+        $('#email').removeClass('input-text-invalid');
     }
 }
 
@@ -114,9 +112,9 @@ function validatePassword() {
         return;
 
     if(!validPassword()) {
-        $('#password').addClass('inputText-Invalid');
+        $('#password').addClass('input-text-invalid');
     } else {
-        $('#password').removeClass('inputText-Invalid');
+        $('#password').removeClass('input-text-invalid');
     }
 }
 
@@ -129,9 +127,9 @@ function validateConfirmPassword() {
         return;
 
     if(!passwordMatches()) {
-        $('#confirmPassword').addClass('inputText-Invalid');
+        $('#confirmPassword').addClass('input-text-invalid');
     } else {
-        $('#confirmPassword').removeClass('inputText-Invalid');
+        $('#confirmPassword').removeClass('input-text-invalid');
     }
 }
 
@@ -327,8 +325,10 @@ function onTypeChange(event) {
         $('#confirmPassword').hide();
 
         // Remove red borders if needed
-        $('input#username').removeClass('inputText-Invalid');
-        $('input#password').removeClass('inputText-Invalid');
+        $('input#username').removeClass('input-text-invalid');
+        $('input#email').removeClass('input-text-invalid');
+        $('input#password').removeClass('input-text-invalid');
+        $('input#confirmPassword').removeClass('input-text-invalid');
     } else if(typeRegister) {
         $('#submit').attr('title', 'Register');
         $('#username').attr('placeholder','Username');
