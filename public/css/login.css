@@ -1,0 +1,194 @@
+@import url('http://fonts.googleapis.com/css?family=Open+Sans');
+
+@media screen and (max-width:640px) {
+    body {
+        width: 100%;
+        height: 100%;
+    }
+}
+
+@media (min-width:640px) and (max-width:960px){
+    body {
+        width: 70%;
+        height: 95%;
+    }
+}
+
+@media (min-width:960px) and (max-width:1200px){
+    body {
+        width: 50%;
+        height: 90%;
+    }
+}
+
+@media (min-width:1200px) and (max-width:1920px){
+    body {
+        width: 35%;
+        height: 85%;
+    }
+}
+
+@media (min-width:1920px) and (max-width:2400px){
+    body {
+        width: 25%;
+        height: 80%;
+    }
+}
+
+body {
+    position: absolute;
+    top:0;
+    bottom: 0;
+    left: 0;
+    right: 0;
+
+    margin: auto;
+
+    background-color: #DEDEDE;
+    background-repeat: no-repeat;
+    background-attachment: fixed;
+    background-position: center center;
+    background-size: cover;
+}
+
+.form {
+    background: #0096D3;
+
+    border-radius: 0.5em;
+
+    padding: 2em 5em;
+
+    /* Form Shadow */
+    -webkit-box-shadow: 0px 0px 25px 6px rgba(0,0,0,0.75);
+    -moz-box-shadow: 0px 0px 25px 6px rgba(0,0,0,0.75);
+    box-shadow: 0px 0px 25px 6px rgba(0,0,0,0.75);
+
+    font-family: "Open Sans", Times, serif;
+    font-size: 16px;
+}
+
+.formFields {
+    border: 0;
+}
+
+.logo {
+    width:80%;
+    margin:auto;
+    margin-bottom: 1em;
+
+    text-align:center;
+    font-family: "Open Sans", Times, serif;
+    font-size: 24px;
+    font-weight: bold;
+}
+
+#loginForm input[type="radio"], #loginForm input[type="checkbox"]{
+    margin: 0em;
+    padding: 0em;
+    float:right;
+    cursor: pointer;
+}
+
+#loginForm div {
+    -webkit-touch-callout: none;
+    -webkit-user-select: none;
+    -khtml-user-select: none;
+    -moz-user-select: none;
+    -ms-user-select: none;
+    user-select: none;
+}
+
+.inputDiv {
+    line-height:100%;
+    margin-top: 0.2em;
+    margin-bottom: 1em;
+    padding: 0;
+}
+
+.inputText {
+    width: 100%;
+    margin: 0.5em 0em 0em 0em;
+    padding: 0.8em;
+    background: #EEEBC2;
+
+    outline: 0;
+    border: 0.15em solid #EEEBC2;
+    border-radius: 0.5em;
+    box-sizing: border-box;
+    -moz-box-sizing: border-box;
+    -webkit-box-sizing: border-box;
+
+    font-family: "Open Sans", Times, serif;
+    font-size: 16px;
+    color:black;
+}
+
+.inputText-Invalid {
+    border-color:#D8000C;
+}
+
+.submitButton {
+    outline: 0;
+    border: 0;
+    border-radius: 0.5em;
+    padding: 5% 20%;
+    background: #EEEBC2;
+
+    margin-top: 2em;
+    margin-left:auto;
+    margin-right:auto;
+
+    font-family: "Open Sans", Times, serif;
+    font-size: 16px;
+    color:black;
+
+    display:block;
+}
+
+.submitButton:active {
+    background: #C7BFAA;
+}
+
+.submitButton::-moz-focus-inner {
+  border: 0;
+}
+
+.closeButton {
+    color: #A8A8A8;
+    cursor: pointer;
+}
+
+.errorDiv, .closeButton {
+    display: table-cell;
+    vertical-align: middle;
+}
+
+.notifyInfo, .notifySuccess, .notifyWarning, .notifyError {
+    display: table;
+    width: 100%;
+    text-align: center;
+    margin: 2em 0em 0em 0em;
+    padding: 1em;
+    border-radius: 0.5em;
+
+    box-sizing: border-box;
+    -moz-box-sizing: border-box;
+    -webkit-box-sizing: border-box;
+}
+
+.notifyInfo {
+    color: #00529B;
+    background-color: #BDE5F8;
+}
+.notifySuccess {
+    color: #4F8A10;
+    background-color: #DFF2BF;
+}
+.notifyWarning {
+    color: #9F6000;
+    background-color: #FEEFB3;
+}
+.notifyError {
+    color: #D8000C;
+    background-color: #FFBABA;
+};
