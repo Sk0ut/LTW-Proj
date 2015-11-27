@@ -25,6 +25,10 @@
  				echo '<p>' . $row['description'] . '</p>';	
  				} 
  			}?>
+
+ 			<form action="createevent.php">
+ 				<input type="submit" value="Create an event" />
+ 			</form>
 			
 		</div>
 
