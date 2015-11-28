@@ -31,7 +31,6 @@ fieldset {
 }
 
 .h-align {
-    width: 300px;
     margin-left: auto;
     margin-right: auto;
 }
@@ -53,9 +52,19 @@ fieldset {
 }
 
 .input-box {
+    width: 100;
+    cursor: text;
+    border: 0;
+    margin: 0;
+    margin: 0.5rem 0rem;
+}
+
+.input-text {
     width: 100%;
+    color: #555;
+    font-family: "Open Sans", Times, serif;
+    font-size: 22px;
     padding: 1rem 1rem;
-    margin: 0.1rem 0rem;
     background-color: #fff;
     border: 0.2rem solid #fff;
     outline: 0;
@@ -63,13 +72,6 @@ fieldset {
     box-sizing: border-box;
     -moz-box-sizing: border-box;
     -webkit-box-sizing: border-box;
-    cursor: text;
-}
-
-.input-text {
-    color: #555;
-    font-family: "Open Sans", Times, serif;
-    font-size: 22px;
 }
 
 .input-text-invalid {
@@ -77,24 +79,31 @@ fieldset {
 }
 
 .label-input {
-    height: 30px;
-    margin: 1rem 0.2rem;
+    height: 1.5rem;
+    margin: 1.5rem 0rem;
+    line-height: 1.5rem;
+    display: table;
 }
 
 .label-input input[type="radio"], .label-input input[type="checkbox"] {
     height: 100%;
-    width: auto;
+    width: 10%;
     padding: 0;
+    margin: 0rem;
+    margin-right: 0.2rem;
     vertical-align: middle;
     cursor: pointer;
+    display: table-cell;
 }
 
 .label-input label {
     height: 100%;
+    width: 100%;
     color: #eee;
     font-family: "Open Sans", Times, serif;
     font-size: 22px;
-    vertical-align: middle;
+    vertical-align: top;
+    display: table-cell;
 }
 
 .submit-button {
@@ -164,4 +173,12 @@ fieldset {
 .notifyError {
     color: #D8000C;
     background-color: #FFBABA;
+}
+
+#form {
+    width: 20rem;
+}
+
+#emailBox, #confirmPasswordBox {
+    display: none;
 }

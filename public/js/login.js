@@ -6,7 +6,6 @@ var actionsPath = "../application/controllers/";
  */
 function onReady() {
     setupListeners();
-    onTypeChange();
     loadImages();
 }
 
@@ -28,12 +27,6 @@ function setupListeners() {
 }
 
 /**
- * Load all the images of the website
- */
-function loadImages() {
-}
-
-/**
  * ===========================================================================
  *                          DISPLAY MESSAGES
  * ===========================================================================
@@ -45,7 +38,7 @@ function loadImages() {
  */
 function displayError(message) {
     var status = $("#status");
-    status.fadeIn(200);
+    status.fadeIn(500);
     status.attr('class', 'notifyError');
 
     $("#statusMsg").text(message);
@@ -58,7 +51,7 @@ function displayError(message) {
  */
 function displaySuccess(message) {
     var status = $("#status");
-    status.fadeIn(200);
+    status.fadeIn(500);
     status.attr('class', 'notifySuccess');
 
     $("#statusMsg").text(message);
@@ -321,8 +314,6 @@ function onTypeChange(event) {
     if(typeLogin) {
         $('#submit').attr('title', 'Login');
         $('#username').attr('placeholder','Username / Email');
-        $('#email').hide();
-        $('#confirmPassword').hide();
 
         // Remove red borders if needed
         $('input#username').removeClass('input-text-invalid');
@@ -332,9 +323,10 @@ function onTypeChange(event) {
     } else if(typeRegister) {
         $('#submit').attr('title', 'Register');
         $('#username').attr('placeholder','Username');
-        $('#email').show();
-        $('#confirmPassword').show();
     }
+
+    $('#emailBox').slideToggle(500);
+    $('#confirmPasswordBox').slideToggle(500);
 }
 
 /**

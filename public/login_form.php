@@ -1,13 +1,21 @@
 <!-- Login Form -->
-<div class="h-align v-align">
+<div id="form" class="h-align v-align">
     <form id="login">
         <header class="logo">Event Manager</header>
 
         <fieldset>
-            <input type="text" id="username" class="input-box input-text" autocomplete="off" placeholder="Username"/>
-            <input type="text" id="email" class="input-box input-text" autocomplete="off" placeholder="Email"/>
-            <input type="password" id="password" class="input-box input-text" placeholder = "Password"/>
-            <input type="password" id="confirmPassword" class="input-box input-text" placeholder="Confirm Password"/>
+            <div class="input-box">
+                <input type="text" id="username" class="input-text" autocomplete="off" placeholder="Username"/>
+            </div>
+            <div id="emailBox" class="input-box">
+                <input type="text" id="email" class="input-text" autocomplete="off" placeholder="Email"/>
+            </div>
+            <div class="input-box">
+                <input type="password" id="password" class="input-text" placeholder = "Password"/>
+            </div>
+            <div id="confirmPasswordBox" class="input-box">
+                <input type="password" id="confirmPassword" class="input-text" placeholder="Confirm Password"/>
+            </div>
 
             <div class="label-input">
                 <input type="checkbox" id="remember" placeholder="Remember me!" />
