@@ -13,7 +13,6 @@ if($user == NULL) {
 
 // Delete token
 deleteToken($user->getUsername());
-updateToken($user->getUsername(), NULL, -1);
 
 printResponse("logout", "success");
 ?>

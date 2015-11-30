@@ -6,7 +6,11 @@ var actionsPath = "../application/controllers/";
  */
 function onReady() {
     setupListeners();
-    loadImages();
+
+    // Check if cookies are enabled
+    if(!navigator.cookieEnabled) {
+        displayError("Please enable cookies in order to login!");
+    }
 }
 
 /**

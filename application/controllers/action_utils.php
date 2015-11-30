@@ -23,28 +23,4 @@ function fillParameters(&$params) {
     return true;
 }
 
-/**
- * Update the token id of the username
- * @param username username to be updated
- * @param token new token value
- */
-function updateToken($username, $token, $remember) {
-    // Remove token cookie
-    if($token == NULL) {
-        unset($_COOKIE['em_username']);
-        unset($_COOKIE['em_token']);
-        $expireTimeCookie = time() - 3600; // Back in time so cookie gets deleted
-    }
-    // Create token cookie
-    else {
-        // Cookies
-        if($remember == "true")
-            $expireTimeCookie = 2147483647;
-        else
-            $expireTimeCookie = time() + 30 * 60; // Expire in 30 minutes
-    }
-    setcookie('em_username', $username, $expireTimeCookie, "/", false);
-    setcookie('em_token', $token, $expireTimeCookie, "/", false);
-}
-
 ?>
