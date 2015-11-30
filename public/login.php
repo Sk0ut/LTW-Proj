@@ -10,7 +10,7 @@ if($user == NULL) {
         <meta name="description" content="Yet another event manager.">
         <meta name="author" content="LTW - MIEIC">
 
-        <link rel="stylesheet" href="css/loginV2.css">
+        <link rel="stylesheet" href="css/login.css">
 
         <!--[if lt IE 9]>
           <script src="http://html5shiv.googlecode.com/svn/trunk/html5.js"></script>

@@ -166,4 +166,21 @@ function regenToken($username) {
     return $token;
 }
 
+/**
+ * Delete the token of a user
+ * @param username username to delete the token
+ * @return true if successful, false otherwise
+ */
+function deleteToken($username) {
+    global $database;
+
+    $query = "UPDATE Users SET token = ?, ipAddress = ? WHERE username = ?";
+    $params = [ NULL, NULL, $username ];
+    $types = [ PDO::PARAM_STR, PDO::PARAM_STR, PDO::PARAM_STR ];
+    $result = $database->executeUpdate($query, $params, $types);
+    if($result <= 0)
+        return false;
+    return true;
+}
+
 ?>
