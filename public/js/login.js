@@ -6,7 +6,11 @@ var actionsPath = "../application/controllers/";
  */
 function onReady() {
     setupListeners();
-    loadImages();
+
+    // Check if cookies are enabled
+    if(!navigator.cookieEnabled) {
+        displayError("Please enable cookies in order to login!");
+    }
 }
 
 /**
@@ -314,6 +318,8 @@ function onTypeChange(event) {
     if(typeLogin) {
         $('#submit').attr('title', 'Login');
         $('#username').attr('placeholder','Username / Email');
+        $('#emailBox').slideUp(500);
+        $('#confirmPasswordBox').slideUp(500);
 
         // Remove red borders if needed
         $('input#username').removeClass('input-text-invalid');
@@ -323,10 +329,9 @@ function onTypeChange(event) {
     } else if(typeRegister) {
         $('#submit').attr('title', 'Register');
         $('#username').attr('placeholder','Username');
+        $('#emailBox').slideDown(500);
+        $('#confirmPasswordBox').slideDown(500);
     }
-
-    $('#emailBox').slideToggle(500);
-    $('#confirmPasswordBox').slideToggle(500);
 }
 
 /**

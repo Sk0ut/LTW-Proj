@@ -102,6 +102,14 @@ class User {
     }
 
     /**
+     * Set the token of the user
+     * @param token new token of the user
+     */
+    public function setToken($token) {
+        $this->_token = $token;
+    }
+
+    /**
      * Check if a password matches the user's password
      * @param password password to be checked
      * @return true if matches, false otherwise

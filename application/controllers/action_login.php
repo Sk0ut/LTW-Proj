@@ -34,12 +34,11 @@ if(!isValidLogin($params['username'], $params['password'])) {
 }
 
 // Update token
-$token = regenToken($params['username']);
+$token = regenToken($params['username'], $params['remember']);
 if(!$token) {
     printResponse($key, $fail_login);
     return;
 }
-updateToken($params['username'], $token, $params['remember']);
 
 printResponse($key, $success_login);
 ?>
