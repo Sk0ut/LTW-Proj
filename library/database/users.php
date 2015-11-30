@@ -29,7 +29,7 @@ function createNewUser($username, $password, $email) {
  */
 function getCurrentUser() {
     // Check cookies
-    $cookies = [ 'em_username', 'em_token' ];
+    $cookies = [ 'em_username', 'em_token', 'em_remember' ];
     foreach ($cookies as $cookie) {
         if(isset($_COOKIE[$cookie])) {
             $cookies[$cookie] = $_COOKIE[$cookie];
@@ -151,7 +151,7 @@ function emailExists($email) {
  * with that token
  * @param username username to be regen
  * @param remember true to remember the token
- * @return true if successful, false otherwise
+ * @return token if successful, false otherwise
  */
 function regenToken($username, $remember) {
     $token = generateToken(256);
@@ -170,10 +170,11 @@ function regenToken($username, $remember) {
         $expireTimeCookie = 2147483647;
     else
         $expireTimeCookie = time() + 30 * 60; // Expire in 30 minutes
-    setcookie('em_username', $username, $expireTimeCookie, "/", false);
-    setcookie('em_token', $token, $expireTimeCookie, "/", false);
+    setcookie('em_username', $username, $expireTimeCookie, "/", $_SERVER['SERVER_NAME'], false, true);
+    setcookie('em_token', $token, $expireTimeCookie, "/", $_SERVER['SERVER_NAME'], false, true);
+    setcookie('em_remember', $remember, $expireTimeCookie, "/", $_SERVER['SERVER_NAME'], false, true);
 
-    return true;
+    return $token;
 }
 
 /**
@@ -193,8 +194,12 @@ function deleteToken($username) {
 
     // Delete the cookies
     $expireTimeCookie = time() - 3600; // Past date
-    setcookie('em_username', NULL, $expireTimeCookie, "/", false);
-    setcookie('em_token', NULL, $expireTimeCookie, "/", false);
+    unset($_COOKIE['em_username']);
+    unset($_COOKIE['em_token']);
+    unset($_COOKIE['em_remember']);
+    setcookie('em_username', NULL, $expireTimeCookie, "/", $_SERVER['SERVER_NAME'], false, true);
+    setcookie('em_token', NULL, $expireTimeCookie, "/", $_SERVER['SERVER_NAME'], false, true);
+    setcookie('em_remember', NULL, $expireTimeCookie, "/", $_SERVER['SERVER_NAME'], false, true);
 
     return true;
 }
