@@ -5,7 +5,7 @@
 
         <fieldset>
             <div class="input-box">
-                <input type="text" id="username" class="input-text" autocomplete="off" placeholder="Username"/>
+                <input type="text" id="username" class="input-text" autocomplete="off" placeholder="Username / Email"/>
             </div>
             <div id="emailBox" class="input-box">
                 <input type="text" id="email" class="input-text" autocomplete="off" placeholder="Email"/>

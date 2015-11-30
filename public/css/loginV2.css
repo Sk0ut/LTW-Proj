@@ -86,8 +86,6 @@ fieldset {
 }
 
 .label-input input[type="radio"], .label-input input[type="checkbox"] {
-    height: 100%;
-    width: 10%;
     padding: 0;
     margin: 0rem;
     margin-right: 0.2rem;
@@ -97,12 +95,10 @@ fieldset {
 }
 
 .label-input label {
-    height: 100%;
-    width: 100%;
     color: #eee;
     font-family: "Open Sans", Times, serif;
     font-size: 22px;
-    vertical-align: top;
+    vertical-align: middle;
     display: table-cell;
 }
 
