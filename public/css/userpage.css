@@ -16,6 +16,15 @@ body {
     left: 0;
 }
 
+form {
+  display: inline;
+}
+
+fieldset {
+   border: 0;
+   padding-top: 2rem;
+}
+
 h1 {
     text-align:center;
     font-family: "Open Sans", Times, serif;
@@ -48,19 +57,12 @@ p {
 }
 
 #createEvent {
+  display: none;
   text-align: center;
   font-family: "Open Sans", Times, serif;
   font-size: 16px;
 }
 
-form {
-  display: inline;
-}
-
-fieldset {
-   border: 0;
-   padding-top: 2rem;
-}
 
 .btn {
   background: #010135;
@@ -116,4 +118,28 @@ fieldset {
     border-radius: 20px;
     border: 5px solid #010135;
     background-color: #c7bfaa;
+}
+
+.inputText {
+  border-radius: 5px;
+}
+
+.inputText::-webkit-input-placeholder {
+      font-family: "Open Sans", Times, serif;
+}
+
+.inputText:-ms-input-placeholder {
+      font-family: "Open Sans", Times, serif;
+}
+
+.inputText:-moz-placeholder {
+      font-family: "Open Sans", Times, serif;
+}
+
+.inputText::-moz-placeholder {
+      font-family: "Open Sans", Times, serif;
+}
+
+div.ui-datepicker{
+ font-size:12px;
 }

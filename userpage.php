@@ -9,6 +9,8 @@
   	$resultEntered = $user->getRegisteredEvents();
 ?>
 	<link rel="stylesheet" type="text/css" href="public/css/userpage.css" />
+  	<link rel="stylesheet" href="//code.jquery.com/ui/1.11.4/themes/smoothness/jquery-ui.css">
+
 	<meta charset="UTF-8">
 	</head>
 
@@ -31,7 +33,7 @@
  			</div>
 
  			<div id="createEvent">
-	 			<fieldset id="formFields">
+	 			<fieldset>
 	 			 	<strong> Create Event: </strong>
 					<div class="nameDiv">
 						<input type="text" id="name" class="inputText" placeholder="Event Name"/>	
@@ -41,37 +43,7 @@
 						<input type="text" id="description" class="inputText" placeholder="Description"/>	
 					</div>
 
-					<div class="datelocalDiv">
-						Date:
-						<select id="year" name="year" class="year">
-						<?php for($i = 2015; $i<=2020; $i++) { ?>
-						<option value="<?php echo $i ?>"><?php echo $i ?></option>
-						<?php } ?>			
-						</option>
-						</select>
-
-						<select id="month" name="month" class="month">
-							<option value="1">January</option>
-							<option value="2">February</option>
-							<option value="3">March</option>
-							<option value="4">April</option>
-							<option value="5">May</option>
-							<option value="6">June</option>
-							<option value="7">July</option>
-							<option value="8">August</option>
-							<option value="9">September</option>
-							<option value="10">October</option>
-							<option value="11">November</option>
-							<option value="12">December</option>
-						</select>
-
-					<select id="day" name="day" class="day">
-					<?php
-						for($i = 1; $i <= 31; $i++) { ?>
-						<option value="<?php echo $i ?>"><?php echo $i ?></option>
-					<?php } ?>
-					</select>
-				</div>
+				<input type="text" id="datepicker" class="inputText" placeholder="Date"/>
 
 				<div class="typeDiv">
 					<input type="text" id="type" class="inputText" placeholder="Event Type" />	
@@ -120,3 +92,4 @@
 <!-- Scripts -->
 <script src="public/js/jquery-1.11.3.min.js" type="text/javascript"></script>
 <script src="public/js/userpage.js" type="text/javascript"></script>
+<script src="http://code.jquery.com/ui/1.11.3/jquery-ui.js"></script>
