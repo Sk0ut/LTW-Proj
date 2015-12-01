@@ -2,7 +2,7 @@
 
 class Controller
 {
-	protected function model($model, $args)
+	protected function model($model, $args = [])
 	{
 		if (file_exists("../application/models/" . $model . ".php"))
 		{
