@@ -1,0 +1,96 @@
+@import url('http://fonts.googleapis.com/css?family=Open+Sans');
+
+body {
+    height: 100%;
+    width: 100%;
+
+    background-color: #01528a;
+
+    margin: 0;
+    padding: 0;
+
+    position: absolute;
+    top: 0;
+    bottom: 0;
+    right: 0;
+    left: 0;
+}
+
+h1 {
+    text-align:center;
+    font-family: "Open Sans", Times, serif;
+    font-size: 48px;
+    font-weight: bold;
+    margin: 0;
+    padding-top: 2.5rem;
+}
+
+h2 {
+    text-align:center;
+    font-family: "Open Sans", Times, serif;
+    font-size: 32px;
+    font-weight: bold;
+    margin: 0;
+    padding-top: 2.5rem;
+}
+
+p {
+    text-align:center;
+    color: #000;
+    font-family: "Open Sans", Times, serif;
+    font-size: 16px;
+    padding-bottom: 1rem;
+
+}
+
+form {
+    text-align: center;
+    padding-bottom: 2.5rem;
+}
+
+footer {
+    margin: 2.5rem;
+}
+
+.btn {
+  background: #010135;
+  background-image: -webkit-linear-gradient(top, #010135, #0096d3);
+  background-image: -moz-linear-gradient(top, #010135, #0096d3);
+  background-image: -ms-linear-gradient(top, #010135, #0096d3);
+  background-image: -o-linear-gradient(top, #010135, #0096d3);
+  background-image: linear-gradient(to bottom, #010135, #0096d3);
+  border-radius: 20px;
+  border: solid #c7bfaa 2px;
+  -webkit-border-radius: 12;
+  -moz-border-radius: 12;
+  font-family: "Open Sans", Times, serif;
+  color: #ffffff;
+  font-size: 12px;
+  border: solid #eeebc2 4px;
+  padding: 5px 20px 5px 20px;
+  text-decoration: none;
+}
+
+.btn:hover {
+  background: #010135;
+  cursor: pointer;
+  background-image: -webkit-linear-gradient(top, #010135, #01528a);
+  background-image: -moz-linear-gradient(top, #010135, #01528a);
+  background-image: -ms-linear-gradient(top, #010135, #01528a);
+  background-image: -o-linear-gradient(top, #010135, #01528a);
+  background-image: linear-gradient(to bottom, #010135, #01528a);
+  text-decoration: none;
+}
+
+.btn:focus {
+    outline: 0;
+}
+
+.event {
+    margin-left: 10rem;
+    margin-right: 10rem;
+    margin-top: 5rem;
+    border-radius: 20px;
+    border: 5px solid #010135;
+    background-color: #c7bfaa;
+}
