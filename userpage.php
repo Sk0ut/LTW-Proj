@@ -1,15 +1,15 @@
 <?php
-	include_once('database/connection.php');
-  	include_once('database/event.php');
-  	$resultOwnEvents = getOwnerEvents($_GET['id']);
-  	$resultEntered = getRegisteredEvents($_GET['id']);
-?>
+	require_once("config" . DIRECTORY_SEPARATOR . "config.php");
+  	require_once("application/models/user.php");
+  	require_once("public/header.php");
 
-<!DOCTYPE html>
-<html>
-	<head>
-		<title> sceptross's page </title>
-		<meta charset="UTF-8">
+  	$user = User::find($_GET['id']);
+
+  	$resultOwnEvents = $user->getOwnerEvents();
+  	$resultEntered = $user->getRegisteredEvents();
+?>
+	<title> sceptross's page </title>
+	<meta charset="UTF-8">
 	</head>
 
 	<body>
@@ -51,6 +51,6 @@
 			<p> You currently have no invites! </p>
 		</div>
 
-	</body>
-
-</html>
+	<?php
+	require_once("public/footer.php");
+	?>
