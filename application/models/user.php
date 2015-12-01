@@ -1,5 +1,7 @@
 <?php
 
+require_once("database.php");
+
 /**
  * User object
  */
@@ -36,6 +38,16 @@ class User {
     private $_ipAddress;
 
     /**
+     *
+     */
+    private $_ownerEvents;
+
+    /**
+     *
+     */
+    private $_registeredEvents;
+
+    /**
      * Constructor of User
      * @param id id of the user
      * @param username username of the user
@@ -51,7 +63,51 @@ class User {
         $this->_email = $email;
         $this->_token = $token;
         $this->_ipAddress = $ipAddress;
+        $this->_ownevents = array();
+        $this->_registeredEvents = array();
     }
+
+    public static function find($id){
+        global $database;
+        $data = $database->executeQuery("SELECT * FROM Users WHERE id = ?",[$id],[PDO::PARAM_STR])[0];
+        $user = new User($data["id"], $data["username"], $data["password"], $data["email"], $data["token"], $data["ipAddress"]);
+
+        $user->setRegisteredEvents($database->executeQuery("SELECT eventId FROM UserEvents WHERE userId = ?", [$id], [PDO::PARAM_STR]));
+        $user->setOwnerEvents($ownEvents = $database->executeQuery("SELECT id FROM Events WHERE ownerId = ?", [$id], [PDO::PARAM_STR]));
+
+        return $user;
+    }
+
+    /**
+     *
+     */
+    public function setOwnerEvents($ownEvents){
+        return $this->_ownerEvents;
+    }
+
+    /**
+     *
+     */
+    public function setRegisteredEvents($registeredEvents){
+        return $this->_registeredEvents;
+    }
+
+        /**
+     *
+     */
+    public function getOwnerEvents(){
+        return $this->_ownerEvents;
+    }
+
+    /**
+     *
+     */
+    public function getRegisteredEvents(){
+        return $this->_registeredEvents;
+    }
+
+
+
 
     /**
      * Get the id of the user
