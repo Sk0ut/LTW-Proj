@@ -52,12 +52,11 @@ if(!createNewUser($params['username'], $params['password'], $params['email'])) {
 }
 
 // Update token
-$token = regenToken($params['username']);
+$token = regenToken($params['username'], $params['remember']);
 if(!$token) {
     printResponse($key, $fail_register);
     return;
 }
-updateToken($params['username'], $token, $params['remember']);
 
 printResponse($key, $success_register);
 ?>

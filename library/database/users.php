@@ -29,7 +29,7 @@ function createNewUser($username, $password, $email) {
  */
 function getCurrentUser() {
     // Check cookies
-    $cookies = [ 'em_username', 'em_token' ];
+    $cookies = [ 'em_username', 'em_token', 'em_remember' ];
     foreach ($cookies as $cookie) {
         if(isset($_COOKIE[$cookie])) {
             $cookies[$cookie] = $_COOKIE[$cookie];
@@ -150,20 +150,58 @@ function emailExists($email) {
  * Regenerate a user's login token and save the ip address associated
  * with that token
  * @param username username to be regen
- * @return new token of the user, false otherwise
+ * @param remember true to remember the token
+ * @return token if successful, false otherwise
  */
-function regenToken($username) {
+function regenToken($username, $remember) {
     $token = generateToken(256);
 
+    // Save in the database
     global $database;
-
     $query = "UPDATE Users SET token = ?, ipAddress = ? WHERE username = ?";
     $params = [ $token, $_SERVER['REMOTE_ADDR'], $username ];
     $types = [ PDO::PARAM_STR, PDO::PARAM_STR, PDO::PARAM_STR ];
     $result = $database->executeUpdate($query, $params, $types);
     if($result <= 0)
         return false;
+
+    // Create the cookies
+    if($remember == "true")
+        $expireTimeCookie = 2147483647;
+    else
+        $expireTimeCookie = time() + 30 * 60; // Expire in 30 minutes
+    setcookie('em_username', $username, $expireTimeCookie, "/", $_SERVER['SERVER_NAME'], false, true);
+    setcookie('em_token', $token, $expireTimeCookie, "/", $_SERVER['SERVER_NAME'], false, true);
+    setcookie('em_remember', $remember, $expireTimeCookie, "/", $_SERVER['SERVER_NAME'], false, true);
+
     return $token;
+}
+
+/**
+ * Delete the token of a user
+ * @param username username to delete the token
+ * @return true if successful, false otherwise
+ */
+function deleteToken($username) {
+    // Delete from the database
+    global $database;
+    $query = "UPDATE Users SET token = ?, ipAddress = ? WHERE username = ?";
+    $params = [ NULL, NULL, $username ];
+    $types = [ PDO::PARAM_STR, PDO::PARAM_STR, PDO::PARAM_STR ];
+    $result = $database->executeUpdate($query, $params, $types);
+    if($result <= 0)
+        return false;
+
+    // Delete the cookies
+    $expireTimeCookie = time() - 3600; // Past date
+    unset($_COOKIE['em_username']);
+    unset($_COOKIE['em_token']);
+    unset($_COOKIE['em_remember']);
+    setcookie('em_username', NULL, $expireTimeCookie, "/", $_SERVER['SERVER_NAME'], false, true);
+    setcookie('em_token', NULL, $expireTimeCookie, "/", $_SERVER['SERVER_NAME'], false, true);
+    setcookie('em_remember', NULL, $expireTimeCookie, "/", $_SERVER['SERVER_NAME'], false, true);
+
+    return true;
 }
 
 ?>

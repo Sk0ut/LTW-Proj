@@ -6,33 +6,28 @@ var actionsPath = "../application/controllers/";
  */
 function onReady() {
     setupListeners();
-    onTypeChange();
-    loadImages();
+
+    // Check if cookies are enabled
+    if(!navigator.cookieEnabled) {
+        displayError("Please enable cookies in order to login!");
+    }
 }
 
 /**
  * Setup all the listeners
  */
 function setupListeners() {
-    $('#loginForm').submit(onFormSubmit);
-    $('input#typeLogin').click(onTypeChange);
-    $('input#typeRegister').click(onTypeChange);
-    $('input#username').keyup(validateUsername);
-    $('input#username').click(validateUsername);
-    $('input#email').keyup(validateEmail);
-    $('input#email').click(validateEmail);
-    $('input#password').keyup(validatePassword);
-    $('input#password').click(validatePassword);
-    $('input#confirmPassword').keyup(validateConfirmPassword);
-    $('input#confirmPassword').click(validateConfirmPassword);
-}
-
-/**
- * Load all the images of the website
- */
-function loadImages() {
-    $('.form').css('background', 'url(' + imgPath + 'bluePaperPattern.png)');
-    $('body').css('background-image', 'url(' + imgPath + 'meeting.jpg)');
+    $('#login').submit(onFormSubmit);
+    $('#typeLogin').click(onTypeChange);
+    $('#typeRegister').click(onTypeChange);
+    $('#username').keyup(validateUsername);
+    $('#username').click(validateUsername);
+    $('#email').keyup(validateEmail);
+    $('#email').click(validateEmail);
+    $('#password').keyup(validatePassword);
+    $('#password').click(validatePassword);
+    $('#confirmPassword').keyup(validateConfirmPassword);
+    $('#confirmPassword').click(validateConfirmPassword);
 }
 
 /**
@@ -47,14 +42,11 @@ function loadImages() {
  */
 function displayError(message) {
     var status = $("#status");
-    status.fadeIn(200);
-    status.text('');
-    status.append('<div class="errorDiv">' + message + "</div>");
-    status.append('<div id="close" class="closeButton">&#x274c;</div>');
+    status.fadeIn(500);
     status.attr('class', 'notifyError');
 
-    // Add listener
-    $('div#close').click(closeMessage);
+    $("#statusMsg").text(message);
+    $('#statusClose').click(closeMessage);
 }
 
 /**
@@ -63,14 +55,11 @@ function displayError(message) {
  */
 function displaySuccess(message) {
     var status = $("#status");
-    status.fadeIn(200);
-    status.text('');
-    status.append('<div class="errorDiv">' + message + "</div>");
-    status.append('<div id="close" class="closeButton">&#x274c;</div>');
+    status.fadeIn(500);
     status.attr('class', 'notifySuccess');
 
-    // Add listener
-    $('div#close').click(closeMessage);
+    $("#statusMsg").text(message);
+    $('#statusClose').click(closeMessage);
 }
 
 /**
@@ -83,15 +72,15 @@ function displaySuccess(message) {
  * Validate a username while user is writing it
  */
 function validateUsername() {
-    var typeRegister = $('input#typeRegister').is(':checked');
+    var typeRegister = $('#typeRegister').is(':checked');
     if(!typeRegister)
         return;
 
     if(!validUsername()) {
-        $('input#username').addClass('inputText-Invalid');
+        $('#username').addClass('input-text-invalid');
         return;
     } else {
-        $('input#username').removeClass('inputText-Invalid');
+        $('#username').removeClass('input-text-invalid');
     }
 }
 
@@ -99,15 +88,15 @@ function validateUsername() {
  * Validate a email while user is writing it
  */
 function validateEmail() {
-    var typeRegister = $('input#typeRegister').is(':checked');
+    var typeRegister = $('#typeRegister').is(':checked');
     if(!typeRegister)
         return;
 
     if(!validEmail()) {
-        $('input#email').addClass('inputText-Invalid');
+        $('#email').addClass('input-text-invalid');
         return;
     } else {
-        $('input#email').removeClass('inputText-Invalid');
+        $('#email').removeClass('input-text-invalid');
     }
 }
 
@@ -115,14 +104,14 @@ function validateEmail() {
  * Validate a password while user is writing it
  */
 function validatePassword() {
-    var typeRegister = $('input#typeRegister').is(':checked');
+    var typeRegister = $('#typeRegister').is(':checked');
     if(!typeRegister)
         return;
 
     if(!validPassword()) {
-        $('input#password').addClass('inputText-Invalid');
+        $('#password').addClass('input-text-invalid');
     } else {
-        $('input#password').removeClass('inputText-Invalid');
+        $('#password').removeClass('input-text-invalid');
     }
 }
 
@@ -130,14 +119,14 @@ function validatePassword() {
  * Validate a password confirmation while user is writing it
  */
 function validateConfirmPassword() {
-    var typeRegister = $('input#typeRegister').is(':checked');
+    var typeRegister = $('#typeRegister').is(':checked');
     if(!typeRegister)
         return;
 
     if(!passwordMatches()) {
-        $('input#confirmPassword').addClass('inputText-Invalid');
+        $('#confirmPassword').addClass('input-text-invalid');
     } else {
-        $('input#confirmPassword').removeClass('inputText-Invalid');
+        $('#confirmPassword').removeClass('input-text-invalid');
     }
 }
 
@@ -145,7 +134,7 @@ function validateConfirmPassword() {
  * Check if a username is valid
  */
 function validUsername() {
-    var username = $('input#username').val();
+    var username = $('#username').val();
     return username.length < 16 && username.length > 3;
 }
 
@@ -154,7 +143,7 @@ function validUsername() {
  */
 function validEmail() {
     var emailRegex = /\S+@\S+\.\S+/;
-    var email = $('input#email').val();
+    var email = $('#email').val();
     return emailRegex.test(email);
 }
 
@@ -162,7 +151,7 @@ function validEmail() {
  * Check if a password is valid
  */
 function validPassword() {
-    var password = $('input#password').val();
+    var password = $('#password').val();
     return password.length > 3;
 }
 
@@ -170,8 +159,8 @@ function validPassword() {
  * Check if password and confirmation password match
  */
 function passwordMatches() {
-    var password = $('input#password').val();
-    var confirmPassword = $('input#confirmPassword').val();
+    var password = $('#password').val();
+    var confirmPassword = $('#confirmPassword').val();
     return password == confirmPassword;
 }
 
@@ -186,9 +175,9 @@ function passwordMatches() {
  */
 function login() {
     // Variables
-    var username = $('input#username').val();
-    var password = $('input#password').val();
-    var remember = $('input#remember').is(':checked');
+    var username = $('#username').val();
+    var password = $('#password').val();
+    var remember = $('#remember').is(':checked');
 
     // Async call to login
     $.post(
@@ -226,11 +215,11 @@ function login() {
  */
 function register() {
     // Variables
-    var username = $('input#username').val();
-    var email = $('input#email').val();
-    var password = $('input#password').val();
-    var confirmPassword = $('input#confirmPassword').val();
-    var remember = $('input#remember').is(':checked');
+    var username = $('#username').val();
+    var email = $('#email').val();
+    var password = $('#password').val();
+    var confirmPassword = $('#confirmPassword').val();
+    var remember = $('#remember').is(':checked');
 
     // Checkers
     if(!validUsername()) {
@@ -310,8 +299,8 @@ function onFormSubmit(event) {
     event.preventDefault();
 
     // Login / Register
-    var typeLogin = $('input#typeLogin').is(':checked');
-    var typeRegister = $('input#typeRegister').is(':checked');
+    var typeLogin = $('#typeLogin').is(':checked');
+    var typeRegister = $('#typeRegister').is(':checked');
     if(typeLogin)
         login();
     else if(typeRegister)
@@ -324,22 +313,24 @@ function onFormSubmit(event) {
  * @param event click event
  */
 function onTypeChange(event) {
-    var typeLogin = $('input#typeLogin').is(':checked');
-    var typeRegister = $('input#typeRegister').is(':checked');
+    var typeLogin = $('#typeLogin').is(':checked');
+    var typeRegister = $('#typeRegister').is(':checked');
     if(typeLogin) {
-        $('input#submit').val('Login');
-        $('input#username').prev().text('Username / Email:');
-        $('div#emailDiv').hide();
-        $('div#confirmPasswordDiv').hide();
+        $('#submit').attr('title', 'Login');
+        $('#username').attr('placeholder','Username / Email');
+        $('#emailBox').slideUp(500);
+        $('#confirmPasswordBox').slideUp(500);
 
         // Remove red borders if needed
-        $('input#username').removeClass('inputText-Invalid');
-        $('input#password').removeClass('inputText-Invalid');
+        $('input#username').removeClass('input-text-invalid');
+        $('input#email').removeClass('input-text-invalid');
+        $('input#password').removeClass('input-text-invalid');
+        $('input#confirmPassword').removeClass('input-text-invalid');
     } else if(typeRegister) {
-        $('input#submit').val('Register');
-        $('input#username').prev().text('Username:');
-        $('div#emailDiv').show();
-        $('div#confirmPasswordDiv').show();
+        $('#submit').attr('title', 'Register');
+        $('#username').attr('placeholder','Username');
+        $('#emailBox').slideDown(500);
+        $('#confirmPasswordBox').slideDown(500);
     }
 }
 
