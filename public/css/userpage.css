@@ -43,9 +43,19 @@ p {
 
 }
 
-form {
+#button {
     text-align: center;
     padding-bottom: 2.5rem;
+}
+
+#createEvent {
+  text-align: center;
+  font-family: "Open Sans", Times, serif;
+  font-size: 16px;
+}
+
+form {
+  display: inline;
 }
 
 footer {
@@ -65,7 +75,6 @@ footer {
   -moz-border-radius: 12;
   font-family: "Open Sans", Times, serif;
   color: #ffffff;
-  font-size: 12px;
   border: solid #eeebc2 4px;
   padding: 5px 20px 5px 20px;
   text-decoration: none;
@@ -80,6 +89,16 @@ footer {
   background-image: -o-linear-gradient(top, #010135, #01528a);
   background-image: linear-gradient(to bottom, #010135, #01528a);
   text-decoration: none;
+}
+
+.big {
+  font-size: 15px;
+  width: 12rem;
+}
+
+.small {
+  font-size: 12px;
+  width: 10rem;
 }
 
 .btn:focus {

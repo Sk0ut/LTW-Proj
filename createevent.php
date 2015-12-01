@@ -67,12 +67,16 @@
 		</div>
 
 		<div class="privateDiv">
-			<input type="checkbox" name="vehicle" value="Bike">Private Event
+			<input type="checkbox" name="private"> Private Event
 		</div>
 
 		<form action="eventcreated.php">
- 				<input type="submit" value="Create Event" />
- 			</form>
+ 			<input type="submit" value="Create Event" />
+ 		</form>
+
+ 		<form action="eventcreated.php">
+ 			<input type="submit" value="Cancel" />
+ 		</form>
 
 	</fieldset>
 </body>
