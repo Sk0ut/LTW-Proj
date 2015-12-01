@@ -13,7 +13,7 @@
 	</head>
 
 	<body>
-		<div id="ownevents" class="ownevents event">
+		<div id="ownevents" class="ownevents event margin">
 			<h1> My events </h1> 
 			<?php
 			if(count($resultOwnEvents) == 0){
@@ -32,20 +32,17 @@
 
  			<div id="createEvent">
 	 			<fieldset id="formFields">
+	 			 	<strong> Create Event: </strong>
 					<div class="nameDiv">
-						<label for="name">Event Name:</label>
-						<input type="text" id="name" class="inputText" />	
+						<input type="text" id="name" class="inputText" placeholder="Event Name"/>	
 					</div>
 
 					<div class="descriptionDiv">
-						<label for="description">Description:</label>
-						<input type="text" id="description" class="inputText" />	
+						<input type="text" id="description" class="inputText" placeholder="Description"/>	
 					</div>
 
 					<div class="datelocalDiv">
 						Date:
-						<br>
-						<label for="year"> Year: </label>
 						<select id="year" name="year" class="year">
 						<?php for($i = 2015; $i<=2020; $i++) { ?>
 						<option value="<?php echo $i ?>"><?php echo $i ?></option>
@@ -53,7 +50,6 @@
 						</option>
 						</select>
 
-						<label for="month"> Month: </label>
 						<select id="month" name="month" class="month">
 							<option value="1">January</option>
 							<option value="2">February</option>
@@ -69,7 +65,6 @@
 							<option value="12">December</option>
 						</select>
 
-					<label for="day"> Day: </label>
 					<select id="day" name="day" class="day">
 					<?php
 						for($i = 1; $i <= 31; $i++) { ?>
@@ -79,8 +74,7 @@
 				</div>
 
 				<div class="typeDiv">
-					<label for="type">Type:</label>
-					<input type="text" id="type" class="inputText" />	
+					<input type="text" id="type" class="inputText" placeholder="Event Type" />	
 				</div>
 
 				<div class="privateDiv">
@@ -96,7 +90,7 @@
 			
 	</div>
 
-	<div id="eventsentered" class="eventsentered event">
+	<div id="eventsentered" class="eventsentered event margin">
 		<h1> Events I'm in </h1>
 		<?php
 		if(count($resultEntered) == 0){

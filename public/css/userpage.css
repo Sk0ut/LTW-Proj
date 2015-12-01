@@ -45,7 +45,6 @@ p {
 
 #button {
     text-align: center;
-    padding-bottom: 2.5rem;
 }
 
 #createEvent {
@@ -58,8 +57,9 @@ form {
   display: inline;
 }
 
-footer {
-    margin: 2.5rem;
+fieldset {
+   border: 0;
+   padding-top: 2rem;
 }
 
 .btn {
@@ -103,6 +103,10 @@ footer {
 
 .btn:focus {
     outline: 0;
+}
+
+.margin {
+  padding-bottom: 2.5rem;
 }
 
 .event {
