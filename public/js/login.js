@@ -193,6 +193,9 @@ function login() {
                         break;
                     case 'success':
                         displaySuccess("Login successful");
+                        setTimeout(function() {
+                            window.location.replace("");
+                        }, 1000);
                         break;
                     default:
                         displayError("Error while processing the login...");

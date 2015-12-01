@@ -22,23 +22,31 @@ class App {
     public function __construct() {
         $url = $this->parseUrl();
 
+        // Get the controller
         if (isset($url[0])) {
             if (file_exists("../application/controllers/" . $url[0] . ".php")) {
                 $this->controller = $url[0];
-                unset($url[0]);
+            } else {
+                $this->controller = "error";
             }
+            unset($url[0]);
         }
-
         require_once "../application/controllers/" . $this->controller . ".php";
 
         $this->controller = ucfirst($this->controller);
         $this->controller = new $this->controller();
 
+        // Get the method name
         if (isset($url[1])) {
             if (method_exists($this->controller, $url[1])) {
                 $this->method = $url[1];
-                unset($url[1]);
+            } else {
+                $this->controller = "error";
+                require_once "../application/controllers/" . $this->controller . ".php";
+                $this->controller = ucfirst($this->controller);
+                $this->controller = new $this->controller();
             }
+            unset($url[1]);
         }
 
         $this->params = $url ? array_values($url) : [];
