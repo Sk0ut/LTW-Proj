@@ -1,6 +1,3 @@
-var imgPath = "img/";
-var actionsPath = "../application/controllers/";
-
 /**
  * Function called when the document is ready
  */
@@ -181,11 +178,8 @@ function login() {
 
     // Async call to login
     $.post(
-            actionsPath + "action_login.php",
+            "login/validateLogin/" + username + "/" + password + "/" + remember,
             {
-                'username' : username,
-                'password' : password,
-                'remember' : remember
             },
             function(data)
             {
@@ -199,6 +193,9 @@ function login() {
                         break;
                     case 'success':
                         displaySuccess("Login successful");
+                        setTimeout(function() {
+                            window.location.replace("");
+                        }, 1000);
                         break;
                     default:
                         displayError("Error while processing the login...");
@@ -238,12 +235,8 @@ function register() {
 
     // Async call to register
     $.post(
-            actionsPath + 'action_register.php',
+            "login/validateRegister/" + username + "/" + email + "/" + password + "/" + remember,
             {
-                'username' : username,
-                'email' : email,
-                'password' : password,
-                'remember' : remember
             },
             function(data)
             {

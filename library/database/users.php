@@ -1,9 +1,7 @@
 <?php
-require_once dirname(dirname(__DIR__)) . DIRECTORY_SEPARATOR . 'config' . DIRECTORY_SEPARATOR . 'config.php';
-
-require_once ROOT . DS . 'application' . DS . 'models' . DS . 'database.php';
-require_once ROOT . DS . 'application' . DS . 'models' . DS . 'user.php';
-require_once ROOT . DS . 'library' . DS . 'security.php';
+require_once __DIR__ . "/../../application/models/database.php";
+require_once __DIR__ . "/../../application/models/user.php";
+require_once __DIR__ . "/../security.php";
 
 /**
  * Create a new username on the events manager
@@ -13,7 +11,7 @@ require_once ROOT . DS . 'library' . DS . 'security.php';
  * @return true if was successfull, false otherwise
  */
 function createNewUser($username, $password, $email) {
-    global $database;
+    $database = Database::getInstance();
 
     $query = "INSERT INTO Users(username, password, email) VALUES (?, ?, ?)";
     $params = [ $username, $password, $email ];
@@ -51,7 +49,7 @@ function getCurrentUser() {
  * @return user with that id or NULL
  */
 function getUserFromId($id) {
-    global $database;
+    $database = Database::getInstance();
 
     $query = "SELECT * FROM Users WHERE id = ?";
     $params = [ $id ];
@@ -70,7 +68,7 @@ function getUserFromId($id) {
  * @return user with that username or NULL
  */
 function getUserFromUsername($username) {
-    global $database;
+    $database = Database::getInstance();
 
     $query = "SELECT * FROM Users WHERE username = ?";
     $params = [ $username ];
@@ -89,7 +87,7 @@ function getUserFromUsername($username) {
  * @return user with that email or NULL
  */
 function getUserFromEmail($email) {
-    global $database;
+    $database = Database::getInstance();
 
     $query = "SELECT * FROM Users WHERE email = ?";
     $params = [ $email ];
@@ -157,7 +155,7 @@ function regenToken($username, $remember) {
     $token = generateToken(256);
 
     // Save in the database
-    global $database;
+    $database = Database::getInstance();
     $query = "UPDATE Users SET token = ?, ipAddress = ? WHERE username = ?";
     $params = [ $token, $_SERVER['REMOTE_ADDR'], $username ];
     $types = [ PDO::PARAM_STR, PDO::PARAM_STR, PDO::PARAM_STR ];
@@ -184,7 +182,7 @@ function regenToken($username, $remember) {
  */
 function deleteToken($username) {
     // Delete from the database
-    global $database;
+    $database = Database::getInstance();
     $query = "UPDATE Users SET token = ?, ipAddress = ? WHERE username = ?";
     $params = [ NULL, NULL, $username ];
     $types = [ PDO::PARAM_STR, PDO::PARAM_STR, PDO::PARAM_STR ];
