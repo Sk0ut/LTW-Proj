@@ -7,7 +7,7 @@ class App {
     /**
      * Controller of the App
      */
-    private $controller = "login";
+    private $controller = "loginCtrl";
 
     /**
      * Method to call on the controller
@@ -27,6 +27,7 @@ class App {
 
         // Get the controller
         if (isset($url[0])) {
+            $url[0] .= "Ctrl";
             if (file_exists("../application/controllers/" . $url[0] . ".php")) {
                 $this->controller = $url[0];
             } else {
@@ -44,7 +45,7 @@ class App {
             if (method_exists($this->controller, $url[1])) {
                 $this->method = $url[1];
             } else {
-                $this->controller = "error";
+                $this->controller = "errorCtrl";
                 require_once "../application/controllers/" . $this->controller . ".php";
                 $this->controller = ucfirst($this->controller);
                 $this->controller = new $this->controller();

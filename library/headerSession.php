@@ -1,8 +1,8 @@
 <?php
-require_once __DIR__ . "/database/users.php";
+require_once __DIR__ . "/../application/models/userDAO.php";
 
 // Get current user and validate session
-$user = getCurrentUser();
+$user = UserDAO::getCurrentUser();
 if($user == NULL)
     $user = NULL;
 else {
@@ -10,6 +10,6 @@ else {
     $remember = "false";
     if(isset($_COOKIE['em_remember']) && $_COOKIE['em_remember'] == "true")
             $remember = "true";
-    regenToken($user->getUsername(), $remember);
+    UserDAO::regenToken($user->getUsername(), $remember);
 }
 ?>
