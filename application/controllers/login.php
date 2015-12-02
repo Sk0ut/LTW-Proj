@@ -139,7 +139,7 @@ class Login extends Controller {
         }
 
         // Delete token
-        deleteToken($user->getUsername());
+        deleteToken($user->getUsername(), $_COOKIE['em_token']);
 
         $this->printResponse("logout", "success");
     }

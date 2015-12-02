@@ -37,10 +37,27 @@ function getCurrentUser() {
         return NULL;
     }
 
-    $user = getUserFromUsername($cookies['em_username']);
-    if($user->tokenMatch($cookies['em_token']))
-        return $user;
-    return NULL;
+    return validateToken($cookies['em_username'], $cookies['em_token']);
+}
+
+/**
+ * Get the foot print of a user
+ * @param userId id of the user to get the footprint
+ * @param token token associated with that footprint
+ * @return footprint with that user and token
+ */
+function getFootPrint($userId, $token) {
+    $database = Database::getInstance();
+
+    $query = "SELECT footprint FROM UserSessions WHERE userId = ? AND token = ?";
+    $params = [ $userId, $token ];
+    $types = [ PDO::PARAM_INT, PDO::PARAM_STR ];
+    $result = $database->executeQuery($query, $params, $types);
+
+    if(!$result || count($result) <= 0)
+        return NULL;
+
+    return $result[0]['footprint'];
 }
 
 /**
@@ -59,7 +76,7 @@ function getUserFromId($id) {
     if(!$result || count($result) <= 0)
         return NULL;
 
-    return new User($result[0]['id'], $result[0]['username'], $result[0]['password'], $result[0]['email'], $result[0]['token'], $result[0]['ipAddress']);
+    return new User($result[0]['id'], $result[0]['username'], $result[0]['password'], $result[0]['email']);
 }
 
 /**
@@ -78,7 +95,7 @@ function getUserFromUsername($username) {
     if(!$result || count($result) <= 0)
         return NULL;
 
-    return new User($result[0]['id'], $result[0]['username'], $result[0]['password'], $result[0]['email'], $result[0]['token'], $result[0]['ipAddress']);
+    return new User($result[0]['id'], $result[0]['username'], $result[0]['password'], $result[0]['email']);
 }
 
 /**
@@ -97,7 +114,7 @@ function getUserFromEmail($email) {
     if(!$result || count($result) <= 0)
         return NULL;
 
-    return new User($result[0]['id'], $result[0]['username'], $result[0]['password'], $result[0]['email'], $result[0]['token'], $result[0]['ipAddress']);
+    return new User($result[0]['id'], $result[0]['username'], $result[0]['password'], $result[0]['email']);
 }
 
 /**
@@ -114,16 +131,23 @@ function isValidLogin($username, $password) {
 }
 
 /**
- * Check if a token is valid
+ * Validate a token
  * @param username username to check the token
  * @param token token of the current user
- * @return true if is a valid token, false otherwise
+ * @return user with that username and token
  */
-function isValidToken($username, $token) {
+function validateToken($username, $token) {
     $user = getUserFromUsername($username);
     if($user == NULL)
-        return false;
-    return $user->tokenMatch($token);
+        return NULL;
+
+    if(!isset($_SERVER['HTTP_USER_AGENT']) || !isset($_SERVER['REMOTE_ADDR']))
+        return NULL;
+
+    $footprint = getFootPrint($user->getId(), $token);
+    if(!password_verify($_SERVER['HTTP_USER_AGENT'].$_SERVER['REMOTE_ADDR'], $footprint))
+        return NULL;
+    return $user;
 }
 
 /**
@@ -152,12 +176,26 @@ function emailExists($email) {
  * @return token if successful, false otherwise
  */
 function regenToken($username, $remember) {
+    // Needed variables
+    $user = getUserFromUsername($username);
+    if($user == NULL)
+        return false;
+    if(!isset($_SERVER['HTTP_USER_AGENT']) || !isset($_SERVER['REMOTE_ADDR']))
+        return false;
+    $userId = $user->getId();
+    $footprint = password_hash($_SERVER['HTTP_USER_AGENT'].$_SERVER['REMOTE_ADDR'], PASSWORD_BCRYPT);
+
+    // Delete previous token (if exists)
+    if(isset($_COOKIE['em_token']))
+        deleteToken($username, $_COOKIE['em_token']);
+
+    // Generate new token
     $token = generateToken(256);
 
     // Save in the database
     $database = Database::getInstance();
-    $query = "UPDATE Users SET token = ?, ipAddress = ? WHERE username = ?";
-    $params = [ $token, $_SERVER['REMOTE_ADDR'], $username ];
+    $query = "INSERT INTO UserSessions(userId, footprint, token) VALUES (?, ?, ?)";
+    $params = [ $userId, $footprint, $token ];
     $types = [ PDO::PARAM_STR, PDO::PARAM_STR, PDO::PARAM_STR ];
     $result = $database->executeUpdate($query, $params, $types);
     if($result <= 0)
@@ -180,12 +218,16 @@ function regenToken($username, $remember) {
  * @param username username to delete the token
  * @return true if successful, false otherwise
  */
-function deleteToken($username) {
+function deleteToken($username, $token) {
+    $user = getUserFromUsername($username);
+    if($user == NULL)
+        return false;
+
     // Delete from the database
     $database = Database::getInstance();
-    $query = "UPDATE Users SET token = ?, ipAddress = ? WHERE username = ?";
-    $params = [ NULL, NULL, $username ];
-    $types = [ PDO::PARAM_STR, PDO::PARAM_STR, PDO::PARAM_STR ];
+    $query = "DELETE FROM UserSessions WHERE userId = ? AND token = ?";
+    $params = [ $user->getId(), $token ];
+    $types = [ PDO::PARAM_INT, PDO::PARAM_STR ];
     $result = $database->executeUpdate($query, $params, $types);
     if($result <= 0)
         return false;

@@ -61,10 +61,10 @@ CREATE TABLE IF NOT EXISTS UserEvents (
 
 CREATE TABLE IF NOT EXISTS UserSessions (
     userId INTEGER,
-    footPrint VARCHAR,
+    footprint VARCHAR,
     token VARCHAR,
 
-    CONSTRAINT pk_UserSessions PRIMARY KEY (userId, footPrint, token),
+    CONSTRAINT pk_UserSessions PRIMARY KEY (userId, token),
     CONSTRAINT fk_UserSessions FOREIGN KEY (userId) REFERENCES Users(id)
 );
 
