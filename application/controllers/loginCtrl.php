@@ -1,5 +1,6 @@
 <?php
 require_once __DIR__ . "/../core/controller.php";
+require_once __DIR__ . "/userCtrl.php";
 
 class LoginCtrl extends Controller {
     /**
@@ -10,7 +11,8 @@ class LoginCtrl extends Controller {
         if($user == NULL) {
             $this->view("login_view");
         } else {
-            $this->view("userpage_view");
+            // TODO: make this better
+            (new UserCtrl)->index($user->getId());
         }
     }
 
