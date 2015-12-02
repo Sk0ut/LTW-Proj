@@ -1,5 +1,5 @@
 <?php
-require_once __DIR__ . "/../core/Controller.php";
+require_once __DIR__ . "/../core/controller.php";
 
 class Error extends Controller {
     public function index() {

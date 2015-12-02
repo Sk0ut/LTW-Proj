@@ -4,8 +4,8 @@ require_once __DIR__ . "/../../application/models/user.php";
 require_once __DIR__ . "/../security.php";
 
 /**
- * Create a new username on the events manager
- * @param username username of the new user
+* Create a new username on the events manager
+* @param username username of the new user
  * @param password password of the user
  * @param email email of the user
  * @return true if was successfull, false otherwise

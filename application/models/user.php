@@ -26,14 +26,9 @@ class User {
     private $_email;
 
     /**
-     * Current login token of the user
+     * Current login token for the user
      */
-    private $_token;
-
-    /**
-     * IP Address of the user on last login
-     */
-    private $_ipAddress;
+    private $_tokens;
 
     /**
      * Constructor of User
@@ -41,16 +36,14 @@ class User {
      * @param username username of the user
      * @param password password of the user
      * @param email email of the user
-     * @param token token of the user
-     * @param ipAddress ip address of the user
+     * @param tokens tokens of the user
      */
-    public function __construct($id, $username, $password, $email, $token, $ipAddress) {
+    public function __construct($id, $username, $password, $email, $tokens) {
         $this->_id = $id;
         $this->_username = $username;
         $this->_password = $password;
         $this->_email = $email;
-        $this->_token = $token;
-        $this->_ipAddress = $ipAddress;
+        $this->_tokens = $tokens;
     }
 
     /**
@@ -86,27 +79,11 @@ class User {
     }
 
     /**
-     * Get the token of the user
-     * @return token of the user
-     */
-    public function getToken() {
-        return $this->_token;
-    }
-
-    /**
      * Get the ip address of the user
      * @return ip address of the user
      */
     public function getIpAddress() {
         return $this->_ipAddress;
-    }
-
-    /**
-     * Set the token of the user
-     * @param token new token of the user
-     */
-    public function setToken($token) {
-        $this->_token = $token;
     }
 
     /**
@@ -119,17 +96,6 @@ class User {
     }
 
     /**
-     * Check if a token matches the user's token and
-     * if the ip address is the same
-     * @param token token to be checked
-     * @return true if matches, false otherwise
-     */
-    public function tokenMatch($token) {
-        return $this->_token === $token &&
-                $this->_ipAddress === $_SERVER['REMOTE_ADDR'];
-    }
-
-    /**
      * Convert a user to string
      */
     public function __toString() {
@@ -138,8 +104,7 @@ class User {
                 $this->_username,
                 $this->_password,
                 $this->_email,
-                $this->_token,
-                $this->_ipAddress
+                $this->_tokens,
             ]);
     }
 }
