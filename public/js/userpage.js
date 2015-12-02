@@ -30,3 +30,16 @@ $( "#createeventbtn" ).click(function() {
     /* Em ambos os casos...*/
     console.log("O JOAO È MERDA");
 });
+
+$('a[href^="#"]').on('click', function(event) {
+
+    var target = $( $(this).attr('href') );
+
+    if( target.length ) {
+        event.preventDefault();
+        $('html, body').animate({
+            scrollTop: -40 + target.offset().top
+        }, 500);
+    }
+
+});

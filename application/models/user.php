@@ -68,7 +68,7 @@ class User {
     }
 
     public static function find($id){
-        global $database;
+        $database = Database::getInstance();
         $data = $database->executeQuery("SELECT * FROM Users WHERE id = ?",[$id],[PDO::PARAM_STR])[0];
         $user = new User($data["id"], $data["username"], $data["password"], $data["email"], $data["token"], $data["ipAddress"]);
 
