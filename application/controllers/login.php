@@ -1,5 +1,5 @@
 <?php
-require_once __DIR__ . "/../core/Controller.php";
+require_once __DIR__ . "/../core/controller.php";
 
 class Login extends Controller {
     /**
@@ -139,7 +139,7 @@ class Login extends Controller {
         }
 
         // Delete token
-        deleteToken($user->getUsername());
+        deleteToken($user->getUsername(), $_COOKIE['em_token']);
 
         $this->printResponse("logout", "success");
     }
