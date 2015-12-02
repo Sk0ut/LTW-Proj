@@ -1,5 +1,8 @@
 <?php
 
+/**
+ * Application class
+ */
 class App {
     /**
      * Controller of the App

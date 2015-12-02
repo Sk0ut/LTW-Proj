@@ -1,10 +1,9 @@
 CREATE TABLE IF NOT EXISTS Users (
     id INTEGER,
+    photo VARCHAR,
     username VARCHAR,
     password VARCHAR,
     email VARCHAR,
-    token VARCHAR,
-    ipAddress VARCHAR,
 
     CONSTRAINT pk_Users PRIMARY KEY (id),
     CONSTRAINT uv_Username UNIQUE (username),
@@ -18,29 +17,19 @@ CREATE TABLE IF NOT EXISTS EventType (
     CONSTRAINT pk_EventTypes PRIMARY KEY (id)
 );
 
-CREATE TABLE IF NOT EXISTS Photos (
-    id INTEGER,
-    albumId INTEGER,
-    url VARCHAR,
-
-    CONSTRAINT pk_Photos PRIMARY KEY (id),
-    CONSTRAINT fk_Album FOREIGN KEY (albumId) REFERENCES Album(id)
-);
-
 CREATE TABLE IF NOT EXISTS Events (
     id INTEGER,
     name VARCHAR,
     description VARCHAR,
     ownerId INTEGER,
-    photoId INTEGER,
+    photo VARCHAR,
     eventDate DATE,
     typeId INTEGER,
     private BOOLEAN,
 
     CONSTRAINT pk_Events PRIMARY KEY (id),
     CONSTRAINT fk_Owner FOREIGN KEY (ownerId) REFERENCES Users(id),
-    CONSTRAINT fk_Photo FOREIGN KEY (photoId) REFERENCES Photos(id),
-    CONSTRAINT fk_EventType FOREIGN KEY (typeId) REFERENCES EventType(id) 
+    CONSTRAINT fk_EventType FOREIGN KEY (typeId) REFERENCES EventType(id)
 );
 
 CREATE TABLE IF NOT EXISTS Albums (
@@ -52,6 +41,15 @@ CREATE TABLE IF NOT EXISTS Albums (
     CONSTRAINT fk_Event FOREIGN KEY (eventId) REFERENCES Events(id)
 );
 
+CREATE TABLE IF NOT EXISTS Photos (
+    id INTEGER,
+    albumId INTEGER,
+    path VARCHAR,
+
+    CONSTRAINT pk_Photos PRIMARY KEY (id),
+    CONSTRAINT fk_Album FOREIGN KEY (albumId) REFERENCES Albums(id)
+);
+
 CREATE TABLE IF NOT EXISTS UserEvents (
     userId INTEGER,
     eventId INTEGER,
@@ -59,6 +57,15 @@ CREATE TABLE IF NOT EXISTS UserEvents (
     CONSTRAINT pk_UserEvents PRIMARY KEY (userId, eventId),
     CONSTRAINT fk_User FOREIGN KEY (userId) REFERENCES Users(id),
     CONSTRAINT fk_Event FOREIGN KEY (eventId) REFERENCES Events(id)
+);
+
+CREATE TABLE IF NOT EXISTS UserSessions (
+    userId INTEGER,
+    footPrint VARCHAR,
+    token VARCHAR,
+
+    CONSTRAINT pk_UserSessions PRIMARY KEY (userId, footPrint, token),
+    CONSTRAINT fk_UserSessions FOREIGN KEY (userId) REFERENCES Users(id)
 );
 
 CREATE TABLE IF NOT EXISTS Threads (
@@ -84,3 +91,17 @@ CREATE TABLE IF NOT EXISTS UserComment (
     CONSTRAINT fk_Thread FOREIGN KEY (threadId) REFERENCES Users(id),
     CONSTRAINT fk_Parent FOREIGN KEY (parentId) REFERENCES UserComment(id)
 );
+
+CREATE TRIGGER IF NOT EXISTS UpdateParentComment
+AFTER INSERT ON UserComment
+FOR EACH ROW
+WHEN NEW.parentId IS NOT NULL AND
+     (SELECT parentId FROM UserComment
+        WHERE id = NEW.parentId) IS NOT NULL
+BEGIN
+    UPDATE UserComment
+    SET parentId = (SELECT parentId
+                    FROM UserComment
+                    WHERE id = NEW.parentId)
+    WHERE id = NEW.id;
+END;
