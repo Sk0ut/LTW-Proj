@@ -1,0 +1,180 @@
+@import url('http://fonts.googleapis.com/css?family=Open+Sans');
+
+body {
+    height: 100%;
+    width: 100%;
+
+    background-color: #01528a;
+
+    margin: 0;
+    padding: 0;
+
+    position: absolute;
+    top: 0;
+    bottom: 0;
+    right: 0;
+    left: 0;
+}
+
+form {
+  display: inline;
+}
+
+fieldset {
+   border: 0;
+   padding-top: 2rem;
+}
+
+h1 {
+    text-align:center;
+    font-family: "Open Sans", Times, serif;
+    font-size: 48px;
+    font-weight: bold;
+    margin: 0;
+    padding-top: 2.5rem;
+}
+
+h2 {
+    text-align:center;
+    font-family: "Open Sans", Times, serif;
+    font-size: 32px;
+    font-weight: bold;
+    margin: 0;
+    padding-top: 2.5rem;
+}
+
+p {
+    text-align:center;
+    color: #000;
+    font-family: "Open Sans", Times, serif;
+    font-size: 16px;
+    padding-bottom: 1rem;
+}
+
+ul {
+  list-style-type: none;
+  text-align: center;
+  display: table;
+  padding-top: 0.5rem;
+  padding-bottom: 0.5rem;
+  padding-left: 0rem;
+  margin:0 auto;
+  overflow: hidden;
+}
+
+li {
+  float: left;
+  font-weight: bold;
+  font-size: 14px;
+  padding-right: 0.5rem;
+  padding-left: 0.5rem;
+  margin-left: auto ;
+  margin-right: auto ;
+}
+
+#button {
+    text-align: center;
+}
+
+#createEvent {
+  display: none;
+  text-align: center;
+  font-family: "Open Sans", Times, serif;
+  font-size: 16px;
+}
+
+
+.btn {
+  background: #010135;
+  background-image: -webkit-linear-gradient(top, #010135, #0096d3);
+  background-image: -moz-linear-gradient(top, #010135, #0096d3);
+  background-image: -ms-linear-gradient(top, #010135, #0096d3);
+  background-image: -o-linear-gradient(top, #010135, #0096d3);
+  background-image: linear-gradient(to bottom, #010135, #0096d3);
+  border-radius: 20px;
+  border: solid #c7bfaa 2px;
+  -webkit-border-radius: 12;
+  -moz-border-radius: 12;
+  font-family: "Open Sans", Times, serif;
+  color: #ffffff;
+  border: solid #eeebc2 4px;
+  padding: 5px 20px 5px 20px;
+  text-decoration: none;
+}
+
+.btn:hover {
+  background: #010135;
+  cursor: pointer;
+  background-image: -webkit-linear-gradient(top, #010135, #01528a);
+  background-image: -moz-linear-gradient(top, #010135, #01528a);
+  background-image: -ms-linear-gradient(top, #010135, #01528a);
+  background-image: -o-linear-gradient(top, #010135, #01528a);
+  background-image: linear-gradient(to bottom, #010135, #01528a);
+  text-decoration: none;
+}
+
+.big {
+  font-size: 15px;
+  width: 12rem;
+}
+
+.small {
+  font-size: 12px;
+  width: 10rem;
+}
+
+.header {
+  margin: 0px auto;
+  margin-left: 10rem;
+  margin-right: 10rem;
+  border-radius: 10px;
+  border: 5px solid #010135;
+  background-color: #c7bfaa;
+}
+
+.header-cont {
+  width:100%;
+  position: fixed;
+  top:0px;
+}
+
+.btn:focus {
+    outline: 0;
+}
+
+.margin {
+  padding-bottom: 2.5rem;
+}
+
+.event {
+    margin-left: 10rem;
+    margin-right: 10rem;
+    margin-top: 5rem;
+    border-radius: 20px;
+    border: 5px solid #010135;
+    background-color: #c7bfaa;
+}
+
+.inputText {
+  border-radius: 5px;
+}
+
+.inputText::-webkit-input-placeholder {
+      font-family: "Open Sans", Times, serif;
+}
+
+.inputText:-ms-input-placeholder {
+      font-family: "Open Sans", Times, serif;
+}
+
+.inputText:-moz-placeholder {
+      font-family: "Open Sans", Times, serif;
+}
+
+.inputText::-moz-placeholder {
+      font-family: "Open Sans", Times, serif;
+}
+
+div.ui-datepicker{
+ font-size:12px;
+}
