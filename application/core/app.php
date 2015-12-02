@@ -29,7 +29,7 @@ class App {
         if (isset($url[0])) {
             $url[0] .= "Ctrl";
             if (file_exists("../application/controllers/" . $url[0] . ".php")) {
-                $this->controller = $URL[0];
+                $this->controller = $url[0];
             } else {
                 $this->controller = "error";
             }
@@ -42,7 +42,6 @@ class App {
 
         // Get the method name
         if (isset($url[1])) {
-        	echo $this->controller;
             if (method_exists($this->controller, $url[1])) {
                 $this->method = $url[1];
             } else {

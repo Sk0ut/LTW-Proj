@@ -1,7 +1,6 @@
 <?php
   	require_once("../models/user.php");
   	require_once("shared/header.php");
-
   	$user = User::find($_GET['id']);
 
   	$resultOwnEvents = $user->getOwnerEvents();
