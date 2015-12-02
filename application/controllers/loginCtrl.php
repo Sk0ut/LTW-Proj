@@ -1,7 +1,7 @@
 <?php
 require_once __DIR__ . "/../core/controller.php";
 
-class Login extends Controller {
+class LoginCtrl extends Controller {
     /**
      * Index function. Display the login / register form.
      */
@@ -19,7 +19,7 @@ class Login extends Controller {
      * @return JSON response
      */
     public function validateLogin($variables) {
-        require_once(__DIR__ . '/../../library/database/users.php');
+        require_once __DIR__ . "/../models/userDAO.php";
 
         // Need error responses
         $key = "login";
@@ -45,13 +45,13 @@ class Login extends Controller {
         }
 
         // Validate login
-        if(!isValidLogin($params['username'], $params['password'])) {
+        if(!UserDAO::isValidLogin($params['username'], $params['password'])) {
             $this->printResponse($key, $fail_login);
             return;
         }
 
         // Update token
-        $token = regenToken($params['username'], $params['remember']);
+        $token = UserDAO::regenToken($params['username'], $params['remember']);
         if(!$token) {
             $this->printResponse($key, $fail_login);
             return;
@@ -66,7 +66,7 @@ class Login extends Controller {
      * @return response of valid register
      */
     public function validateRegister($variables) {
-        require_once(__DIR__ . '/../../library/database/users.php');
+        require_once __DIR__ . "/../models/userDAO.php";
 
         // Need error responses
         $key = "register";
@@ -91,7 +91,7 @@ class Login extends Controller {
             $this->printResponse($key, $invalid_username);
             return;
         }
-        if(usernameExists($params['username'])) {
+        if(UserDAO::usernameExists($params['username'])) {
             $this->printResponse($key, $taken_user);
             return;
         }
@@ -99,7 +99,7 @@ class Login extends Controller {
             $this->printResponse($key, $invalid_email);
             return;
         }
-        if(emailExists($params['email'])) {
+        if(UserDAO::emailExists($params['email'])) {
             $this->printResponse($key, $taken_email);
             return;
         }
@@ -110,13 +110,13 @@ class Login extends Controller {
 
         // Create register
         $params['password'] = password_hash($params['password'], PASSWORD_BCRYPT);
-        if(!createNewUser($params['username'], $params['password'], $params['email'])) {
+        if(!UserDAO::createNewUser($params['username'], $params['password'], $params['email'])) {
             $this->printResponse($key, $fail_register);
             return;
         }
 
         // Update token
-        $token = regenToken($params['username'], $params['remember']);
+        $token = UserDAO::regenToken($params['username'], $params['remember']);
         if(!$token) {
             $this->printResponse($key, $fail_register);
             return;
@@ -129,17 +129,17 @@ class Login extends Controller {
      * Validate a user logout
      */
     public function validateLogout() {
-        require_once(__DIR__ . '/../../library/database/users.php');
+        require_once __DIR__ . "/../models/userDAO.php";
 
         // Check if is logged in
-        $user = getCurrentUser();
+        $user = UserDAO::getCurrentUser();
         if($user == NULL) {
             $this->printResponse("logout", "not_logged");
             return;
         }
 
         // Delete token
-        deleteToken($user->getUsername(), $_COOKIE['em_token']);
+        UserDAO::deleteToken($user->getUsername(), $_COOKIE['em_token']);
 
         $this->printResponse("logout", "success");
     }

@@ -1,7 +1,7 @@
 <?php
 require_once __DIR__ . "/../core/controller.php";
 
-class Error extends Controller {
+class ErrorCtrl extends Controller {
     public function index() {
         $this->view("error_view");
     }
