@@ -1,11 +1,11 @@
 <?php
 
 require_once "database.php";
-require_once "event.php"
+require_once "event.php";
 
 class EventDAO {
 	public static function getById($id) {
-		$db = Database::getInstance();
+		$database = Database::getInstance();
 		$query = "SELECT * FROM Events WHERE id = ?";
 		$params = [ $id ];
 		$types = [ PDO::PARAM_INT ];
