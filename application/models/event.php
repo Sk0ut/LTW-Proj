@@ -10,7 +10,7 @@ class Event {
 	private $_type;
 	private $_private;
 	
-	public __construct($id, $name, $description, $ownerId, $photo, $date, $type, $private) {
+	public function __construct($id, $name, $description, $ownerId, $photo, $date, $type, $private) {
 		$this->_id = $id;
 		$this->_name = $name;
 		$this->_description = $description;
@@ -21,67 +21,67 @@ class Event {
 		$this->_private = $private;
 	}
 	
-	public getId() {
+	public function getId() {
 		return $this->_id;
 	}
 	
-	public setId($id) {
+	public function setId($id) {
 		$this->_id = $id;
 	}
 	
-	public getName() {
+	public function getName() {
 		return $this->_name;
 	}
 	
-	public setName($name) {
+	public function setName($name) {
 		$this->_name = $name;
 	}
 	
-	public getDescription() {
+	public function getDescription() {
 		return $this->_description;
 	}
 	
-	public setDescription($description) {
+	public function setDescription($description) {
 		$this->_description = $description;
 	}
 	
-	public getOwnerId() {
+	public function getOwnerId() {
 		return $this->_ownerId;
 	}
 	
-	public setOwnerId($ownerId) {
+	public function setOwnerId($ownerId) {
 		$this->_ownerId = $ownerId;
 	}
 	
-	public getPhoto() {
+	public function getPhoto() {
 		return $this->_photo;
 	}
 	
-	public setPhoto($photo) {
+	public function setPhoto($photo) {
 		$this->_photo = $photo;
 	}
 	
-	public getDate() {
+	public function getDate() {
 		return $this->_date;
 	}
 	
-	public setDate($date) {
+	public function setDate($date) {
 		$this->_date = $date;
 	}
 	
-	public getType() {
+	public function getType() {
 		return $this->_type;
 	}
 	
-	public setType($type) {
+	public function setType($type) {
 		$this->_type = $type;
 	}
 	
-	public getPrivate() {
+	public function getPrivate() {
 		return $this->_private;
 	}
 	
-	public setPrivate($private) {
+	public function setPrivate($private) {
 		$this->_private = $private;
 	}
 }
