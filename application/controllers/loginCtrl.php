@@ -51,7 +51,7 @@ class LoginCtrl extends Controller {
         $params = ['username' => '', 'password' => '', 'remember' => ''];
         if(!$this->fillPostParameters($params)) {
             $this->printResponse($key, $missing_params);
-            return false;
+            return;
         }
 
         // Convert email to username
@@ -101,7 +101,7 @@ class LoginCtrl extends Controller {
         $params = ['username' => '', 'email' => '', 'password' => ''];
         if(!$this->fillPostParameters($params)) {
             $this->printResponse($key, $missing_params);
-            return false;
+            return;
         }
 
         // Validate parameters
@@ -141,7 +141,7 @@ class LoginCtrl extends Controller {
         $username = $params['username'];
         $link = "http://" . $_SERVER['SERVER_NAME'] . $_SERVER['REQUEST_URI'];
         $link = substr($link, 0, strpos($link, "?"));
-        $link .= "?url=confirmAccount&username=$username&token=$token";
+        $link .= "?url=login/confirmAccount&username=$username&token=$token";
 
         $subject = 'Event Manager - Confirm your account';
 
@@ -202,7 +202,7 @@ class LoginCtrl extends Controller {
         $params = ['email' => ''];
         if(!$this->fillPostParameters($params)) {
             $this->printResponse($key, $missing_params);
-            return false;
+            return;
         }
 
         // Validate parameters
@@ -224,7 +224,7 @@ class LoginCtrl extends Controller {
             $token = generateToken(64);
             $link = "http://" . $_SERVER['SERVER_NAME'] . $_SERVER['REQUEST_URI'];
             $link = substr($link, 0, strpos($link, "?"));
-            $link .= "?url=resetPassword&username=$username&token=$token";
+            $link .= "?url=login/resetPassword&username=$username&token=$token";
 
             // Send the email
             $subject = 'Event Manager - Forgot your password';
@@ -250,11 +250,69 @@ class LoginCtrl extends Controller {
     }
 
     /**
+     * Confirm a user account
+     */
+    public function confirmAccount() {
+        // Need error responses
+        $key = "confirm_account";
+        $missing_params = "missing_params";
+        $fail_confirm_account = "fail";
+        $success_confirm_account = "success";
+
+        // Check parameters
+        $params = ['username' => '', 'token' => ''];
+        if(!$this->fillGetParameters($params)) {
+            $this->printResponse($key, $missing_params);
+            return;
+        }
+
+        // Validate confirm account token
+        $user = UserDAO::validateConfirmToken($params['username'], $params['token']);
+        if($user == NULL) {
+            $this->printResponse($key, $fail_confirm_account);
+            return;
+        }
+
+        // Confirm account
+        if(!UserDAO::confirmAccount($user)) {
+            $this->printResponse($key, $fail_confirm_account);
+            return;
+        }
+
+        // Update token
+        $token = UserDAO::regenToken($params['username'], "false");
+        if(!$token) {
+            $this->printResponse($key, $fail_confirm_account);
+            return;
+        }
+
+        $this->printResponse($key, $success_confirm_account);
+
+        $link = "http://" . $_SERVER['SERVER_NAME'] . $_SERVER['REQUEST_URI'];
+        $link = substr($link, 0, strpos($link, "?"));
+        header("Location: $link");
+    }
+
+    /**
+     * Fill the expected get parameters
+     * @param params array map with params
+     * @return true if all the needed variables are set, false otherwise
+     */
+    private function fillGetParameters(&$params) {
+        foreach($params as $key => $param) {
+            if(!isset($_GET[$key]))
+                return false;
+            $params[$key] = $_GET[$key];
+        }
+        return true;
+    }
+
+    /**
      * Fill the expected post parameters
      * @param params array map with params
      * @return true if all the needed variables are set, false otherwise
      */
-    public function fillPostParameters(&$params) {
+    private function fillPostParameters(&$params) {
         foreach($params as $key => $param) {
             if(!isset($_POST[$key]))
                 return false;
@@ -268,7 +326,7 @@ class LoginCtrl extends Controller {
      * @param key key of the response
      * @param value value of the response
      */
-    public function printResponse($key, $value) {
+    private function printResponse($key, $value) {
         $data = [$key => $value];
         header('Content-Type: application/json');
         echo json_encode($data);

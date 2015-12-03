@@ -271,7 +271,7 @@ function register() {
                         displayError("Please use a valid email");
                         break;
                     case 'success':
-                        displaySuccess("Register was successful");
+                        displaySuccess("Email sent to confirm the account");
                         break;
                     default:
                         displayError("Error while processing the register...");

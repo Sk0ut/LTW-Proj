@@ -138,6 +138,50 @@ class UserDAO {
     }
 
     /**
+     * Check if a token is a valid confirmation account token
+     * @param username username to check confirmation account token
+     * @param token token of the account confirmation
+     * @return user with that username and confirmation account token
+     */
+    public static function validateConfirmToken($username, $token) {
+        $database = Database::getInstance();
+
+        $query = "SELECT * FROM AwaitingUsers WHERE username = ?";
+        $params = [ $username ];
+        $types = [ PDO::PARAM_STR ];
+        $result = $database->executeQuery($query, $params, $types);
+
+        if(!$result || count($result) <= 0)
+            return NULL;
+
+        return new User($result[0]['id'], $result[0]['username'], $result[0]['password'], $result[0]['email']);
+    }
+
+    /**
+     * Confirm a user account
+     * @param user user to confirm the account
+     * @return true if account was confirmed, false otherwise
+     */
+    public static function confirmAccount($user) {
+        // Delete from the database
+        $database = Database::getInstance();
+        $query = "DELETE FROM AwaitingUsers WHERE id = ?";
+        $params = [ $user->getId() ];
+        $types = [ PDO::PARAM_INT ];
+        $result = $database->executeUpdate($query, $params, $types);
+        if($result <= 0)
+            return false;
+
+        // Insert into the users database
+        $query = "INSERT INTO Users(username, password, email) VALUES (?, ?, ?)";
+        $params = [ $user->getUsername(), $user->getPassword(), $user->getEmail() ];
+        $types = [ PDO::PARAM_STR, PDO::PARAM_STR, PDO::PARAM_STR ];
+        $result = $database->executeUpdate($query, $params, $types);
+        return $result > 0;
+    }
+
+
+    /**
      * Validate a token
      * @param username username to check the token
      * @param token token of the current user
