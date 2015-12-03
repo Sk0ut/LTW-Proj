@@ -39,7 +39,7 @@ class LoginCtrl extends Controller {
      * Check if a login is valid
      * @return JSON response
      */
-    public function validateLogin($variables) {
+    public function validateLogin() {
         // Need error responses
         $key = "login";
         $missing_params = "missing_params";
@@ -47,11 +47,11 @@ class LoginCtrl extends Controller {
         $success_login = "success";
 
         // Check parameters
-        if(count($variables) != 3) {
+        $params = ['username' => '', 'password' => '', 'remember' => ''];
+        if(!$this->fillPostParameters($params)) {
             $this->printResponse($key, $missing_params);
             return false;
         }
-        $params = ['username' => $variables[0], 'password' => $variables[1], 'remember' => $variables[2]];
 
         // Convert email to username
         if(filter_var($params['username'], FILTER_VALIDATE_EMAIL)) {
@@ -84,7 +84,7 @@ class LoginCtrl extends Controller {
      * @param variables variables sent by the user
      * @return response of valid register
      */
-    public function validateRegister($variables) {
+    public function validateRegister() {
         // Need error responses
         $key = "register";
         $missing_params = "missing_params";
@@ -97,11 +97,11 @@ class LoginCtrl extends Controller {
         $success_register = "success";
 
         // Check parameters
-        if(count($variables) != 4) {
+        $params = ['username' => '', 'email' => '', 'password' => ''];
+        if(!$this->fillPostParameters($params)) {
             $this->printResponse($key, $missing_params);
             return false;
         }
-        $params = ['username' => $variables[0], 'email' => $variables[1], 'password' => $variables[2], 'remember' => $variables[3]];
 
         // Validate parameters
         if(strlen($params['username']) < 4 || strlen($params['username']) > 15) {
@@ -157,6 +157,28 @@ class LoginCtrl extends Controller {
         UserDAO::deleteToken($user->getUsername(), $_COOKIE['em_token']);
 
         $this->printResponse("logout", "success");
+    }
+
+    /**
+     * Send an email to the user that lost
+     * his password
+     */
+    public function forgotPassword() {
+
+    }
+
+    /**
+     * Fill the expected post parameters
+     * @param params array map with params
+     * @return true if all the needed variables are set, false otherwise
+     */
+    public function fillPostParameters(&$params) {
+        foreach($params as $key => $param) {
+            if(!isset($_POST[$key]))
+                return false;
+            $params[$key] = $_POST[$key];
+        }
+        return true;
     }
 
     /**

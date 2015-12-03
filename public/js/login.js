@@ -180,8 +180,11 @@ function login() {
 
     // Async call to login
     $.post(
-            "login/validateLogin/" + username + "/" + password + "/" + remember,
+            "login/validateLogin",
             {
+                username : username,
+                password : password,
+                remember : remember
             },
             function(data)
             {
@@ -218,7 +221,6 @@ function register() {
     var email = $('#email').val();
     var password = $('#password').val();
     var confirmPassword = $('#confirmPassword').val();
-    var remember = $('#remember').is(':checked');
 
     // Checkers
     if(!validUsername()) {
@@ -237,8 +239,11 @@ function register() {
 
     // Async call to register
     $.post(
-            "login/validateRegister/" + username + "/" + email + "/" + password + "/" + remember,
+            "login/validateRegister",
             {
+                'username' : username,
+                'email' : email,
+                'password' : password,
             },
             function(data)
             {
@@ -277,6 +282,49 @@ function register() {
                 displayError("Error while processing the register...");
             });
 }
+
+/**
+ * Send forgot password to action on forgot password.
+ */
+function forgotPassword() {
+    // Variables
+    var email = $('#email').val();
+
+    // Async call to login
+    $.post(
+            "login/forgotPassword",
+            {
+                username : username,
+                password : password,
+                remember : remember
+            },
+            function(data)
+            {
+                var response = data['login'];
+                switch(response) {
+                    case 'missing_params':
+                        displayError("Missing input parameters");
+                        break;
+                    case 'fail':
+                        displayError("Invalid username or password");
+                        break;
+                    case 'success':
+                        displaySuccess("Login successful");
+                        setTimeout(function() {
+                            window.location.replace("");
+                        }, 1000);
+                        break;
+                    default:
+                        displayError("Error while processing the login...");
+                        break;
+                }
+            })
+            .fail(function(error) {
+                displayError("Error while processing the login...");
+            });
+}
+
+
 
 /**
  * ===========================================================================
