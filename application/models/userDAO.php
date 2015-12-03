@@ -125,6 +125,44 @@ class UserDAO {
     }
 
     /**
+     * Get a awaiting confirmation user from his username
+     * @param username username of the user
+     * @return user with that username or NULL
+     */
+    public static function getAwaitingUserFromUsername($username) {
+        $database = Database::getInstance();
+
+        $query = "SELECT * FROM AwaitingUsers WHERE username = ?";
+        $params = [ $username ];
+        $types = [ PDO::PARAM_STR ];
+        $result = $database->executeQuery($query, $params, $types);
+
+        if(!$result || count($result) <= 0)
+            return NULL;
+
+        return new User($result[0]['id'], $result[0]['username'], $result[0]['password'], $result[0]['email']);
+    }
+
+    /**
+     * Get a awaiting confirmation user from his email
+     * @param email email of the user
+     * @return user with that email or NULL
+     */
+    public static function getAwaitingUserFromEmail($email) {
+        $database = Database::getInstance();
+
+        $query = "SELECT * FROM AwaitingUsers WHERE email = ?";
+        $params = [ $email ];
+        $types = [ PDO::PARAM_STR ];
+        $result = $database->executeQuery($query, $params, $types);
+
+        if(!$result || count($result) <= 0)
+            return NULL;
+
+        return new User($result[0]['id'], $result[0]['username'], $result[0]['password'], $result[0]['email']);
+    }
+
+    /**
      * Check if a login is valid
      * @param username username to check login
      * @param password password of the username to check
@@ -146,9 +184,9 @@ class UserDAO {
     public static function validateConfirmToken($username, $token) {
         $database = Database::getInstance();
 
-        $query = "SELECT * FROM AwaitingUsers WHERE username = ?";
-        $params = [ $username ];
-        $types = [ PDO::PARAM_STR ];
+        $query = "SELECT * FROM AwaitingUsers WHERE username = ? AND authToken = ?";
+        $params = [ $username, $token ];
+        $types = [ PDO::PARAM_STR, PDO::PARAM_STR ];
         $result = $database->executeQuery($query, $params, $types);
 
         if(!$result || count($result) <= 0)
@@ -207,7 +245,7 @@ class UserDAO {
      * @return true if a user exists with that username
      */
     public static function usernameExists($username) {
-        return UserDAO::getUserFromUsername($username) != NULL;
+        return UserDAO::getUserFromUsername($username) != NULL || UserDAO::getAwaitingUserFromUsername($username) != NULL;
     }
 
     /**
@@ -216,7 +254,7 @@ class UserDAO {
      * @return true if a user exists with that email
      */
     public static function emailExists($email) {
-        return UserDAO::getUserFromEmail($email) != NULL;
+        return UserDAO::getUserFromEmail($email) != NULL || UserDAO::getAwaitingUserFromEmail($email) != NULL;
     }
 
     /**
