@@ -303,6 +303,9 @@ function forgotPassword() {
                     case 'missing_params':
                         displayError("Missing input parameters");
                         break;
+                    case 'fail':
+                        displayError("Failed to send reset password email");
+                        break;
                     case 'invalid_email':
                         displayError("Please use a valid email");
                         break;

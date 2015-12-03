@@ -175,6 +175,7 @@ class LoginCtrl extends Controller {
         $key = "forgotPassword";
         $missing_params = "missing_params";
         $invalid_email = "invalid_email";
+        $fail_forgot_password = "fail";
         $success_forgot_password = "success";
 
         // Check parameters
@@ -217,7 +218,10 @@ class LoginCtrl extends Controller {
             $headers .= "MIME-Version: 1.0\r\n";
             $headers .= "Content-Type: text/html; charset=ISO-8859-1\r\n";
 
-            mail($to, $subject, $message, $headers);
+            if(!mail($to, $subject, $message, $headers)) {
+                $this->printResponse($key, $fail_forgot_password);
+                return;
+            }
         }
 
         $this->printResponse($key, $success_forgot_password);
