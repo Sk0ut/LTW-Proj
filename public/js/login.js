@@ -180,8 +180,11 @@ function login() {
 
     // Async call to login
     $.post(
-            "login/validateLogin/" + username + "/" + password + "/" + remember,
+            "?url=login/validateLogin",
             {
+                username : username,
+                password : password,
+                remember : remember
             },
             function(data)
             {
@@ -218,7 +221,6 @@ function register() {
     var email = $('#email').val();
     var password = $('#password').val();
     var confirmPassword = $('#confirmPassword').val();
-    var remember = $('#remember').is(':checked');
 
     // Checkers
     if(!validUsername()) {
@@ -237,8 +239,11 @@ function register() {
 
     // Async call to register
     $.post(
-            "login/validateRegister/" + username + "/" + email + "/" + password + "/" + remember,
+            "?url=login/validateRegister",
             {
+                'username' : username,
+                'email' : email,
+                'password' : password,
             },
             function(data)
             {
@@ -266,7 +271,7 @@ function register() {
                         displayError("Please use a valid email");
                         break;
                     case 'success':
-                        displaySuccess("Register was successful");
+                        displaySuccess("Email sent to confirm the account");
                         break;
                     default:
                         displayError("Error while processing the register...");
@@ -277,6 +282,50 @@ function register() {
                 displayError("Error while processing the register...");
             });
 }
+
+/**
+ * Send forgot password to action on forgot password.
+ */
+function forgotPassword() {
+    // Variables
+    var email = $('#email').val();
+
+    // Async call to login
+    $.post(
+            "?url=login/forgotPassword",
+            {
+                email : email,
+            },
+            function(data)
+            {
+                var response = data['forgotPassword'];
+                switch(response) {
+                    case 'missing_params':
+                        displayError("Missing input parameters");
+                        break;
+                    case 'fail':
+                        displayError("Failed to send reset password email");
+                        break;
+                    case 'invalid_email':
+                        displayError("Please use a valid email");
+                        break;
+                    case 'inexisting_email': // This is just a trap so the hacker thinks that the email he entered is valid (even when it does not exist so we can avoid bruteforcing real accounts). In the future we would of course remove this comment from JS ;)
+                        displayError("The email you entered does not exist");
+                        break;
+                    case 'success':
+                        displaySuccess("Email sent, check your inbox");
+                        break;
+                    default:
+                        displayError("Error while processing the forgot password...");
+                        break;
+                }
+            })
+            .fail(function(error) {
+                displayError("Error while processing the forgot password...");
+            });
+}
+
+
 
 /**
  * ===========================================================================

@@ -3,6 +3,7 @@ require_once __DIR__ . "/../core/controller.php";
 require_once __DIR__ . "/userCtrl.php";
 require_once __DIR__ . "/../models/eventDAO.php";
 require_once __DIR__ . "/../models/userDAO.php";
+require_once __DIR__ . '/../../library/bcrypt.php';
 
 class LoginCtrl extends Controller {
     /**
@@ -39,7 +40,7 @@ class LoginCtrl extends Controller {
      * Check if a login is valid
      * @return JSON response
      */
-    public function validateLogin($variables) {
+    public function validateLogin() {
         // Need error responses
         $key = "login";
         $missing_params = "missing_params";
@@ -47,15 +48,15 @@ class LoginCtrl extends Controller {
         $success_login = "success";
 
         // Check parameters
-        if(count($variables) != 3) {
+        $params = ['username' => '', 'password' => '', 'remember' => ''];
+        if(!$this->fillPostParameters($params)) {
             $this->printResponse($key, $missing_params);
-            return false;
+            return;
         }
-        $params = ['username' => $variables[0], 'password' => $variables[1], 'remember' => $variables[2]];
 
         // Convert email to username
         if(filter_var($params['username'], FILTER_VALIDATE_EMAIL)) {
-            $user = getUserFromEmail($params['username']);
+            $user = UserDAO::getUserFromEmail($params['username']);
             if($user == NULL) {
                 $this->printResponse($key, $fail_login);
                 return;
@@ -84,7 +85,7 @@ class LoginCtrl extends Controller {
      * @param variables variables sent by the user
      * @return response of valid register
      */
-    public function validateRegister($variables) {
+    public function validateRegister() {
         // Need error responses
         $key = "register";
         $missing_params = "missing_params";
@@ -97,11 +98,11 @@ class LoginCtrl extends Controller {
         $success_register = "success";
 
         // Check parameters
-        if(count($variables) != 4) {
+        $params = ['username' => '', 'email' => '', 'password' => ''];
+        if(!$this->fillPostParameters($params)) {
             $this->printResponse($key, $missing_params);
-            return false;
+            return;
         }
-        $params = ['username' => $variables[0], 'email' => $variables[1], 'password' => $variables[2], 'remember' => $variables[3]];
 
         // Validate parameters
         if(strlen($params['username']) < 4 || strlen($params['username']) > 15) {
@@ -125,16 +126,37 @@ class LoginCtrl extends Controller {
             return;
         }
 
+        // Generate token
+        $token = generateToken(64);
+
         // Create register
-        $params['password'] = password_hash($params['password'], PASSWORD_BCRYPT);
-        if(!UserDAO::createNewUser($params['username'], $params['password'], $params['email'])) {
+        $params['password'] = Bcrypt::hashPassword($params['password']);
+        if(!UserDAO::createNewUser($params['username'], $params['password'], $params['email'], $token)) {
             $this->printResponse($key, $fail_register);
             return;
         }
 
-        // Update token
-        $token = UserDAO::regenToken($params['username'], $params['remember']);
-        if(!$token) {
+        // Send the email
+        $to = strip_tags($params['email']);
+        $username = $params['username'];
+        $link = "http://" . $_SERVER['SERVER_NAME'] . $_SERVER['REQUEST_URI'];
+        $link = substr($link, 0, strpos($link, "?"));
+        $link .= "?url=login/confirmAccount&username=$username&token=$token";
+
+        $subject = 'Event Manager - Confirm your account';
+
+        $css = file_get_contents(__DIR__ . '/../../public/css/confirmAccount.css');
+        $message = file_get_contents(__DIR__ . '/../../public/confirmAccount.html');
+        $message = str_replace('%css%', $css, $message);
+        $message = str_replace('%username%', $username, $message);
+        $message = str_replace('%link%', $link, $message);
+
+        $headers = "To: $to\r\n";
+        $headers = "From: Event Manager<noreply@eventmanager.xyz>\r\n";
+        $headers .= "MIME-Version: 1.0\r\n";
+        $headers .= "Content-Type: text/html; charset=ISO-8859-1\r\n";
+
+        if(!mail($to, $subject, $message, $headers)) {
             $this->printResponse($key, $fail_register);
             return;
         }
@@ -146,17 +168,198 @@ class LoginCtrl extends Controller {
      * Validate a user logout
      */
     public function validateLogout() {
-        // Check if is logged in
+        // Variables
+        $key = "logout";
+        $not_logged = "not_logged";
+        $success_logout = "success";
+
+       // Check if is logged in
         $user = UserDAO::getCurrentUser();
         if($user == NULL) {
-            $this->printResponse("logout", "not_logged");
+            $this->printResponse($key, $not_logged);
             return;
         }
 
         // Delete token
         UserDAO::deleteToken($user->getUsername(), $_COOKIE['em_token']);
 
-        $this->printResponse("logout", "success");
+        $this->printResponse($key, $success_logout);
+    }
+
+    /**
+     * Send an email to the user that lost
+     * his password
+     */
+    public function forgotPassword() {
+        // Variables
+        $key = "forgotPassword";
+        $missing_params = "missing_params";
+        $invalid_email = "invalid_email";
+        $fail_forgot_password = "fail";
+        $success_forgot_password = "success";
+
+        // Check parameters
+        $params = ['email' => ''];
+        if(!$this->fillPostParameters($params)) {
+            $this->printResponse($key, $missing_params);
+            return;
+        }
+
+        // Validate parameters
+        if(!filter_var($params['email'], FILTER_VALIDATE_EMAIL)) {
+            $this->printResponse($key, $invalid_email);
+            return;
+        }
+        $to = strip_tags($params['email']);
+        if(UserDAO::emailExists($to)) {
+            // Get the user
+            $user = UserDAO::getUserFromEmail($to);
+            if($user == NULL) {
+                $this->printResponse($key, $invalid_email);
+                return;
+            }
+            $username = $user->getUsername();
+
+            // Generate token
+            $token = generateToken(64);
+            $link = "http://" . $_SERVER['SERVER_NAME'] . $_SERVER['REQUEST_URI'];
+            $link = substr($link, 0, strpos($link, "?"));
+            $link .= "?url=login/resetPassword&username=$username&token=$token";
+
+            // Save in the database
+            if(!UserDAO::addRecoverPasswordToken($params['username'], $token)) {
+                $this->printResponse($key, $fail_forgot_password);
+                return;
+            }
+
+            // Send the email
+            $subject = 'Event Manager - Forgot your password';
+
+            $css = file_get_contents(__DIR__ . '/../../public/css/forgotPassword.css');
+            $message = file_get_contents(__DIR__ . '/../../public/forgotPassword.html');
+            $message = str_replace('%css%', $css, $message);
+            $message = str_replace('%username%', $username, $message);
+            $message = str_replace('%link%', $link, $message);
+
+            $headers = "To: $to\r\n";
+            $headers = "From: Event Manager<noreply@eventmanager.xyz>\r\n";
+            $headers .= "MIME-Version: 1.0\r\n";
+            $headers .= "Content-Type: text/html; charset=ISO-8859-1\r\n";
+
+            if(!mail($to, $subject, $message, $headers)) {
+                $this->printResponse($key, $fail_forgot_password);
+                return;
+            }
+        }
+
+        $this->printResponse($key, $success_forgot_password);
+    }
+
+    /**
+     * Confirm a user account
+     */
+    public function confirmAccount() {
+        // Need error responses
+        $key = "confirm_account";
+        $missing_params = "missing_params";
+        $fail_confirm_account = "fail";
+        $success_confirm_account = "success";
+
+        // Check parameters
+        $params = ['username' => '', 'token' => ''];
+        if(!$this->fillGetParameters($params)) {
+            $this->printResponse($key, $missing_params);
+            return;
+        }
+
+        // Validate confirm account token
+        $user = UserDAO::validateConfirmToken($params['username'], $params['token']);
+        if($user == NULL) {
+            $this->printResponse($key, $fail_confirm_account);
+            return;
+        }
+
+        // Confirm account
+        if(!UserDAO::confirmAccount($user)) {
+            $this->printResponse($key, $fail_confirm_account);
+            return;
+        }
+
+        // Update token
+        $token = UserDAO::regenToken($params['username'], "false");
+        if(!$token) {
+            $this->printResponse($key, $fail_confirm_account);
+            return;
+        }
+
+        $this->printResponse($key, $success_confirm_account);
+
+        $link = "http://" . $_SERVER['SERVER_NAME'] . $_SERVER['REQUEST_URI'];
+        $link = substr($link, 0, strpos($link, "?"));
+        header("Location: $link");
+    }
+
+    /**
+     * Reset a user password
+     */
+    public function resetPassword() {
+        // Need error responses
+        $key = "reset_password";
+        $missing_params = "missing_params";
+        $fail_reset_password = "fail";
+        $success_reset_password = "success";
+
+        // Check parameters
+        $params = ['username' => '', 'token' => ''];
+        if(!$this->fillGetParameters($params)) {
+            $this->printResponse($key, $missing_params);
+            return;
+        }
+
+        // Validate confirm account token
+        $user = UserDAO::validateResetPasswordToken($params['username'], $params['token']);
+        if($user == NULL) {
+            $this->printResponse($key, $fail_reset_password);
+            return;
+        }
+
+        // Reset the password
+        $newPassword = UserDAO::resetPassword($user);
+        if(!$newPassword) {
+            $this->printResponse($key, $fail_reset_password);
+            return;
+        }
+
+        echo $newPassword;
+        $this->printResponse($key, $success_reset_password);
+    }
+
+    /**
+     * Fill the expected get parameters
+     * @param params array map with params
+     * @return true if all the needed variables are set, false otherwise
+     */
+    private function fillGetParameters(&$params) {
+        foreach($params as $key => $param) {
+            if(!isset($_GET[$key]))
+                return false;
+            $params[$key] = $_GET[$key];
+        }
+        return true;
+    }
+
+    /**
+     * Fill the expected post parameters
+     * @param params array map with params
+     * @return true if all the needed variables are set, false otherwise
+     */
+    private function fillPostParameters(&$params) {
+        foreach($params as $key => $param) {
+            if(!isset($_POST[$key]))
+                return false;
+            $params[$key] = $_POST[$key];
+        }
+        return true;
     }
 
     /**
@@ -164,7 +367,7 @@ class LoginCtrl extends Controller {
      * @param key key of the response
      * @param value value of the response
      */
-    public function printResponse($key, $value) {
+    private function printResponse($key, $value) {
         $data = [$key => $value];
         header('Content-Type: application/json');
         echo json_encode($data);

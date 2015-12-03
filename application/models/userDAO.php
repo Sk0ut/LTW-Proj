@@ -2,6 +2,7 @@
 require_once __DIR__ . "/database.php";
 require_once __DIR__ . "/user.php";
 require_once __DIR__ . "/../../library/security.php";
+require_once(__DIR__ . '/../../library/bcrypt.php');
 
 /**
  * User Database Access Object
@@ -13,14 +14,31 @@ class UserDAO {
      * @param username username of the new user
      * @param password password of the user
      * @param email email of the user
+     * @param token authentication token
      * @return true if was successfull, false otherwise
      */
-    public static function createNewUser($username, $password, $email) {
+    public static function createNewUser($username, $password, $email, $token) {
         $database = Database::getInstance();
 
-        $query = "INSERT INTO Users(username, password, email) VALUES (?, ?, ?)";
-        $params = [ $username, $password, $email ];
-        $types = [ PDO::PARAM_STR, PDO::PARAM_STR, PDO::PARAM_STR ];
+        $query = "INSERT INTO AwaitingUsers(username, password, email, authToken, registerDate) VALUES (?, ?, ?, ?, date('now'))";
+        $params = [ $username, $password, $email, $token ];
+        $types = [ PDO::PARAM_STR, PDO::PARAM_STR, PDO::PARAM_STR, PDO::PARAM_STR ];
+        $result = $database->executeUpdate($query, $params, $types);
+        return $result > 0;
+    }
+
+    /**
+     * Save a recover password token
+     * @param userId userId of the recover password token
+     * @param token recover password token
+     * @return true if was successfull, false otherwise
+     */
+    public static function addRecoverPasswordToken($userId, $token) {
+        $database = Database::getInstance();
+
+        $query = "INSERT INTO LostUsers(userId, authToken) VALUES (?, ?)";
+        $params = [ $userId, $token ];
+        $types = [ PDO::PARAM_INT, PDO::PARAM_STR ];
         $result = $database->executeUpdate($query, $params, $types);
         return $result > 0;
     }
@@ -123,6 +141,44 @@ class UserDAO {
     }
 
     /**
+     * Get a awaiting confirmation user from his username
+     * @param username username of the user
+     * @return user with that username or NULL
+     */
+    public static function getAwaitingUserFromUsername($username) {
+        $database = Database::getInstance();
+
+        $query = "SELECT * FROM AwaitingUsers WHERE username = ?";
+        $params = [ $username ];
+        $types = [ PDO::PARAM_STR ];
+        $result = $database->executeQuery($query, $params, $types);
+
+        if(!$result || count($result) <= 0)
+            return NULL;
+
+        return new User($result[0]['id'], $result[0]['username'], $result[0]['password'], $result[0]['email']);
+    }
+
+    /**
+     * Get a awaiting confirmation user from his email
+     * @param email email of the user
+     * @return user with that email or NULL
+     */
+    public static function getAwaitingUserFromEmail($email) {
+        $database = Database::getInstance();
+
+        $query = "SELECT * FROM AwaitingUsers WHERE email = ?";
+        $params = [ $email ];
+        $types = [ PDO::PARAM_STR ];
+        $result = $database->executeQuery($query, $params, $types);
+
+        if(!$result || count($result) <= 0)
+            return NULL;
+
+        return new User($result[0]['id'], $result[0]['username'], $result[0]['password'], $result[0]['email']);
+    }
+
+    /**
      * Check if a login is valid
      * @param username username to check login
      * @param password password of the username to check
@@ -133,6 +189,100 @@ class UserDAO {
         if($user == NULL)
             return false;
         return $user->passwordMatch($password);
+    }
+
+    /**
+     * Check if a token is a valid confirmation account token
+     * @param username username to check confirmation account token
+     * @param token token of the account confirmation
+     * @return user with that username and confirmation account token
+     */
+    public static function validateConfirmToken($username, $token) {
+        $database = Database::getInstance();
+
+        $query = "SELECT * FROM AwaitingUsers WHERE username = ? AND authToken = ?";
+        $params = [ $username, $token ];
+        $types = [ PDO::PARAM_STR, PDO::PARAM_STR ];
+        $result = $database->executeQuery($query, $params, $types);
+
+        if(!$result || count($result) <= 0)
+            return NULL;
+
+        return new User($result[0]['id'], $result[0]['username'], $result[0]['password'], $result[0]['email']);
+    }
+
+    /**
+     * Confirm a user account
+     * @param user user to confirm the account
+     * @return true if account was confirmed, false otherwise
+     */
+    public static function confirmAccount($user) {
+        // Delete from the database
+        $database = Database::getInstance();
+        $query = "DELETE FROM AwaitingUsers WHERE id = ?";
+        $params = [ $user->getId() ];
+        $types = [ PDO::PARAM_INT ];
+        $result = $database->executeUpdate($query, $params, $types);
+        if($result <= 0)
+            return false;
+
+        // Insert into the users database
+        $query = "INSERT INTO Users(username, password, email) VALUES (?, ?, ?)";
+        $params = [ $user->getUsername(), $user->getPassword(), $user->getEmail() ];
+        $types = [ PDO::PARAM_STR, PDO::PARAM_STR, PDO::PARAM_STR ];
+        $result = $database->executeUpdate($query, $params, $types);
+        return $result > 0;
+    }
+
+    /**
+     * Check if a token is a valid reset password token
+     * @param username username to check reset password token
+     * @param token token of the account reset password
+     * @return user with that username and confirmation account token
+     */
+    public static function validateResetPasswordToken($username, $token) {
+        $user = UserDAO::getUserFromUsername($username);
+        if($user == NULL)
+            return NULL;
+
+        $database = Database::getInstance();
+
+        $query = "SELECT * FROM LostUsers WHERE userId = ? AND authToken = ?";
+        $params = [ $user->getId(), $token ];
+        $types = [ PDO::PARAM_INT, PDO::PARAM_STR ];
+        $result = $database->executeQuery($query, $params, $types);
+
+        if(!$result || count($result) <= 0)
+            return NULL;
+
+        return $user;
+    }
+
+    /**
+     * Reset a user account password
+     * @param user user to reset the account password
+     * @return new user password if successfull, false otherwise
+     */
+    public static function resetPassword($user) {
+        // Delete from the database
+        $database = Database::getInstance();
+        $query = "DELETE FROM LostUsers WHERE userId = ?";
+        $params = [ $user->getId() ];
+        $types = [ PDO::PARAM_INT ];
+        $result = $database->executeUpdate($query, $params, $types);
+        if($result <= 0)
+            return false;
+
+        // Update user's password in the database
+        $newPassword = generateToken(10);
+        $password = Bcrypt::hashPassword($newPassword);
+        $query = "UPDATE Users SET password = ? WHERE id = ?";
+        $params = [$password , $user->getId() ];
+        $types = [ PDO::PARAM_STR, PDO::PARAM_INT ];
+        $result = $database->executeUpdate($query, $params, $types);
+        if($result <= 0)
+            return false;
+        return $newPassword;
     }
 
     /**
@@ -150,7 +300,7 @@ class UserDAO {
             return NULL;
 
         $footprint = UserDAO::getFootPrint($user->getId(), $token);
-        if(!password_verify($_SERVER['HTTP_USER_AGENT'].$_SERVER['REMOTE_ADDR'], $footprint))
+        if(!Bcrypt::checkPassword($_SERVER['HTTP_USER_AGENT'].$_SERVER['REMOTE_ADDR'], $footprint))
             return NULL;
         return $user;
     }
@@ -161,7 +311,7 @@ class UserDAO {
      * @return true if a user exists with that username
      */
     public static function usernameExists($username) {
-        return UserDAO::getUserFromUsername($username) != NULL;
+        return UserDAO::getUserFromUsername($username) != NULL || UserDAO::getAwaitingUserFromUsername($username) != NULL;
     }
 
     /**
@@ -170,7 +320,7 @@ class UserDAO {
      * @return true if a user exists with that email
      */
     public static function emailExists($email) {
-        return UserDAO::getUserFromEmail($email) != NULL;
+        return UserDAO::getUserFromEmail($email) != NULL || UserDAO::getAwaitingUserFromEmail($email) != NULL;
     }
 
     /**
@@ -188,7 +338,7 @@ class UserDAO {
         if(!isset($_SERVER['HTTP_USER_AGENT']) || !isset($_SERVER['REMOTE_ADDR']))
             return false;
         $userId = $user->getId();
-        $footprint = password_hash($_SERVER['HTTP_USER_AGENT'].$_SERVER['REMOTE_ADDR'], PASSWORD_BCRYPT);
+        $footprint = Bcrypt::hashPassword($_SERVER['HTTP_USER_AGENT'].$_SERVER['REMOTE_ADDR']);
 
         // Delete previous token (if exists)
         if(isset($_COOKIE['em_token']))
@@ -248,6 +398,26 @@ class UserDAO {
 
         return true;
     }
+	
+		public static function searchUsername($username) {
+		$database = Database::getInstance();
+
+		$query = "SELECT id FROM Users WHERE username LIKE ?";
+		$params = ['%' . $username . '%'];
+		$types = [PDO::PARAM_STR];
+
+		$result = $database->executeQuery($query, $params, $types);
+		$users = [];
+
+		foreach($result as $row){
+			$user = self::getUserFromId($row['id']);
+			if ($user == NULL)
+				return NULL;
+			$users[] = $user;
+		}
+
+		return $users;
+	}
 }
 
 ?>

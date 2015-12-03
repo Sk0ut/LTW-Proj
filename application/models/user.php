@@ -1,5 +1,6 @@
 <?php
 
+require_once(__DIR__ . '/../../library/bcrypt.php');
 require_once("database.php");
 
 /**
@@ -79,7 +80,7 @@ class User {
      * @return true if matches, false otherwise
      */
     public function passwordMatch($password) {
-        return password_verify($password, $this->_password);
+        return Bcrypt::checkPassword($password, $this->_password);
     }
 
     /**
