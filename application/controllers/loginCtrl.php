@@ -3,7 +3,7 @@ require_once __DIR__ . "/../core/controller.php";
 require_once __DIR__ . "/userCtrl.php";
 require_once __DIR__ . "/../models/eventDAO.php";
 require_once __DIR__ . "/../models/userDAO.php";
-require_once(__DIR__ . '/../../library/bcrypt.php');
+require_once __DIR__ . '/../../library/bcrypt.php';
 
 class LoginCtrl extends Controller {
     /**
