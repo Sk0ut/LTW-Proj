@@ -96,7 +96,7 @@ class EventDAO {
 		$db = Database::getInstance();
 
 		$query = "SELECT id FROM Events WHERE name LIKE ?";
-		$params = [$name];
+		$params = ['%' . $name . '%'];
 		$types = [PDO::PARAM_STR];
 
 		$result = $db->executeQuery($query, $params, $types);
