@@ -20,7 +20,7 @@ class UserDAO {
     public static function createNewUser($username, $password, $email, $token) {
         $database = Database::getInstance();
 
-        $query = "INSERT INTO AwaitingUsers(username, password, email, authToken, registerDate) VALUES (?, ?, ?, ?, NOW())";
+        $query = "INSERT INTO AwaitingUsers(username, password, email, authToken, registerDate) VALUES (?, ?, ?, ?, date('now'))";
         $params = [ $username, $password, $email, $token ];
         $types = [ PDO::PARAM_STR, PDO::PARAM_STR, PDO::PARAM_STR, PDO::PARAM_STR ];
         $result = $database->executeUpdate($query, $params, $types);
