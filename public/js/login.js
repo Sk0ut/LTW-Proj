@@ -17,6 +17,7 @@ function setupListeners() {
     $('#login').submit(onFormSubmit);
     $('#typeLogin').click(onTypeChange);
     $('#typeRegister').click(onTypeChange);
+    $('#typeForgotPassword').click(onTypeChange);
     $('#username').keyup(validateUsername);
     $('#username').click(validateUsername);
     $('#email').keyup(validateEmail);
@@ -86,7 +87,8 @@ function validateUsername() {
  */
 function validateEmail() {
     var typeRegister = $('#typeRegister').is(':checked');
-    if(!typeRegister)
+    var typeRegister = $('#typeForgotPassword').is(':checked');
+    if(!typeRegister && !typeForgotPassword)
         return;
 
     if(!validEmail()) {
@@ -294,10 +296,13 @@ function onFormSubmit(event) {
     // Login / Register
     var typeLogin = $('#typeLogin').is(':checked');
     var typeRegister = $('#typeRegister').is(':checked');
+    var typeForgotPassword = $('#typeForgotPassword').is(':checked');
     if(typeLogin)
         login();
     else if(typeRegister)
         register();
+    else if(typeForgotPassword)
+        forgotPassword();
 }
 
 /**
@@ -308,11 +313,18 @@ function onFormSubmit(event) {
 function onTypeChange(event) {
     var typeLogin = $('#typeLogin').is(':checked');
     var typeRegister = $('#typeRegister').is(':checked');
+    var typeForgotPassword = $('#typeForgotPassword').is(':checked');
     if(typeLogin) {
         $('#submit').attr('title', 'Login');
         $('#username').attr('placeholder','Username / Email');
+
+        // Animations
+        $('#usernameBox').slideDown(500);
         $('#emailBox').slideUp(500);
+        $('#passwordBox').slideDown(500);
         $('#confirmPasswordBox').slideUp(500);
+
+        $('#rememberBox').fadeTo(200, 1);
 
         // Remove red borders if needed
         $('input#username').removeClass('input-text-invalid');
@@ -322,9 +334,37 @@ function onTypeChange(event) {
     } else if(typeRegister) {
         $('#submit').attr('title', 'Register');
         $('#username').attr('placeholder','Username');
+
+        // Animations
+        $('#usernameBox').slideDown(500);
         $('#emailBox').slideDown(500);
+        $('#passwordBox').slideDown(500);
         $('#confirmPasswordBox').slideDown(500);
+
+        $('#rememberBox').fadeTo(500, 0);
+    } else if(typeForgotPassword) {
+        $('#submit').attr('title', 'Send email');
+
+        // Animations
+        $('#usernameBox').slideUp(500);
+        $('#emailBox').slideDown(500);
+        $('#passwordBox').slideUp(500);
+        $('#confirmPasswordBox').slideUp(500);
+
+        $('#rememberBox').fadeTo(500, 0);
+
+        // Remove red borders if needed
+        $('input#username').removeClass('input-text-invalid');
+        $('input#email').removeClass('input-text-invalid');
+        $('input#password').removeClass('input-text-invalid');
+        $('input#confirmPassword').removeClass('input-text-invalid');
     }
+
+    // Clear all fields
+    $('#username').val('');
+    $('#email').val('');
+    $('#password').val('');
+    $('#confirmPassword').val('');
 }
 
 /**

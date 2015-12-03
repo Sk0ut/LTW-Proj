@@ -4,20 +4,20 @@
         <header class="logo">Event Manager</header>
 
         <fieldset>
-            <div class="input-box">
+            <div id="usernameBox" class="input-box">
                 <input type="text" id="username" class="input-text" autocomplete="off" placeholder="Username / Email"/>
             </div>
             <div id="emailBox" class="input-box">
                 <input type="text" id="email" class="input-text" autocomplete="off" placeholder="Email"/>
             </div>
-            <div class="input-box">
+            <div id="passwordBox" class="input-box">
                 <input type="password" id="password" class="input-text" placeholder = "Password"/>
             </div>
             <div id="confirmPasswordBox" class="input-box">
                 <input type="password" id="confirmPassword" class="input-text" placeholder="Confirm Password"/>
             </div>
 
-            <div class="label-input">
+            <div id="rememberBox" class="label-input">
                 <input type="checkbox" id="remember" placeholder="Remember me!" />
                 <label for="remember">Remember me</label>
             </div>
@@ -29,6 +29,10 @@
             <div class="label-input">
                 <input type="radio" id="typeRegister" name="type"/>
                 <label for="typeRegister">Register new account</label>
+            </div>
+            <div class="label-input">
+                <input type="radio" id="typeForgotPassword" name="type"/>
+                <label for="typeForgotPassword">Forgot my password</label>
             </div>
             <input id="submit" type="submit" class="submit-button arrow-icon" value="" title="Login" />
         </fieldset>

@@ -42,7 +42,7 @@ class App {
 
         // Get the method name
         if (isset($url[1])) {
-            if (method_exists($this->controller, $url[1])) {
+            if (is_callable([$this->controller, $url[1]])) {
                 $this->method = $url[1];
             } else {
                 $this->controller = "errorCtrl";

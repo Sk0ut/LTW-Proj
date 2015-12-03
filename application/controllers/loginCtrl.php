@@ -1,6 +1,8 @@
 <?php
 require_once __DIR__ . "/../core/controller.php";
 require_once __DIR__ . "/userCtrl.php";
+require_once __DIR__ . "/../models/eventDAO.php";
+require_once __DIR__ . "/../models/userDAO.php";
 
 class LoginCtrl extends Controller {
     /**
@@ -9,11 +11,28 @@ class LoginCtrl extends Controller {
     public function index() {
         require_once(__DIR__ . '/../../library/headerSession.php');
         if($user == NULL) {
-            $this->view("login_view");
+            $this->loginIndex();
         } else {
-            // TODO: make this better
-            (new UserCtrl)->index($user->getId());
+            $this->userPageIndex($user);
         }
+    }
+
+    /**
+     * Login index page
+     */
+    private function loginIndex() {
+        $this->view("login_view");
+    }
+
+    /**
+     * User page index
+     * @param user user to display user page
+     */
+    private function userPageIndex($user) {
+
+        $ownedEvents = EventDAO::getOwnerEvents($user->getId());
+        $userEvents = EventDAO::getRegisteredEvents($user->getId());
+        $this->view("homepage_view", ['user' => $user, 'ownedEvents' => $ownedEvents, 'userEvents' => $userEvents]);
     }
 
     /**
@@ -21,8 +40,6 @@ class LoginCtrl extends Controller {
      * @return JSON response
      */
     public function validateLogin($variables) {
-        require_once __DIR__ . "/../models/userDAO.php";
-
         // Need error responses
         $key = "login";
         $missing_params = "missing_params";
@@ -68,8 +85,6 @@ class LoginCtrl extends Controller {
      * @return response of valid register
      */
     public function validateRegister($variables) {
-        require_once __DIR__ . "/../models/userDAO.php";
-
         // Need error responses
         $key = "register";
         $missing_params = "missing_params";
@@ -131,8 +146,6 @@ class LoginCtrl extends Controller {
      * Validate a user logout
      */
     public function validateLogout() {
-        require_once __DIR__ . "/../models/userDAO.php";
-
         // Check if is logged in
         $user = UserDAO::getCurrentUser();
         if($user == NULL) {
