@@ -226,6 +226,12 @@ class LoginCtrl extends Controller {
             $link = substr($link, 0, strpos($link, "?"));
             $link .= "?url=login/resetPassword&username=$username&token=$token";
 
+            // Save in the database
+            if(!UserDAO::addRecoverPasswordToken($params['username'], $token)) {
+                $this->printResponse($key, $fail_forgot_password);
+                return;
+            }
+
             // Send the email
             $subject = 'Event Manager - Forgot your password';
 
@@ -291,6 +297,41 @@ class LoginCtrl extends Controller {
         $link = "http://" . $_SERVER['SERVER_NAME'] . $_SERVER['REQUEST_URI'];
         $link = substr($link, 0, strpos($link, "?"));
         header("Location: $link");
+    }
+
+    /**
+     * Reset a user password
+     */
+    public function resetPassword() {
+        // Need error responses
+        $key = "reset_password";
+        $missing_params = "missing_params";
+        $fail_reset_password = "fail";
+        $success_reset_password = "success";
+
+        // Check parameters
+        $params = ['username' => '', 'token' => ''];
+        if(!$this->fillGetParameters($params)) {
+            $this->printResponse($key, $missing_params);
+            return;
+        }
+
+        // Validate confirm account token
+        $user = UserDAO::validateResetPasswordToken($params['username'], $params['token']);
+        if($user == NULL) {
+            $this->printResponse($key, $fail_reset_password);
+            return;
+        }
+
+        // Reset the password
+        $newPassword = UserDAO::resetPassword($user);
+        if(!$newPassword) {
+            $this->printResponse($key, $fail_reset_password);
+            return;
+        }
+
+        echo $newPassword;
+        $this->printResponse($key, $success_reset_password);
     }
 
     /**

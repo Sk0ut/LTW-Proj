@@ -28,6 +28,22 @@ class UserDAO {
     }
 
     /**
+     * Save a recover password token
+     * @param userId userId of the recover password token
+     * @param token recover password token
+     * @return true if was successfull, false otherwise
+     */
+    public static function addRecoverPasswordToken($userId, $token) {
+        $database = Database::getInstance();
+
+        $query = "INSERT INTO LostUsers(userId, authToken) VALUES (?, ?)";
+        $params = [ $userId, $token ];
+        $types = [ PDO::PARAM_INT, PDO::PARAM_STR ];
+        $result = $database->executeUpdate($query, $params, $types);
+        return $result > 0;
+    }
+
+    /**
      * Get the user that is currently navigating
      * the website
      * @return current user or NULL
@@ -218,6 +234,56 @@ class UserDAO {
         return $result > 0;
     }
 
+    /**
+     * Check if a token is a valid reset password token
+     * @param username username to check reset password token
+     * @param token token of the account reset password
+     * @return user with that username and confirmation account token
+     */
+    public static function validateResetPasswordToken($username, $token) {
+        $user = UserDAO::getUserFromUsername($username);
+        if($user == NULL)
+            return NULL;
+
+        $database = Database::getInstance();
+
+        $query = "SELECT * FROM LostUsers WHERE userId = ? AND authToken = ?";
+        $params = [ $user->getId(), $token ];
+        $types = [ PDO::PARAM_INT, PDO::PARAM_STR ];
+        $result = $database->executeQuery($query, $params, $types);
+
+        if(!$result || count($result) <= 0)
+            return NULL;
+
+        return $user;
+    }
+
+    /**
+     * Reset a user account password
+     * @param user user to reset the account password
+     * @return new user password if successfull, false otherwise
+     */
+    public static function resetPassword($user) {
+        // Delete from the database
+        $database = Database::getInstance();
+        $query = "DELETE FROM LostUsers WHERE userId = ?";
+        $params = [ $user->getId() ];
+        $types = [ PDO::PARAM_INT ];
+        $result = $database->executeUpdate($query, $params, $types);
+        if($result <= 0)
+            return false;
+
+        // Update user's password in the database
+        $newPassword = generateToken(10);
+        $password = Bcrypt::hashPassword($newPassword);
+        $query = "UPDATE Users SET password = ? WHERE id = ?";
+        $params = [$password , $user->getId() ];
+        $types = [ PDO::PARAM_STR, PDO::PARAM_INT ];
+        $result = $database->executeUpdate($query, $params, $types);
+        if($result <= 0)
+            return false;
+        return $newPassword;
+    }
 
     /**
      * Validate a token
