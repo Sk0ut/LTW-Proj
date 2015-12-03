@@ -24,12 +24,11 @@ CREATE TABLE IF NOT EXISTS AwaitingUsers (
 );
 
 CREATE TABLE IF NOT EXISTS LostUsers (
-    id INTEGER,
+    userId INTEGER,
     authToken VARCHAR,
 
-    CONSTRAINT pk_Users PRIMARY KEY (id),
-    CONSTRAINT uv_Username UNIQUE (username),
-    CONSTRAINT uv_Email UNIQUE (email)
+    CONSTRAINT pk_Users PRIMARY KEY (userId),
+    CONSTRAINT fk_User FOREIGN KEY (userId) REFERENCES Users(id)
 );
 
 CREATE TABLE IF NOT EXISTS EventType (

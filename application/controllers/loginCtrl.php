@@ -3,6 +3,7 @@ require_once __DIR__ . "/../core/controller.php";
 require_once __DIR__ . "/userCtrl.php";
 require_once __DIR__ . "/../models/eventDAO.php";
 require_once __DIR__ . "/../models/userDAO.php";
+require_once(__DIR__ . '/../../library/bcrypt.php');
 
 class LoginCtrl extends Controller {
     /**
@@ -125,16 +126,36 @@ class LoginCtrl extends Controller {
             return;
         }
 
+        // Generate token
+        $token = generateToken(64);
+
         // Create register
-        $params['password'] = password_hash($params['password'], PASSWORD_BCRYPT);
-        if(!UserDAO::createNewUser($params['username'], $params['password'], $params['email'])) {
+        $params['password'] = Bcrypt::hashPassword($params['password']);
+        if(!UserDAO::createNewUser($params['username'], $params['password'], $params['email'], $token)) {
             $this->printResponse($key, $fail_register);
             return;
         }
 
-        // Update token
-        $token = UserDAO::regenToken($params['username'], $params['remember']);
-        if(!$token) {
+        // Send the email
+        $username = $params['username'];
+        $link = "http://" . $_SERVER['SERVER_NAME'] . $_SERVER['REQUEST_URI'];
+        $link = substr($link, 0, strpos($link, "?"));
+        $link .= "?url=confirmAccount&username=$username&token=$token";
+
+        $subject = 'Event Manager - Confirm your account';
+
+        $css = file_get_contents(__DIR__ . '/../../public/css/confirmAccount.css');
+        $message = file_get_contents(__DIR__ . '/../../public/confirmAccount.html');
+        $message = str_replace('%css%', $css, $message);
+        $message = str_replace('%username%', $params['username'], $message);
+        $message = str_replace('%link%', $link, $message);
+
+        $headers = "To: $to\r\n";
+        $headers = "From: Event Manager<noreply@eventmanager.xyz>\r\n";
+        $headers .= "MIME-Version: 1.0\r\n";
+        $headers .= "Content-Type: text/html; charset=ISO-8859-1\r\n";
+
+        if(!mail($to, $subject, $message, $headers)) {
             $this->printResponse($key, $fail_register);
             return;
         }
@@ -169,8 +190,6 @@ class LoginCtrl extends Controller {
      * his password
      */
     public function forgotPassword() {
-        require_once(__DIR__ . '/../../library/security.php');
-
         // Variables
         $key = "forgotPassword";
         $missing_params = "missing_params";
@@ -201,8 +220,10 @@ class LoginCtrl extends Controller {
             $username = $user->getUsername();
 
             // Generate token
-            $token = generateToken(16);
-            $link = "//eventmanager.xyz/events/public/resetPassword?username=$username&token=$token";
+            $token = generateToken(64);
+            $link = "http://" . $_SERVER['SERVER_NAME'] . $_SERVER['REQUEST_URI'];
+            $link = substr($link, 0, strpos($link, "?"));
+            $link .= "?url=resetPassword&username=$username&token=$token";
 
             // Send the email
             $subject = 'Event Manager - Forgot your password';

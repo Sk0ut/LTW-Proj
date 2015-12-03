@@ -180,7 +180,7 @@ function login() {
 
     // Async call to login
     $.post(
-            "login/validateLogin",
+            "?url=login/validateLogin",
             {
                 username : username,
                 password : password,
@@ -239,7 +239,7 @@ function register() {
 
     // Async call to register
     $.post(
-            "login/validateRegister",
+            "?url=login/validateRegister",
             {
                 'username' : username,
                 'email' : email,
@@ -292,7 +292,7 @@ function forgotPassword() {
 
     // Async call to login
     $.post(
-            "login/forgotPassword",
+            "?url=login/forgotPassword",
             {
                 email : email,
             },
@@ -308,6 +308,9 @@ function forgotPassword() {
                         break;
                     case 'invalid_email':
                         displayError("Please use a valid email");
+                        break;
+                    case 'inexisting_email': // This is just a trap so the hacker thinks that the email he entered is valid (even when it does not exist so we can avoid bruteforcing real accounts). In the future we would of course remove this comment from JS ;)
+                        displayError("The email you entered does not exist");
                         break;
                     case 'success':
                         displaySuccess("Email sent, check your inbox");

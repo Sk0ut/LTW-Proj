@@ -2,6 +2,7 @@
 require_once __DIR__ . "/database.php";
 require_once __DIR__ . "/user.php";
 require_once __DIR__ . "/../../library/security.php";
+require_once(__DIR__ . '/../../library/bcrypt.php');
 
 /**
  * User Database Access Object
@@ -13,14 +14,15 @@ class UserDAO {
      * @param username username of the new user
      * @param password password of the user
      * @param email email of the user
+     * @param token authentication token
      * @return true if was successfull, false otherwise
      */
-    public static function createNewUser($username, $password, $email) {
+    public static function createNewUser($username, $password, $email, $token) {
         $database = Database::getInstance();
 
-        $query = "INSERT INTO Users(username, password, email) VALUES (?, ?, ?)";
-        $params = [ $username, $password, $email ];
-        $types = [ PDO::PARAM_STR, PDO::PARAM_STR, PDO::PARAM_STR ];
+        $query = "INSERT INTO AwaitingUsers(username, password, email, authToken, registerDate) VALUES (?, ?, ?, ?, NOW())";
+        $params = [ $username, $password, $email, $token ];
+        $types = [ PDO::PARAM_STR, PDO::PARAM_STR, PDO::PARAM_STR, PDO::PARAM_STR ];
         $result = $database->executeUpdate($query, $params, $types);
         return $result > 0;
     }
@@ -150,7 +152,7 @@ class UserDAO {
             return NULL;
 
         $footprint = UserDAO::getFootPrint($user->getId(), $token);
-        if(!password_verify($_SERVER['HTTP_USER_AGENT'].$_SERVER['REMOTE_ADDR'], $footprint))
+        if(!Bcrypt::checkPassword($_SERVER['HTTP_USER_AGENT'].$_SERVER['REMOTE_ADDR'], $footprint))
             return NULL;
         return $user;
     }
@@ -188,7 +190,7 @@ class UserDAO {
         if(!isset($_SERVER['HTTP_USER_AGENT']) || !isset($_SERVER['REMOTE_ADDR']))
             return false;
         $userId = $user->getId();
-        $footprint = password_hash($_SERVER['HTTP_USER_AGENT'].$_SERVER['REMOTE_ADDR'], PASSWORD_BCRYPT);
+        $footprint = Bcrypt::hashPassword($_SERVER['HTTP_USER_AGENT'].$_SERVER['REMOTE_ADDR']);
 
         // Delete previous token (if exists)
         if(isset($_COOKIE['em_token']))
