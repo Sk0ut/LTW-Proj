@@ -137,6 +137,7 @@ class LoginCtrl extends Controller {
         }
 
         // Send the email
+        $to = strip_tags($params['email']);
         $username = $params['username'];
         $link = "http://" . $_SERVER['SERVER_NAME'] . $_SERVER['REQUEST_URI'];
         $link = substr($link, 0, strpos($link, "?"));
@@ -147,7 +148,7 @@ class LoginCtrl extends Controller {
         $css = file_get_contents(__DIR__ . '/../../public/css/confirmAccount.css');
         $message = file_get_contents(__DIR__ . '/../../public/confirmAccount.html');
         $message = str_replace('%css%', $css, $message);
-        $message = str_replace('%username%', $params['username'], $message);
+        $message = str_replace('%username%', $username, $message);
         $message = str_replace('%link%', $link, $message);
 
         $headers = "To: $to\r\n";
