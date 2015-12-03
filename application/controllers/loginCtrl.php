@@ -55,7 +55,7 @@ class LoginCtrl extends Controller {
 
         // Convert email to username
         if(filter_var($params['username'], FILTER_VALIDATE_EMAIL)) {
-            $user = getUserFromEmail($params['username']);
+            $user = UserDAO::getUserFromEmail($params['username']);
             if($user == NULL) {
                 $this->printResponse($key, $fail_login);
                 return;
@@ -146,17 +146,22 @@ class LoginCtrl extends Controller {
      * Validate a user logout
      */
     public function validateLogout() {
-        // Check if is logged in
+        // Variables
+        $key = "logout";
+        $not_logged = "not_logged";
+        $success_logout = "success";
+
+       // Check if is logged in
         $user = UserDAO::getCurrentUser();
         if($user == NULL) {
-            $this->printResponse("logout", "not_logged");
+            $this->printResponse($key, $not_logged);
             return;
         }
 
         // Delete token
         UserDAO::deleteToken($user->getUsername(), $_COOKIE['em_token']);
 
-        $this->printResponse("logout", "success");
+        $this->printResponse($key, $success_logout);
     }
 
     /**
@@ -164,7 +169,58 @@ class LoginCtrl extends Controller {
      * his password
      */
     public function forgotPassword() {
+        require_once(__DIR__ . '/../../library/security.php');
 
+        // Variables
+        $key = "forgotPassword";
+        $missing_params = "missing_params";
+        $invalid_email = "invalid_email";
+        $success_forgot_password = "success";
+
+        // Check parameters
+        $params = ['email' => ''];
+        if(!$this->fillPostParameters($params)) {
+            $this->printResponse($key, $missing_params);
+            return false;
+        }
+
+        // Validate parameters
+        if(!filter_var($params['email'], FILTER_VALIDATE_EMAIL)) {
+            $this->printResponse($key, $invalid_email);
+            return;
+        }
+        $to = strip_tags($params['email']);
+        if(UserDAO::emailExists($to)) {
+            // Get the user
+            $user = UserDAO::getUserFromEmail($to);
+            if($user == NULL) {
+                $this->printResponse($key, $invalid_email);
+                return;
+            }
+            $username = $user->getUsername();
+
+            // Generate token
+            $token = generateToken(16);
+            $link = "//eventmanager.xyz/events/public/resetPassword?username=$username&token=$token";
+
+            // Send the email
+            $subject = 'Event Manager - Forgot your password';
+
+            $css = file_get_contents(__DIR__ . '/../../public/css/forgotPassword.css');
+            $message = file_get_contents(__DIR__ . '/../../public/forgotPassword.html');
+            $message = str_replace('%css%', $css, $message);
+            $message = str_replace('%username%', $username, $message);
+            $message = str_replace('%link%', $link, $message);
+
+            $headers = "To: $to\r\n";
+            $headers = "From: Event Manager<noreply@eventmanager.xyz>\r\n";
+            $headers .= "MIME-Version: 1.0\r\n";
+            $headers .= "Content-Type: text/html; charset=ISO-8859-1\r\n";
+
+            mail($to, $subject, $message, $headers);
+        }
+
+        $this->printResponse($key, $success_forgot_password);
     }
 
     /**

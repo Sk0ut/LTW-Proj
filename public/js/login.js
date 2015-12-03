@@ -294,33 +294,28 @@ function forgotPassword() {
     $.post(
             "login/forgotPassword",
             {
-                username : username,
-                password : password,
-                remember : remember
+                email : email,
             },
             function(data)
             {
-                var response = data['login'];
+                var response = data['forgotPassword'];
                 switch(response) {
                     case 'missing_params':
                         displayError("Missing input parameters");
                         break;
-                    case 'fail':
-                        displayError("Invalid username or password");
+                    case 'invalid_email':
+                        displayError("Please use a valid email");
                         break;
                     case 'success':
-                        displaySuccess("Login successful");
-                        setTimeout(function() {
-                            window.location.replace("");
-                        }, 1000);
+                        displaySuccess("Email sent, check your inbox");
                         break;
                     default:
-                        displayError("Error while processing the login...");
+                        displayError("Error while processing the forgot password...");
                         break;
                 }
             })
             .fail(function(error) {
-                displayError("Error while processing the login...");
+                displayError("Error while processing the forgot password...");
             });
 }
 
