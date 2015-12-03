@@ -29,7 +29,7 @@ class EventDAO {
 						 $eventData['private']);
 	}
 
-	function getOwnerEvents($ownerId) {
+	public static function getOwnerEvents($ownerId) {
 		$db = Database::getInstance();
 
 		$query = "SELECT * FROM Events WHERE ownerId = ?";
@@ -60,7 +60,7 @@ class EventDAO {
 		return $events;
 	}
 	
-	function getRegisteredEvents($userId) {
+	public static function getRegisteredEvents($userId) {
 
 		$db = Database::getInstance();
 
@@ -87,6 +87,26 @@ class EventDAO {
 						 $row['photo'], $row['date'], $row['type'],
 						 $row['private']);
 
+		}
+
+		return $events;
+	}
+	
+	public static function searchEventName($name) {
+		$db = Database::getInstance();
+
+		$query = "SELECT id FROM Events WHERE name LIKE ?";
+		$params = [$name];
+		$types = [PDO::PARAM_STR];
+
+		$result = $db->executeQuery($query, $params, $types);
+		$events = [];
+
+		foreach($result as $row){
+			$event = self::getById($row['id']);
+			if ($event == NULL)
+				return NULL;
+			$events[] = $event;
 		}
 
 		return $events;
