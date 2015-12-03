@@ -91,6 +91,24 @@ class EventDAO {
 
 		return $events;
 	}
+
+	public static function createEvent($ownerId, $name, $description, $photo, $date, $type, $private){
+		$db = Database::getInstance();
+
+		$query = "SELECT id FROM EventType WHERE type = ?";
+		$params = [$type];
+		$types = [PDO:PARAM_STR];
+
+		$result = $db->executeQuery($query, $params, $types);
+
+		if(count($result) != 1){
+				return NULL;
+		}
+
+		$type = $result[0]['id'];
+		$query = "INSERT INTO Events(name, description, ownerId, photo, eventDate, typeId, private) VALUES(?, ?, ?, ?, ?, ?, ?) ";
+		$params[$name, $description, $ownerId, $photo, ]
+	}
 	
 	public static function searchEventName($name) {
 		$db = Database::getInstance();
