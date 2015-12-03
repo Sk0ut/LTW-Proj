@@ -248,6 +248,26 @@ class UserDAO {
 
         return true;
     }
+	
+		public static function searchUsername($username) {
+		$database = Database::getInstance();
+
+		$query = "SELECT id FROM Users WHERE username LIKE ?";
+		$params = ['%' . $username . '%'];
+		$types = [PDO::PARAM_STR];
+
+		$result = $database->executeQuery($query, $params, $types);
+		$users = [];
+
+		foreach($result as $row){
+			$user = self::getUserFromId($row['id']);
+			if ($user == NULL)
+				return NULL;
+			$users[] = $user;
+		}
+
+		return $users;
+	}
 }
 
 ?>
