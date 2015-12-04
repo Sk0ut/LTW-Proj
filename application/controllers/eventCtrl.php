@@ -56,7 +56,7 @@ class EventCtrl extends Controller {
 		move_uploaded_file( $_FILES['image']['tmp_name'], $photoPath);
 		
 		
-		EventDAO::createEvent($user->getId(), $params['name'], $params['description'], $photoPath, $params['date'], $params['type'], $private);
+		EventDAO::createEvent($user->getId(), $params['name'], $params['description'], $photoPath, $params['date'], $params['type'], $params['private']);
 		
 		$this->printResponse($key, $created_event);
 	}
