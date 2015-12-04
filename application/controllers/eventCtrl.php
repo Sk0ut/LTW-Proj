@@ -27,13 +27,21 @@ class EventCtrl extends Controller {
 	public function create() {
 		$key = "createEvent";
         $missing_params = "missing_params";
+		$missing_file = "missing_file";
 		$created_event = "created_event";
-		$params = ['name' => '', 'description' => '', 'date' => '', 'type' => '', 'private' => ''];
+		$params = ['name' => '', 'description' => '', 'date' => '', 'type' => ''];
 		
 		if(!$this->fillPostParameters($params)) {
             $this->printResponse($key, $missing_params);
             return;
         }
+		
+		$params['private'] = isset($_POST['private']);
+		
+		if (!isset($_FILES[0]) || $_FILES[0]['name'] = "") {
+			$this->printResponse($key, $missing_file);
+			return;
+		}
 		
 		$this->printResponse($key, $created_event);
 	}
