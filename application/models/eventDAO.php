@@ -97,17 +97,39 @@ class EventDAO {
 
 		$query = "SELECT id FROM EventType WHERE type = ?";
 		$params = [$type];
-		$types = [PDO:PARAM_STR];
+		$types = [PDO::PARAM_STR];
 
 		$result = $db->executeQuery($query, $params, $types);
 
 		if(count($result) != 1){
-				return NULL;
+			return NULL;
 		}
 
 		$type = $result[0]['id'];
-		$query = "INSERT INTO Events(name, description, ownerId, photo, eventDate, typeId, private) VALUES(?, ?, ?, ?, ?, ?, ?) ";
-		$params[$name, $description, $ownerId, $photo, ]
+		$query = "INSERT INTO Events(name, description, ownerId, photo, eventDate, typeId, private) VALUES(?, ?, ?, ?, ?, ?, ?)";
+		$params = [$name, $description, $ownerId, $photo, $date, $type, $private];
+		$types = [PDO::PARAM_STR, PDO::PARAM_STR, PDO::PARAM_INT, PDO::PARAM_STR, PDO::PARAM_STR, PDO::PARAM_INT, PDO::PARAM_BOOL];
+
+		$result = $db->executeUpdate($query, $params, $types);
+
+		if(count($result) != 1){
+			return NULL;
+		}
+
+		$query = "SELECT last_insert_rowid() AS id FROM Events";
+		$params = [];
+		$types = [];
+
+		$result = $db->executeQuery($query, $params, $types);
+
+		if(count($result) != 1){
+			return NULL;
+		}
+
+		$id = $result[0]['id'];
+
+		return $self.getById($id);
+
 	}
 	
 	public static function searchEventName($name) {

@@ -7,7 +7,9 @@ $( document ).ready(
       dateFormat: "dd-mm-yy",
       changeMonth: true,//this option for allowing user to select month
       changeYear: true //this option for allowing user to select from year range
-    });   
+    });
+
+    $("#createEventForm").submit(onFormSubmit);
 });
 
 $( "#createeventbtn" ).click(function() {
@@ -26,9 +28,6 @@ $( "#createeventbtn" ).click(function() {
     	$("#createEvent").slideDown(500);
 		$("#createeventbtn").attr("value", "Cancel creation");
     }
-
-    /* Em ambos os casos...*/
-    console.log("O JOAO È MERDA");
 });
 
 $('a[href^="#"]').on('click', function(event) {
@@ -43,3 +42,25 @@ $('a[href^="#"]').on('click', function(event) {
     }
 
 });
+
+function onFormSubmit(event) {
+    event.preventDefault();
+    var formData = new FormData(this);
+
+    $.ajax({
+        type:'POST',
+        url: "?url=event/create",
+        data:formData,
+        cache:false,
+        contentType: false,
+        processData: false,
+        success:function(data){
+            console.log("success");
+            console.log(data);
+        },
+        error: function(data){
+            console.log("error");
+            console.log(data);
+        }
+    });
+}

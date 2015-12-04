@@ -26,7 +26,7 @@
         <input type="submit" id="createeventbtn" class="big btn" value="Create an event" />
     </div>
 
-    <div id="createEvent">
+	<form id="createEventForm">
         <fieldset>
             <strong> Create Event: </strong>
             <div class="nameDiv">
@@ -47,11 +47,15 @@
                 <input type="checkbox" name="private" class="checkbox"> Private Event
             </div>
 
-            <form action="eventcreated.php" class="inline">
-                <input type="submit" class="small btn" value="Create Event" />
-            </form>
+            <div class="imageDiv">
+            	<input type="file" name="image">
+            	<input type="submit" value="Upload">
+            </div>
+
+            <input type="submit" class="small btn" value="Create Event">
+  
         </fieldset>
-    </div>
+    </form>
 </div>
 
 <div id="eventsentered" class="eventsentered event margin">
