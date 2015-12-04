@@ -48,7 +48,7 @@ class EventCtrl extends Controller {
 		
 		require_once(__DIR__ . '/../../library/headerSession.php');
 		if ($user == NULL) {
-			$this->printResponse($key, $missing_params);
+			$this->printResponse($key, "no user");
 			return;
 		}
 		
