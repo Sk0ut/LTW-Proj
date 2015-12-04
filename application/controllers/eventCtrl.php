@@ -27,14 +27,15 @@ class EventCtrl extends Controller {
 	public function create() {
 		$key = "createEvent";
         $missing_params = "missing_params";
-		$params = ['name' => '', 'description' => '', 'photo' => '', 'date' => '', 'type' => '', 'private' => ''];
+		$created_event = "created_event";
+		$params = ['name' => '', 'description' => '', 'date' => '', 'type' => '', 'private' => ''];
 		
 		if(!$this->fillPostParameters($params)) {
             $this->printResponse($key, $missing_params);
             return;
         }
 		
-		
+		$this->printResponse($key, $created_event);
 	}
 	
     /**
