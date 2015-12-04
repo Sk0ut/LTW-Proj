@@ -40,7 +40,7 @@ class EventCtrl extends Controller {
 		
 		$params['private'] = isset($_POST['private']);
 		
-		if (!isset($_FILES[0]) || $_FILES[0]['name'] = "") {
+		if (!isset($_FILES['image']) || $_FILES['image']['name'] = "") {
 			$this->printResponse($key, $missing_file);
 			return;
 		}
