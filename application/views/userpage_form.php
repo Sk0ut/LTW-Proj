@@ -16,9 +16,9 @@
         echo '<p> You currently have no events created! </p>';
     }
     else { 
-        foreach( $resultOwnEvents as $row) {
-        echo '<h2>' . $row['name'] . '</h2>';
-        echo '<p>' . $row['description'] . '</p>';
+        foreach( $ownedEvents as $row) {
+        echo '<h2>' . $row->getName() . '</h2>';
+        echo '<p>' . $row->getDescription() . '</p>';
         } 
     }?>
 

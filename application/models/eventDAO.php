@@ -22,11 +22,12 @@ class EventDAO {
 		if (count($result) != 1) {
 			return NULL;
 		}
-		$eventData['type'] = $result['type'];
-		
-		return new Event($eventData['id'], $eventData['name'], $eventData['ownerId'],
-						 $eventData['photo'], $eventData['date'], $eventData['type'],
-						 $eventData['private']);
+		$row = $result[0];
+
+		$row['type'] = $typeData[0]['type'];
+		return new Event($row['id'], $row['name'], $row['description'],
+						 $row['ownerId'], $row['photo'], $row['eventDate'],
+						 $row['type'], $row['private']);
 	}
 
 	public static function getOwnerEvents($ownerId) {
@@ -50,10 +51,10 @@ class EventDAO {
 				return NULL;
 			}
 
-			$row['type'] = $typeData['type'];
-			$events[] = new Event($row['id'], $row['name'], $row['ownerId'],
-						 $row['photo'], $row['eventDate'], $typeData[0]['type'],
-						 $row['private']);
+			$row['type'] = $typeData[0]['type'];
+			$events[] = new Event($row['id'], $row['name'], $row['description'],
+						 $row['ownerId'], $row['photo'], $row['eventDate'],
+						 $row['type'], $row['private']);
 
 		}
 
@@ -82,10 +83,10 @@ class EventDAO {
 				return NULL;
 			}
 
-			$row['type'] = $typeData['type'];
-			$events[] = new Event($row['id'], $row['name'], $row['ownerId'],
-						 $row['photo'], $row['date'], $row['type'],
-						 $row['private']);
+			$row['type'] = $typeData[0]['type'];
+			$events[] = new Event($row['id'], $row['name'], $row['description'],
+						 $row['ownerId'], $row['photo'], $row['eventDate'],
+						 $row['type'], $row['private']);
 
 		}
 
