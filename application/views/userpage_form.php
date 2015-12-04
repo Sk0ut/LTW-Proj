@@ -1,3 +1,4 @@
+<!-- Navigation Bar -->
 <div class="navbar-fixed">
     <nav class="navbar-content">
         <header class="navbar-title"><a href="#">Event Manager</a></header>
@@ -5,9 +6,9 @@
             <li class="navbar-item"><a href="#ownedEvents">Owned</a></li>
             <li class="navbar-item"><a href="#joinedEvents">Joined</a>
             <li class="navbar-item"><a href="#invites">Invites</a></li>
-            <li class="navbar-item"><a href="#invites">Profile</a>
+            <li class="navbar-item"><a href="#invites">Photo</a>
                 <ul class="navbar-subitems">
-                    <li class="navbar-subitem"><a href="#">Photo</a></li>
+                    <li class="navbar-subitem"><a href="#">Profile</a></li>
                     <li class="navbar-subitem"><a href="?url=login/validateLogout">Logout</a></li>
                 </ul>
             </li>
@@ -15,6 +16,7 @@
     </nav>
 </div>
 
+<!-- Content of the page -->
 <div class="container h-align">
     <div id="ownEvents" class="">
         <h1> My events </h1>
@@ -33,33 +35,7 @@
             <input type="submit" id="createeventbtn" class="big btn" value="Create an event" />
         </div>
 
-        <div id="createEvent">
-            <fieldset>
-                <strong> Create Event: </strong>
-                <div class="nameDiv">
-                    <input type="text" id="name" class="inputText" placeholder="Event Name"/>
-                </div>
-
-                <div class="descriptionDiv">
-                    <input type="text" id="description" class="inputText" placeholder="Description"/>
-                </div>
-
-                <input type="text" id="datepicker" class="inputText" placeholder="Date"/>
-
-                <div class="typeDiv">
-                    <input type="text" id="type" class="inputText" placeholder="Event Type" />
-                </div>
-
-                <div class="privateDiv">
-                    <input type="checkbox" name="private" class="checkbox"> Private Event
-                </div>
-
-                <form action="eventcreated.php" class="inline">
-                    <input type="submit" class="small btn" value="Create Event" />
-                </form>
-            </fieldset>
-        </div>
-    </div>
+   </div>
 
     <div id="joinedEvents" class="">
         <h1> Events I'm in </h1>
@@ -82,6 +58,39 @@
     <div id="invites" class="">
         <h1>My current invites</h1>
         <p>You currently have no invites!</p>
+    </div>
+</div>
+
+<!-- Create Event Modal -->
+<div id="createEvent" class="modal">
+    <div class="modal-form v-align h-align">
+        <form id="createEvent">
+            <header class="logo">Create Event</header>
+            <fieldset>
+                <div class="input-box">
+                    <input type="text" id="name" class="input-text" placeholder="Event Name"/>
+                </div>
+
+                <div class="input-box">
+                    <input type="text" id="description" class="input-text" placeholder="Description"/>
+                </div>
+
+                <input type="text" id="datepicker" class="input-text" placeholder="Date"/>
+
+                <div class="input-box">
+                    <input type="text" id="type" class="input-text" placeholder="Event Type" />
+                </div>
+
+                <div class="label-input">
+                    <input type="checkbox" id="private" name="private">
+                    <label for="private">Private Event</label>
+                </div>
+
+                <input type="submit" class="submit-button" value="Create" />
+                <input type="submit" class="submit-button" value="Cancel" />
+                </form>
+            </fieldset>
+        </form>
     </div>
 </div>
 

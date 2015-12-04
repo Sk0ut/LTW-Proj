@@ -21,6 +21,11 @@ h1 {
     padding: 0;
 }
 
+fieldset {
+    outline: 0;
+    border: 0;
+}
+
 .h-align {
     margin-left: auto;
     margin-right: auto;
@@ -133,4 +138,112 @@ h1 {
     background-color:#fff;
 
     box-sizing: border-box;
+}
+
+.input-box {
+    width: 100%;
+    cursor: text;
+    border: 0;
+    margin: 0;
+    margin: 0.5rem 0rem;
+}
+
+.input-text {
+    width: 100%;
+    color: #555;
+    font-family: "Open Sans", Times, serif;
+    font-size: 22px;
+    padding: 1rem 1rem;
+    background-color: #fff;
+    border: 0.2rem solid #fff;
+    outline: 0;
+    border-radius: 0.2rem;
+    box-sizing: border-box;
+    -moz-box-sizing: border-box;
+    -webkit-box-sizing: border-box;
+}
+
+.input-text-invalid {
+    border-color:#d8000c;
+}
+
+.label-input {
+    height: 1.5rem;
+    margin: 1.5rem 0rem;
+    line-height: 1.5rem;
+    display: table;
+}
+
+.label-input input[type="radio"], .label-input input[type="checkbox"] {
+    padding: 0;
+    margin: 0rem;
+    margin-right: 0.2rem;
+    vertical-align: middle;
+    cursor: pointer;
+    display: table-cell;
+}
+
+.label-input label {
+    color: #eee;
+    font-family: "Open Sans", Times, serif;
+    font-size: 22px;
+    vertical-align: middle;
+    display: table-cell;
+}
+
+.submit-button {
+    cursor: pointer;
+    border: 0;
+    outline: 0;
+    margin: 1.5rem auto;
+    box-sizing: border-box;
+    -moz-box-sizing: border-box;
+    -webkit-box-sizing: border-box;
+    display:block;
+    height: 3rem;
+    width: 10rem;
+    display: inline-block;
+}
+
+.submit-button::-moz-focus-inner {
+  border: 0;
+}
+
+.modal {
+    height: 100%;
+    width: 100%;
+
+    background-color:rgba(24, 24, 24, 0.9);
+
+    margin: 0;
+    padding: 0;
+
+    position: absolute;
+    top: 0;
+    bottom: 0;
+    right: 0;
+    left: 0;
+
+    display: block;
+    z-index: 9999;
+}
+
+.modal-form {
+    width: 30rem;
+    border-radius: 0.2rem;
+
+    background-color:rgba(1, 82, 138, 1);
+
+    padding: 0rem 2rem;
+    box-sizing: border-box;
+    -moz-box-sizing: border-box;
+    -webkit-box-sizing: border-box;
+}
+
+.logo {
+    text-align:center;
+    font-family: "Open Sans", Times, serif;
+    font-size: 24px;
+    font-weight: bold;
+    margin: 1rem auto;
 }
