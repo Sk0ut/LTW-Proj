@@ -52,7 +52,7 @@ class EventDAO {
 
 			$row['type'] = $typeData['type'];
 			$events[] = new Event($row['id'], $row['name'], $row['ownerId'],
-						 $row['photo'], $row['date'], $row['type'],
+						 $row['photo'], $row['eventDate'], $typeData[0]['type'],
 						 $row['private']);
 
 		}
