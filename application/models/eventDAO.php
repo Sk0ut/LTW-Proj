@@ -91,23 +91,35 @@ class EventDAO {
 
 		return $events;
 	}
-
-	public static function createEvent($ownerId, $name, $description, $photo, $date, $type, $private){
-		$db = Database::getInstance();
-
+	
+	public static function getEventTypeId($type) {
+		$database = Database::getInstance();
+		
 		$query = "SELECT id FROM EventType WHERE type = ?";
 		$params = [$type];
 		$types = [PDO::PARAM_STR];
 
-		$result = $db->executeQuery($query, $params, $types);
+		$result = $database->executeQuery($query, $params, $types);
 
 		if(count($result) != 1){
 			return NULL;
 		}
 
-		$type = $result[0]['id'];
+		return $result[0]['id'];
+	}
+	
+	public static function getEventTypesInfo() {
+		$database = Database::getInstance();
+		
+		$query = "SELECT * FROM EventType";
+		return $database->executeQuery($query, [], []);
+	}
+	
+	public static function createEvent($ownerId, $name, $description, $photo, $date, $typeId, $private){
+		$db = Database::getInstance();
+
 		$query = "INSERT INTO Events(name, description, ownerId, photo, eventDate, typeId, private) VALUES(?, ?, ?, ?, ?, ?, ?)";
-		$params = [$name, $description, $ownerId, $photo, $date, $type, $private];
+		$params = [$name, $description, $ownerId, $photo, $date, $typeId, $private];
 		$types = [PDO::PARAM_STR, PDO::PARAM_STR, PDO::PARAM_INT, PDO::PARAM_STR, PDO::PARAM_STR, PDO::PARAM_INT, PDO::PARAM_BOOL];
 
 		$result = $db->executeUpdate($query, $params, $types);

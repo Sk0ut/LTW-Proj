@@ -45,8 +45,18 @@ class EventCtrl extends Controller {
 			return;
 		}
 		
-		$target = __DIR__ . "/../../public/" .$_FILES['image']['name'];
-		move_uploaded_file( $_FILES['image']['tmp_name'], $target);
+		
+		require_once(__DIR__ . '/../../library/headerSession.php');
+		if ($user == NULL) {
+			$this->printResponse($key, $missing_params);
+			return;
+		}
+		
+		$photoPath = __DIR__ . "/../../public/img/uploaded/" . time() . $_FILES['image']['name'];
+		move_uploaded_file( $_FILES['image']['tmp_name'], $photoPath);
+		
+		
+		EventDAO::createEvent($user->getId(), $params['name'], $params['description'], $photoPath, $params['date'], $params['type'], $private);
 		
 		$this->printResponse($key, $created_event);
 	}

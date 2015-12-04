@@ -21,12 +21,12 @@ function scaleImageFileToBlob($file) {
     if( ($width <= $max_width) && ($height <= $max_height) ){
         $tn_width = $width;
         $tn_height = $height;
-        }elseif (($x_ratio * $height) < $max_height){
-            $tn_height = ceil($x_ratio * $height);
-            $tn_width = $max_width;
-        }else{
-            $tn_width = ceil($y_ratio * $width);
-            $tn_height = $max_height;
+    }elseif (($x_ratio * $height) < $max_height){
+        $tn_height = ceil($x_ratio * $height);
+        $tn_width = $max_width;
+    }else{
+        $tn_width = ceil($y_ratio * $width);
+        $tn_height = $max_height;
     }
 
     $tmp = imagecreatetruecolor($tn_width,$tn_height);
