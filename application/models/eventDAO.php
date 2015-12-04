@@ -125,7 +125,7 @@ class EventDAO {
 
 		$result = $db->executeUpdate($query, $params, $types);
 
-		if(count($result) != 1){
+		if($result != 1){
 			return NULL;
 		}
 
@@ -140,6 +140,24 @@ class EventDAO {
 		}
 
 		$id = $result[0]['id'];
+
+		return $self.getById($id);
+
+	}
+
+	public static function editEvent($id, $ownerId, $name, $description, $photo, $date, $typeId, $private){
+		$db = Database::getInstance();
+		$key = "editEvent";
+
+		$query = "UPDATE Events SET name=?, description=?, ownerId = ?, photo = ?, eventDate = ?, typeId = ?, private = ? WHERE id = ?";
+		$params = [$name, $description, $ownerId, $photo, $date, $typeId, $private, $id];
+		$types = [PDO::PARAM_STR, PDO::PARAM_STR, PDO::PARAM_INT, PDO::PARAM_STR, PDO::PARAM_INT, PDO::PARAM_BOOL, PDO::PARAM_INT];
+
+		$result = $db->executeUpdate($query, $params, $types);
+
+		if($result != 1){
+			return NULL;
+		}
 
 		return $self.getById($id);
 

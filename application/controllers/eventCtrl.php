@@ -23,6 +23,34 @@ class EventCtrl extends Controller {
 		}
 		$this->view("event_view", ['event' => $event, 'owner' => $owner]);
 	}
+
+	public function edit() {
+		$key = "editEvent";
+		$missing_params = "missing_params";
+		$corrupted_file = "corrupted_file";
+		$params = ['name' => '', 'description' => '', 'date' => '', 'type' => ''];
+
+		if(!$this->fillPostParameters($params)) {
+            $this->printResponse($key, $missing_params);
+            return;
+        }
+
+        $params['private'] = isset($_POST['private']);
+
+        if (isset($_FILES['image']) && $_FILES['image']['name'] == "") {
+			$this->printResponse($key, $corrupted_file);
+			return;
+		}
+
+		if(!isset($_FILES['image'])) {
+			EventDAO::editEvent($user->getId(), $params['name'], $params['description'], NULL, $params['date'], $params['type'], $params['private']);
+		}
+
+		else {
+
+		}
+
+	}
 	
 	public function create() {
 		$key = "createEvent";
