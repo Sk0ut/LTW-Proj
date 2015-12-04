@@ -6,14 +6,26 @@
 class Database {
 
     /**
+     * Instance of the database
+     */
+    private static $_instance = NULL;
+
+    /**
      * Connection to the database
      */
     private $_connection;
 
     /**
-     * Constructor of Database.
+     * Get the instance of the database
+     * @return instance of the database
      */
-    public function __construct() {  }
+    public static function getInstance() {
+        if(self::$_instance == NULL) {
+            self::$_instance = new Database();
+            self::$_instance->openConnection(__DIR__ . '/../../db/events.db');
+        }
+        return self::$_instance;
+    }
 
     /**
      * Open a connection to a database
@@ -21,20 +33,10 @@ class Database {
      * the file that created the database, if unable then will try
      * to open from the parent folder of the current file
      * in last case will try to open from the root directory
-     * @param fileName name of the database's file
+     * @param path path to the database's file
      * @return true if successfull, false otherwise
      */
-    public function openConnection($fileName) {
-        $path = $fileName;
-        if(!file_exists($path))
-            $path = '../../db/'.$fileName;
-        if(!file_exists($path))
-            $path = '../db/'.$fileName;
-        if(!file_exists($path))
-            $path = 'db/'.$fileName;
-        if(!file_exists($path))
-            return false;
-
+    public function openConnection($path) {
         try {
             $this->_connection = new PDO('sqlite:'.$path);
             return true;
@@ -108,7 +110,4 @@ class Database {
     }
 }
 
-// Create database
-$database = new Database();
-$database->openConnection(DBPATH);
 ?>
