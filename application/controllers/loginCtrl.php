@@ -184,6 +184,10 @@ class LoginCtrl extends Controller {
         UserDAO::deleteToken($user->getUsername(), $_COOKIE['em_token']);
 
         $this->printResponse($key, $success_logout);
+
+        $link = "http://" . $_SERVER['SERVER_NAME'] . $_SERVER['REQUEST_URI'];
+        $link = substr($link, 0, strpos($link, "?"));
+        header("Location: $link");
     }
 
     /**
