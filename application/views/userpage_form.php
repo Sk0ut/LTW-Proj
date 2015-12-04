@@ -64,7 +64,7 @@
 <!-- Create Event Modal -->
 <div id="createEvent" class="modal">
     <div class="modal-form v-align h-align">
-        <form id="createEvent">
+        <form id="createEventForm">
             <header class="logo">Create Event</header>
             <fieldset>
                 <div class="input-box">
@@ -75,7 +75,9 @@
                     <input type="text" id="description" class="input-text" placeholder="Description"/>
                 </div>
 
-                <input type="text" id="datepicker" class="input-text" placeholder="Date"/>
+                <div class="input-box">
+                    <input type="text" id="datepicker" class="input-text" placeholder="Date"/>
+                </div>
 
                 <div class="input-box">
                     <input type="text" id="type" class="input-text" placeholder="Event Type" />
@@ -86,8 +88,10 @@
                     <label for="private">Private Event</label>
                 </div>
 
-                <input type="submit" class="submit-button" value="Create" />
-                <input type="submit" class="submit-button" value="Cancel" />
+                <div class="buttons-box">
+                    <input id="createButton" type="submit" class="submit-button" value="Create" />
+                    <input id="cancelButton" type="submit" class="submit-button" value="Cancel" />
+                </div>
                 </form>
             </fieldset>
         </form>

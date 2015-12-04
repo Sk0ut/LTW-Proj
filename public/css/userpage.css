@@ -24,6 +24,8 @@ h1 {
 fieldset {
     outline: 0;
     border: 0;
+    margin: 0;
+    padding: 0;
 }
 
 .h-align {
@@ -140,12 +142,16 @@ fieldset {
     box-sizing: border-box;
 }
 
-.input-box {
+.input-box, .buttons-box {
     width: 100%;
     cursor: text;
     border: 0;
     margin: 0;
     margin: 0.5rem 0rem;
+}
+
+.buttons-box {
+    display: table;
 }
 
 .input-text {
@@ -194,19 +200,31 @@ fieldset {
 .submit-button {
     cursor: pointer;
     border: 0;
+    border-radius: 0.2rem;
     outline: 0;
+    padding:0;
     margin: 1.5rem auto;
     box-sizing: border-box;
     -moz-box-sizing: border-box;
     -webkit-box-sizing: border-box;
-    display:block;
+
     height: 3rem;
     width: 10rem;
     display: inline-block;
+
+    text-align:center;
+    font-family: "Open Sans", Times, serif;
+    font-size: 20px;
+    color:#fff;
+    background-color: #484848;
 }
 
 .submit-button::-moz-focus-inner {
   border: 0;
+}
+
+.submit-button:hover {
+    background-color: #888;
 }
 
 .modal {
@@ -224,7 +242,7 @@ fieldset {
     right: 0;
     left: 0;
 
-    display: block;
+    display: none;
     z-index: 9999;
 }
 
@@ -232,7 +250,7 @@ fieldset {
     width: 30rem;
     border-radius: 0.2rem;
 
-    background-color:rgba(1, 82, 138, 1);
+    background-color: #01528a;
 
     padding: 0rem 2rem;
     box-sizing: border-box;
@@ -245,5 +263,14 @@ fieldset {
     font-family: "Open Sans", Times, serif;
     font-size: 24px;
     font-weight: bold;
-    margin: 1rem auto;
+    margin: auto;
+    padding: 1rem 0rem;
+}
+
+#createButton {
+    float:left;
+}
+
+#cancelButton {
+    float:right;
 }
