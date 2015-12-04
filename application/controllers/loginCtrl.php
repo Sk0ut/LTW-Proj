@@ -11,7 +11,6 @@ class LoginCtrl extends Controller {
      */
     public function index() {
         require_once(__DIR__ . '/../../library/headerSession.php');
-        $user = new User(1, "joao", '$2a$08$vcSfcDWWpM5v4X1blYnkMupKZVgXNBaT1FCsBXpot1ZwHnRSZnz6u', "up201305892@fe.up.pt");
         if($user == NULL) {
             $this->loginIndex();
         } else {

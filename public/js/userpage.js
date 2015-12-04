@@ -19,6 +19,7 @@ function setupListeners() {
     $("#createeventbtn").click(openCreateEvent);
     $('a[href^="#"]').click(scrollToTag);
     $('.navbar-item').mouseover(openDropdownMenu);
+    $('#createEventForm').submit(onFormSubmit);
 }
 
 /**
@@ -68,7 +69,33 @@ function scrollToTag(event) {
 }
 
 /**
+ * On submit the create event form
+ */
+function onFormSubmit(event) {
+    event.preventDefault();
+    var formData = new FormData(this);
+
+    $.ajax({
+        type:'POST',
+        url: "?url=event/create",
+        data:formData,
+        cache:false,
+        contentType: false,
+        processData: false,
+        success:function(data){
+            console.log("success");
+            console.log(data);
+        },
+        error: function(data){
+            console.log("error");
+            console.log(data);
+        }
+    });
+}
+
+/**
  * Called when document is fully loaded in the
  * client browser
  */
 $(document).ready(onReady);
+

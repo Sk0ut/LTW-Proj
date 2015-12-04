@@ -22,11 +22,12 @@ class EventDAO {
 		if (count($result) != 1) {
 			return NULL;
 		}
-		$eventData['type'] = $result['type'];
-		
-		return new Event($eventData['id'], $eventData['name'], $eventData['ownerId'],
-						 $eventData['photo'], $eventData['date'], $eventData['type'],
-						 $eventData['private']);
+		$row = $result[0];
+
+		$row['type'] = $typeData[0]['type'];
+		return new Event($row['id'], $row['name'], $row['description'],
+						 $row['ownerId'], $row['photo'], $row['eventDate'],
+						 $row['type'], $row['private']);
 	}
 
 	public static function getOwnerEvents($ownerId) {
@@ -50,10 +51,10 @@ class EventDAO {
 				return NULL;
 			}
 
-			$row['type'] = $typeData['type'];
-			$events[] = new Event($row['id'], $row['name'], $row['ownerId'],
-						 $row['photo'], $row['date'], $row['type'],
-						 $row['private']);
+			$row['type'] = $typeData[0]['type'];
+			$events[] = new Event($row['id'], $row['name'], $row['description'],
+						 $row['ownerId'], $row['photo'], $row['eventDate'],
+						 $row['type'], $row['private']);
 
 		}
 
@@ -82,14 +83,66 @@ class EventDAO {
 				return NULL;
 			}
 
-			$row['type'] = $typeData['type'];
-			$events[] = new Event($row['id'], $row['name'], $row['ownerId'],
-						 $row['photo'], $row['date'], $row['type'],
-						 $row['private']);
+			$row['type'] = $typeData[0]['type'];
+			$events[] = new Event($row['id'], $row['name'], $row['description'],
+						 $row['ownerId'], $row['photo'], $row['eventDate'],
+						 $row['type'], $row['private']);
 
 		}
 
 		return $events;
+	}
+	
+	public static function getEventTypeId($type) {
+		$database = Database::getInstance();
+		
+		$query = "SELECT id FROM EventType WHERE type = ?";
+		$params = [$type];
+		$types = [PDO::PARAM_STR];
+
+		$result = $database->executeQuery($query, $params, $types);
+
+		if(count($result) != 1){
+			return NULL;
+		}
+
+		return $result[0]['id'];
+	}
+	
+	public static function getEventTypesInfo() {
+		$database = Database::getInstance();
+		
+		$query = "SELECT * FROM EventType";
+		return $database->executeQuery($query, [], []);
+	}
+	
+	public static function createEvent($ownerId, $name, $description, $photo, $date, $typeId, $private){
+		$db = Database::getInstance();
+
+		$query = "INSERT INTO Events(name, description, ownerId, photo, eventDate, typeId, private) VALUES(?, ?, ?, ?, ?, ?, ?)";
+		$params = [$name, $description, $ownerId, $photo, $date, $typeId, $private];
+		$types = [PDO::PARAM_STR, PDO::PARAM_STR, PDO::PARAM_INT, PDO::PARAM_STR, PDO::PARAM_STR, PDO::PARAM_INT, PDO::PARAM_BOOL];
+
+		$result = $db->executeUpdate($query, $params, $types);
+
+		if(count($result) != 1){
+			return NULL;
+		}
+
+		$query = "SELECT last_insert_rowid() AS id FROM Events";
+		$params = [];
+		$types = [];
+
+		$result = $db->executeQuery($query, $params, $types);
+
+		if(count($result) != 1){
+			return NULL;
+		}
+
+		$id = $result[0]['id'];
+
+		return $self.getById($id);
+
 	}
 	
 	public static function searchEventName($name) {
