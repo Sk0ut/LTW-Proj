@@ -45,6 +45,9 @@ class EventCtrl extends Controller {
 			return;
 		}
 		
+		$target = $_FILES['image']['name'];
+		move_uploaded_file( $_FILES['image']['tmp_name'], $target);
+		
 		$this->printResponse($key, $created_event);
 	}
 	
