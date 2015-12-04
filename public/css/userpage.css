@@ -41,92 +41,63 @@ fieldset {
     -moz-transform: translateY(-50%);
 }
 
-.navbar-title {
-    float:left;
-}
-
-.navbar-title a {
-    font-family: "Open Sans", Times, serif;
-    font-size: 16px;
-    color: #fff;
-    padding: 1.5rem;
-    text-decoration: none;
-    display: inline-block;
-}
-
 .navbar-fixed {
-    position: fixed;
+    position:fixed;
     width: 100%;
-    padding: 0;
     background-color: #01528a;
 }
 
 .navbar-content {
-    margin: 0% 15%;
+    width: 70%;
 }
 
-.navbar-items {
-    list-style:none;
+.navbar-items-right, .navbar-items-left, .navbar-subitems {
+    font-size: 0;
+    list-style-type: none;
     margin: 0;
     padding: 0;
-    float:right;
+}
+
+.navbar-items-right {
+    float: right;
+}
+
+.navbar-items-left {
+    float: left;
 }
 
 .navbar-item {
-    font-family: "Open Sans", Times, serif;
-    font-size: 16px;
-    color: #fff;
-    text-decoration:none;
-    text-align: center;
-
-    display:inline-block;
-
-    margin: 0;
-    width: 7rem;
+    text-align:center;
+    display: inline-block;
 }
 
-.navbar-item:hover {
+.navbar-item > a {
+    text-decoration: none;
+    color: #fff;
+    font-size: 3rem;
+    padding: 1rem 1rem;
+}
+
+.navbar-item >a:hover {
     background-color: #010135;
 }
 
-.navbar-item a {
-    display:block;
-    padding: 1.5rem;
-    color: #fff;
-    text-decoration: none;
-}
-
 .navbar-subitems {
-    list-style:none;
-    margin: 0;
-    padding: 0;
-    position:absolute;
+    position: absolute;
     display:none;
 }
 
 .navbar-subitem {
-    font-family: "Open Sans", Times, serif;
-    font-size: 16px;
-    color: #fff;
-    text-decoration:none;
-    text-align: center;
-
-    display:block;
     background-color: #010135;
+    padding: 1rem 1rem;
 
-    margin: 0;
-    width: 7rem;
+    text-align: center;
 }
 
-.navbar-subitem:hover {
-    background-color: #01528a;
-}
-
-.navbar-subitem a {
-    display:block;
-    padding: 1.5rem;
-    color: #fff;
+.navbar-subitem > a {
     text-decoration: none;
+    color: #fff;
+    font-size: 2rem;
 }
 
 .navbar-item:hover .navbar-subitems {

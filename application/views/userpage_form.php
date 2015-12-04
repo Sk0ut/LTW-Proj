@@ -1,21 +1,3 @@
-<!-- Navigation Bar -->
-<div class="navbar-fixed">
-    <nav class="navbar-content">
-        <header class="navbar-title"><a href="#">Event Manager</a></header>
-        <ul class="navbar-items">
-            <li class="navbar-item"><a href="#ownedEvents">Owned</a></li>
-            <li class="navbar-item"><a href="#joinedEvents">Joined</a>
-            <li class="navbar-item"><a href="#invites">Invites</a></li>
-            <li class="navbar-item"><a href="#invites">Photo</a>
-                <ul class="navbar-subitems">
-                    <li class="navbar-subitem"><a href="#">Profile</a></li>
-                    <li class="navbar-subitem"><a href="?url=login/validateLogout">Logout</a></li>
-                </ul>
-            </li>
-        </ul>
-    </nav>
-</div>
-
 <!-- Content of the page -->
 <div class="container h-align">
     <div id="ownEvents" class="">
