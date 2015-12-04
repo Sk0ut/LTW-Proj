@@ -11,6 +11,7 @@ class LoginCtrl extends Controller {
      */
     public function index() {
         require_once(__DIR__ . '/../../library/headerSession.php');
+        $user = new User(1, "joao", '$2a$08$vcSfcDWWpM5v4X1blYnkMupKZVgXNBaT1FCsBXpot1ZwHnRSZnz6u', "up201305892@fe.up.pt");
         if($user == NULL) {
             $this->loginIndex();
         } else {
@@ -184,6 +185,10 @@ class LoginCtrl extends Controller {
         UserDAO::deleteToken($user->getUsername(), $_COOKIE['em_token']);
 
         $this->printResponse($key, $success_logout);
+
+        $link = "http://" . $_SERVER['SERVER_NAME'] . $_SERVER['REQUEST_URI'];
+        $link = substr($link, 0, strpos($link, "?"));
+        header("Location: $link");
     }
 
     /**

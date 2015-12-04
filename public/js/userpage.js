@@ -26,9 +26,6 @@ $( "#createeventbtn" ).click(function() {
     	$("#createEvent").slideDown(500);
 		$("#createeventbtn").attr("value", "Cancel creation");
     }
-
-    /* Em ambos os casos...*/
-    console.log("O JOAO È MERDA");
 });
 
 $('a[href^="#"]').on('click', function(event) {

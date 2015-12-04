@@ -3,7 +3,7 @@ $user = $data['user'];
 $ownedEvents = $data['ownedEvents'];
 $userEvents = $data['userEvents'];
 
-$PageTitle = $user->getUsername() . "'s page";
+$PageTitle = "Event Manager";
 function customPageHeader() { ?>
     <meta name="description" content="Yet another event manager.">
     <meta name="author" content="LTW - MIEIC">
