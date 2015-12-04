@@ -25,6 +25,8 @@ class EventCtrl extends Controller {
 	}
 	
 	public function create() {
+		var_dump($_FILES);
+		var_dump($_POST);
 		$key = "createEvent";
         $missing_params = "missing_params";
 		$missing_file = "missing_file";

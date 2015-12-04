@@ -26,36 +26,37 @@
         <input type="submit" id="createeventbtn" class="big btn" value="Create an event" />
     </div>
 
-	<form id="createEventForm">
-        <fieldset>
-            <strong> Create Event: </strong>
-            <div class="nameDiv">
-                <input type="text" id="name" class="inputText" placeholder="Event Name"/>
-            </div>
+    <div id="createEvent">
+		<form id="createEventForm">
+	        <fieldset>
+	            <strong> Create Event: </strong>
+	            <div class="nameDiv">
+	                <input type="text" name="name" id="name" class="inputText" placeholder="Event Name"/>
+	            </div>
 
-            <div class="descriptionDiv">
-                <input type="text" id="description" class="inputText" placeholder="Description"/>
-            </div>
+	            <div class="descriptionDiv">
+	                <input type="text" name="description" id="description" class="inputText" placeholder="Description"/>
+	            </div>
 
-            <input type="text" id="datepicker" class="inputText" placeholder="Date"/>
+	            <input type="text" name="date" id="datepicker" class="inputText" placeholder="Date"/>
 
-            <div class="typeDiv">
-                <input type="text" id="type" class="inputText" placeholder="Event Type" />
-            </div>
+	            <div class="typeDiv">
+	                <input type="text" id="type" name="type" class="inputText" placeholder="Event Type" />
+	            </div>
 
-            <div class="privateDiv">
-                <input type="checkbox" name="private" class="checkbox"> Private Event
-            </div>
+	            <div class="privateDiv">
+	                <input type="checkbox" name="private" class="checkbox"> Private Event
+	            </div>
 
-            <div class="imageDiv">
-            	<input type="file" name="image">
-            	<input type="submit" value="Upload">
-            </div>
+	            <div class="imageDiv">
+	            	<input type="file" name="image">
+	            </div>
 
-            <input type="submit" class="small btn" value="Create Event">
-  
-        </fieldset>
-    </form>
+	            <input type="submit" class="small btn" value="Create Event">
+	  
+	        </fieldset>
+	    </form>
+	 </div>
 </div>
 
 <div id="eventsentered" class="eventsentered event margin">
