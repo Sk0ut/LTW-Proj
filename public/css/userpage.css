@@ -83,21 +83,36 @@ fieldset {
 }
 
 .navbar-subitems {
+    width: 12rem;
     position: absolute;
     display:none;
 }
 
 .navbar-subitem {
+    height: 6rem;
+    display:block;
     background-color: #010135;
-    padding: 1rem 1rem;
-
     text-align: center;
 }
 
 .navbar-subitem > a {
+    width: 100%;
+    height: 100%;
+    position:relative;
     text-decoration: none;
     color: #fff;
-    font-size: 2rem;
+    font-size: 1.4rem;
+    display:inline-block;
+    padding: 1rem 0.5rem;
+    box-sizing: border-box;
+}
+
+.navbar-subitem > a > span {
+    font-family: "Open Sans", Times, serif;
+    position:absolute;
+    top:50%;
+    left: 50%;
+    transform: translateX(-50%) translateY(-50%);
 }
 
 .navbar-item:hover .navbar-subitems {

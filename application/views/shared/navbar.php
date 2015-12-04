@@ -9,8 +9,8 @@
             <li class="navbar-item"><a class="fa fa-inbox" href="#"></a></li>
             <li class="navbar-item"><a class="fa fa-user" href="#"></a>
                 <ul class="navbar-subitems">
-                    <li class="navbar-subitem"><a class="" href="#">Photo</a></li>
-                    <li class="navbar-subitem"><a class="fa fa-lock" href="?url=login/validateLogout">Logout</a></li>
+                    <li class="navbar-subitem"><a href="#"><span>Photo</span></a></li>
+                    <li class="navbar-subitem"><a href="?url=login/validateLogout"><span><i class="fa fa-lock"></i> Logout</span></a></li>
                 </ul>
             </li>
         </ul>
