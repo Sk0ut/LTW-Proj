@@ -51,10 +51,17 @@ class EventCtrl extends Controller {
 		}
 		
 		$photoPath = __DIR__ . "/../../public/img/uploaded/" . time() . $_FILES['image']['name'];
-		move_uploaded_file( $_FILES['image']['tmp_name'], $photoPath);
+		if (!move_uploaded_file( $_FILES['image']['tmp_name'], $photoPath)) {
+			$this->printResponse($key, "image upload failed");
+			return;
+		}
 		
+		$event = EventDAO::createEvent($user->getId(), $params['name'], $params['description'], $photoPath, $params['date'], $params['type'], $params['private']);
 		
-		EventDAO::createEvent($user->getId(), $params['name'], $params['description'], $photoPath, $params['date'], $params['type'], $params['private']);
+		if ($event == NULL) {
+			$this->printResponse($key, "event creation failed");
+			return;
+		}
 		
 		$this->printResponse($key, $created_event);
 	}
