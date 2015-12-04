@@ -85,4 +85,4 @@
 <!-- Scripts -->
 <script src="js/jquery-1.11.3.min.js" type="text/javascript"></script>
 <script src="js/userpage.js" type="text/javascript"></script>
-<script src="http://code.jquery.com/ui/1.11.3/jquery-ui.js"></script>
+<script src="//code.jquery.com/ui/1.11.3/jquery-ui.js"></script>
