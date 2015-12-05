@@ -101,6 +101,14 @@ class EventCtrl extends Controller {
 		$this->printResponse($key, $created_event);
 	}
 	
+	
+	public function search() {
+		$name = $_GET['name'];
+		
+		$events = EventDAO::searchEventName($name);
+		
+	}
+	
     /**
      * Fill the expected post parameters
      * @param params array map with params
