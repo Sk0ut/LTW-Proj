@@ -13,4 +13,15 @@ class UserCtrl extends Controller {
         $userEvents = EventDAO::getRegisteredEvents($id);
         $this->view("userpage_view", ['user' => $user, 'ownedEvents' => $ownedEvents, 'userEvents' => $userEvents]);
     }
+
+   /**
+     * Print a response
+     * @param key key of the response
+     * @param value value of the response
+     */
+    private function printResponse($key, $value) {
+        $data = [$key => $value];
+        header('Content-Type: application/json');
+        echo json_encode($data);
+    }
 }
