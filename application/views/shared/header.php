@@ -3,7 +3,7 @@
   <head>
     <meta charset="utf-8">
     <meta http-equiv="content-type" content="text/html">
-    <title><?= isset($PageTitle) ? $PageTitle : "EventManager"?></title>
+    <title><?= isset($PageTitle) ? $PageTitle : "Event Manager"?></title>
     <?php
       if (function_exists('customPageHeader')){
         customPageHeader();

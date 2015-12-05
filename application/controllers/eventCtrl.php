@@ -23,6 +23,39 @@ class EventCtrl extends Controller {
 		}
 		$this->view("event_view", ['event' => $event, 'owner' => $owner]);
 	}
+
+	public function edit() {
+		$key = "editEvent";
+		$missing_params = "missing_params";
+		$corrupted_file = "corrupted_file";
+		$created_event = "created_event";
+		$params = ['name' => '', 'description' => '', 'date' => '', 'type' => ''];
+
+		if(!$this->fillPostParameters($params)) {
+            $this->printResponse($key, $missing_params);
+            return;
+        }
+
+        $params['private'] = isset($_POST['private']);
+
+        if (isset($_FILES['image']) && $_FILES['image']['name'] == "") {
+			$this->printResponse($key, $corrupted_file);
+			return;
+		}
+
+		if(!isset($_FILES['image'])) {
+			EventDAO::editEvent($user->getId(), $params['name'], $params['description'], NULL, $params['date'], $params['type'], $params['private']);
+		}
+
+		else {
+			$photoPath = __DIR__ . "/../../public/img/uploaded/" . time() . $_FILES['image']['name'];
+			move_uploaded_file( $_FILES['image']['tmp_name'], $photoPath);
+			EventDAO::editEvent($user->getId(), $params['name'], $params['description'], $photoPath, $params['date'], $params['type'], $params['private']);
+		}
+
+		$this->printResponse($key, $created_event);
+
+	}
 	
 	public function create() {
 		$key = "createEvent";
