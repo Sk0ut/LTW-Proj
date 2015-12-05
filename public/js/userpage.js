@@ -97,6 +97,26 @@ function onFormSubmit(event) {
 }
 
 /**
+ * On submit the find event form
+ */
+ function onSearchSubmit(event){
+    var formData = new FormData(this);
+
+    $.ajax({
+        type:'GET',
+        url: "?url=event/search",
+        data:formData,
+        cache:false,
+        contentType: false,
+        processData: false,
+        success:function(data){
+        },
+        error: function(data){
+        }
+    });
+ }
+
+/**
  * Called when document is fully loaded in the
  * client browser
  */
