@@ -7,18 +7,18 @@ require_once __DIR__ . "/../models/userDAO.php";
 class EventCtrl extends Controller {
 	public function index() {
 		if (!isset($_GET['id'])) {
-			$this->model("error_view");
+			$this->view("error_view");
 			return;
 		}
 		$id = $_GET['id'];
 		$event = EventDAO::getById($id);
 		if ($event == NULL) {
-			$this->model("error_view");
+			$this->view("error_view");
 			return;
 		}
 		$owner = UserDAO::getUserFromId($event->getOwnerId());
 		if ($owner == NULL) {
-			$this->model("error_view");
+			$this->view("error_view");
 			return;
 		}
 		$this->view("event_view", ['event' => $event, 'owner' => $owner]);
