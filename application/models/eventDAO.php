@@ -147,11 +147,17 @@ class EventDAO {
 
 	public static function editEvent($id, $ownerId, $name, $description, $photo, $date, $typeId, $private){
 		$db = Database::getInstance();
-		$key = "editEvent";
 
-		$query = "UPDATE Events SET name=?, description=?, ownerId = ?, photo = ?, eventDate = ?, typeId = ?, private = ? WHERE id = ?";
-		$params = [$name, $description, $ownerId, $photo, $date, $typeId, $private, $id];
-		$types = [PDO::PARAM_STR, PDO::PARAM_STR, PDO::PARAM_INT, PDO::PARAM_STR, PDO::PARAM_INT, PDO::PARAM_BOOL, PDO::PARAM_INT];
+		if($photo == NULL){
+			$query = "UPDATE Events SET name=?, description=?, ownerId = ?, eventDate = ?, typeId = ?, private = ? WHERE id = ?";
+			$params = [$name, $description, $ownerId, $date, $typeId, $private, $id];
+			$types = [PDO::PARAM_STR, PDO::PARAM_STR, PDO::PARAM_INT, PDO::PARAM_STR, PDO::PARAM_INT, PDO::PARAM_BOOL, PDO::PARAM_INT];
+		}
+		else {
+			$query = "UPDATE Events SET name=?, description=?, ownerId = ?, photo = ?, eventDate = ?, typeId = ?, private = ? WHERE id = ?";
+			$params = [$name, $description, $ownerId, $photo, $date, $typeId, $private, $id];
+			$types = [PDO::PARAM_STR, PDO::PARAM_STR, PDO::PARAM_INT, PDO::PARAM_STR, PDO::PARAM_STR, PDO::PARAM_INT, PDO::PARAM_BOOL, PDO::PARAM_INT];
+		}
 
 		$result = $db->executeUpdate($query, $params, $types);
 
@@ -160,7 +166,6 @@ class EventDAO {
 		}
 
 		return $self.getById($id);
-
 	}
 	
 	public static function searchEventName($name) {

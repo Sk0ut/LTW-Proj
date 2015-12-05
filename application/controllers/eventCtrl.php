@@ -28,6 +28,7 @@ class EventCtrl extends Controller {
 		$key = "editEvent";
 		$missing_params = "missing_params";
 		$corrupted_file = "corrupted_file";
+		$created_event = "created_event";
 		$params = ['name' => '', 'description' => '', 'date' => '', 'type' => ''];
 
 		if(!$this->fillPostParameters($params)) {
@@ -47,8 +48,12 @@ class EventCtrl extends Controller {
 		}
 
 		else {
-
+			$photoPath = __DIR__ . "/../../public/img/uploaded/" . time() . $_FILES['image']['name'];
+			move_uploaded_file( $_FILES['image']['tmp_name'], $photoPath);
+			EventDAO::editEvent($user->getId(), $params['name'], $params['description'], $photoPath, $params['date'], $params['type'], $params['private']);
 		}
+
+		$this->printResponse($key, $created_event);
 
 	}
 	
