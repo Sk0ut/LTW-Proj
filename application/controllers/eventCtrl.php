@@ -7,21 +7,54 @@ require_once __DIR__ . "/../models/userDAO.php";
 class EventCtrl extends Controller {
 	public function index() {
 		if (!isset($_GET['id'])) {
-			$this->model("error_view");
+			$this->view("error_view");
 			return;
 		}
 		$id = $_GET['id'];
 		$event = EventDAO::getById($id);
 		if ($event == NULL) {
-			$this->model("error_view");
+			$this->view("error_view");
 			return;
 		}
 		$owner = UserDAO::getUserFromId($event->getOwnerId());
 		if ($owner == NULL) {
-			$this->model("error_view");
+			$this->view("error_view");
 			return;
 		}
 		$this->view("event_view", ['event' => $event, 'owner' => $owner]);
+	}
+
+	public function edit() {
+		$key = "editEvent";
+		$missing_params = "missing_params";
+		$corrupted_file = "corrupted_file";
+		$created_event = "created_event";
+		$params = ['id' => '', 'name' => '', 'description' => '', 'date' => '', 'type' => ''];
+
+		if(!$this->fillPostParameters($params)) {
+            $this->printResponse($key, $missing_params);
+            return;
+        }
+
+        $params['private'] = isset($_POST['private']);
+
+        if (isset($_FILES['image']) && $_FILES['image']['name'] == "") {
+			$this->printResponse($key, $corrupted_file);
+			return;
+		}
+
+		if(!isset($_FILES['image'])) {
+			EventDAO::editEvent($params['id'],$user->getId(), $params['name'], $params['description'], NULL, $params['date'], $params['type'], $params['private']);
+		}
+
+		else {
+			$photo = time() . $_FILES['image']['name'];
+			$photoPath = __DIR__ . "/../../public/img/uploaded/" . $photo;
+			move_uploaded_file( $_FILES['image']['tmp_name'], $photoPath);
+			EventDAO::editEvent($params['id'],$user->getId(), $params['name'], $params['description'], $photoPath, $params['date'], $params['type'], $params['private']);
+		}
+
+		$this->printResponse($key, $created_event);
 	}
 	
 	public function create() {
@@ -48,8 +81,12 @@ class EventCtrl extends Controller {
 			return;
 		}
 		
-		$photoPath = __DIR__ . "/../../public/img/uploaded/" . time() . $_FILES['image']['name'];
-		move_uploaded_file( $_FILES['image']['tmp_name'], $photoPath);
+		$photo = time() . $_FILES['image']['name'];
+		$photoPath = __DIR__ . "/../../public/img/uploaded/" . $photo;
+		if (!move_uploaded_file( $_FILES['image']['tmp_name'], $photoPath)) {
+			$this->printResponse($key, "image upload failed");
+			return;
+		}
 		
         if(isset($_POST['private']))
             $params['private'] = 1;
