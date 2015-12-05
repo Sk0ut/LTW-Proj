@@ -2,6 +2,9 @@
 <div class="container h-align">
     <div id="ownevents" class="">
         <h1 class="title">My Events</h1>
+        <div class="eventCard" id="createeventbtn">
+            <div class="eventAdd"></div>
+        </div>
         <?php
         if(count($ownedEvents) == 0){ ?>
             <p>You currently have no events created!</p>
@@ -39,7 +42,7 @@
         } else {
             foreach( $resultEntered as $row) { ?>
                 <div class="eventCard">
-                    <div class="eventImage" style="background-image: url(http://lorempixel.com/600/800/)">
+                    <div class="eventImage" style="background-image: url(img/uploaded/<?php echo str_replace(' ', '%20',$row->getPhoto()); ?>)">
                     </div>
                     <div class="eventContent">
                         <?php if($row->getPrivate() == 0) { ?>
