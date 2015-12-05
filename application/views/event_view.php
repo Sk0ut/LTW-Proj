@@ -4,7 +4,6 @@ $event = $data['event'];
 $owner = $data['owner'];
 
 $imageUrl = str_replace(' ', '%20', $event->getPhoto());
-$imageUrl = substr($imageUrl, strrpos($imageUrl, '/') + 1);
 $imageUrl = "img/uploaded/" . $imageUrl;
 
 $PageTitle = $event->getName();

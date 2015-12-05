@@ -89,7 +89,10 @@ class EventCtrl extends Controller {
 			return;
 		}
 		
-		$event = EventDAO::createEvent($user->getId(), $params['name'], $params['description'], $photoPath, $params['date'], $params['type'], $params['private']);
+		$photo = substr($photoPath, strrpos($imageUrl, '/') + 1);
+		
+		$event = EventDAO::createEvent($user->getId(), $params['name'], $params['description'],
+		                               $photo, $params['date'], $params['type'], $params['private']);
 		
 		if ($event == NULL) {
 			$this->printResponse($key, "event creation failed");
