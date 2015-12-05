@@ -90,8 +90,10 @@ function onFormSubmit(event) {
         contentType: false,
         processData: false,
         success:function(data){
+            console.log("Success");
         },
         error: function(data){
+            console.log("Error");
         }
     });
 }

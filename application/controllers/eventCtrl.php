@@ -69,8 +69,6 @@ class EventCtrl extends Controller {
             return;
         }
 		
-		$params['private'] = isset($_POST['private']);
-		
 		if (!isset($_FILES['image']) || $_FILES['image']['name'] == "") {
 			$this->printResponse($key, $missing_file);
 			return;
@@ -90,13 +88,12 @@ class EventCtrl extends Controller {
 			return;
 		}
 		
-		$event = EventDAO::createEvent($user->getId(), $params['name'], $params['description'],
-		                               $photo, $params['date'], $params['type'], $params['private']);
+        if(isset($_POST['private']))
+            $params['private'] = 1;
+        else
+            $params['private'] = 0;
 		
-		if ($event == NULL) {
-			$this->printResponse($key, "event creation failed");
-			return;
-		}
+        EventDAO::createEvent($user->getId(), $params['name'], $params['description'], $photoPath, $params['date'], $params['type'], $params['private']);
 		
 		$this->printResponse($key, $created_event);
 	}
