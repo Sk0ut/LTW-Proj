@@ -1,7 +1,7 @@
 <!-- Content of the page -->
 <div class="container h-align">
     <div id="ownevents" class="ownevents event margin">
-        <h1> My events </h1>
+        <h1>My Events</h1>
         <?php
         if(count($ownedEvents) == 0){
             echo '<p> You currently have no events created! </p>';
@@ -48,7 +48,7 @@
             <header class="logo">Create Event</header>
             <fieldset>
                 <div class="input-box">
-                    <input type="text" name="name" id="name" class="input-text" placeholder="Event Name"/>
+                    <input type="text" name="name" id="name" class="input-text" placeholder="Name"/>
                 </div>
 
                 <div class="input-box">
@@ -60,7 +60,11 @@
                 </div>
 
                 <div class="input-box">
-                    <input type="text" name="type" id="type" class="input-text" placeholder="Event Type" />
+                    <input type="text" name="type" id="type" class="input-text" placeholder="Type" />
+                </div>
+
+                <div class="input-box">
+                    <input type="file" name="image" id="image" class="input-file" placeholder="Image">
                 </div>
 
                 <div class="label-input">
@@ -68,13 +72,9 @@
                     <label for="private">Private Event</label>
                 </div>
 
-                <div class="imageDiv">
-                    <input type="file" name="image" id="image">
-                </div>
-
                 <div class="buttons-box">
                     <input id="createButton" type="submit" class="submit-button" value="Create" />
-                    <input id="cancelButton" type="submit" class="submit-button" value="Cancel" />
+                    <input id="cancelButton" type="button" class="submit-button" value="Cancel" />
                 </div>
                 </form>
             </fieldset>
@@ -86,3 +86,5 @@
 <script src="js/jquery-1.11.3.min.js" type="text/javascript"></script>
 <script src="js/userpage.js" type="text/javascript"></script>
 <script src="//code.jquery.com/ui/1.11.3/jquery-ui.js"></script>
+<script src="//cdnjs.cloudflare.com/ajax/libs/jquery-ui-timepicker-addon/1.4.5/jquery-ui-timepicker-addon.min.js"></script>
+<script src="//cdnjs.cloudflare.com/ajax/libs/jquery-ui-timepicker-addon/1.4.5/jquery-ui-sliderAccess.js"></script>
