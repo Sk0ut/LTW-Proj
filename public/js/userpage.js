@@ -2,11 +2,14 @@
  * Setup the Javascript
  */
 function onReady() {
-    $("#datepicker").datepicker({
-      yearRange: "2015:2060",
-      dateFormat: "dd-mm-yy",
-      changeMonth: true,//this option for allowing user to select month
-      changeYear: true //this option for allowing user to select from year range
+    $("#datepicker").datetimepicker({
+        yearRange: "2015:2060",
+        dateFormat: "yy-mm-dd",
+        timeFormat: "hh:mm",
+        changeMonth: true,//this option for allowing user to select month
+        changeYear: true, //this option for allowing user to select from year range
+        addSliderAccess: true,
+        sliderAccessArgs: { touchonly: false  }
     });
 
     setupListeners();
