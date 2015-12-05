@@ -264,19 +264,26 @@ fieldset {
 .title {
     text-align:center;
     font-family: "Open Sans", Times, serif;
-    font-size: 24px;
+    font-size: 48px;
     font-weight: bold;
 }
 
-.eventImage {
-    width: 15rem;
-    height: 15rem;
-    display:inline-block;
+.eventCard {
+    width: 24%;
+    height: 20rem;
     border-radius: 1rem;
+    display: inline-block;
+    margin: 1rem 0rem;
+    padding: 0;
+    overflow:hidden;
 }
 
-.subTitle, .description {
-    display:inline-block;
+.eventImage {
+    width: 100%;
+    height: 33%;
+    background-repeat: no-repeat;
+    background-position: center center;
+    background-size:cover;
 }
 
 #createButton {

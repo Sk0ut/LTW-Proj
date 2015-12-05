@@ -1,6 +1,6 @@
 <!-- Content of the page -->
 <div class="container h-align">
-    <div id="ownevents" class="ownevents event margin">
+    <div id="ownevents" class="">
         <h1 class="title">My Events</h1>
         <?php
         if(count($ownedEvents) == 0){ ?>
@@ -8,10 +8,17 @@
         <?php
         } else {
             foreach( $ownedEvents as $row) { ?>
-                <div class="event">
-                <img src="http://lorempixel.com/400/200/" alt="<?php echo $row->getName() ?>" class="eventImage">
-                    <h2 class="subTitle"><?php echo $row->getName(); ?></h2>
-                    <p class="description"><?php echo $row->getDescription(); ?></p>
+                <div class="eventCard">
+                    <div class="eventImage" style="background-image: url(http://www.online-image-editor.com//styles/2014/images/example_image.png)">
+                    </div>
+                    <div>
+                        <?php if($row->getPrivate()) ?>
+                            <h2 class="subTitle"><i class="fa fa-unlock"></i>  <?php echo $row->getName(); ?></h2>
+                        <?php else ?>
+                            <h2 class="subTitle"><i class="fa fa-lock"></i>  <?php echo $row->getName(); ?></h2>
+                        <p class="date"><i class="fa fa-calendar-check-o"></i>  <?php echo $row->getDate(); ?></p>
+                        <p class="description"><?php echo $row->getDescription(); ?></p>
+                    </div>
                 </div>
         <?php
             }
