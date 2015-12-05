@@ -23,6 +23,7 @@ function setupListeners() {
     $('a[href^="#"]').click(scrollToTag);
     $('.navbar-item').mouseover(openDropdownMenu);
     $('#createEventForm').submit(onFormSubmit);
+	$('.eventCard').click(onEventClick);
 }
 
 /**
@@ -118,6 +119,17 @@ function onFormSubmit(event) {
     });
  }
 
+ /**
+  * Event when clicking an event card.
+  * Redirects to event page.
+  * @param event event of the click
+  */
+ function onEventClick(event) {
+	var eventId = this.id.substr("event".length);
+	
+	window.location.replace("?url=event/index&id=" + eventId);
+ }
+ 
 /**
  * Called when document is fully loaded in the
  * client browser
