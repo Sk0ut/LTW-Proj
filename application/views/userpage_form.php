@@ -2,60 +2,46 @@
 <div class="container h-align">
     <div id="ownevents" class="">
         <h1 class="title">My Events</h1>
-        <div class="eventAddCard" id="createeventbtn">
-            <div class="eventAdd"></div>
+        <div class="eventActionCard" id="createeventbtn">
+            <div class="eventImage eventAction eventAdd"></div>
         </div>
-        <?php
-        if(count($ownedEvents) == 0){ ?>
-            <p>You currently have no events created!</p>
-        <?php
-        } else {
-            foreach( $ownedEvents as $row) { ?>
-                <div class="eventCard" id="event<?php echo $row->getId()?>">
-                    <div class="eventImage" style="background-image: url(img/uploaded/<?php echo str_replace(' ', '%20',$row->getPhoto()); ?>)">
-                    </div>
-                    <div class="eventContent">
-                        <?php if($row->getPrivate() == 0) { ?>
-                            <h2 class="subTitle"><i class="fa fa-unlock"></i>  <?php echo $row->getName(); ?></h2>
-                        <?php } else { ?>
-                            <h2 class="subTitle"><i class="fa fa-lock"></i>  <?php echo $row->getName(); ?></h2>
-                        <?php } ?>
-                        <p class="date"><i class="fa fa-calendar-check-o"></i>  <?php echo $row->getDate(); ?></p>
-                        <p class="description"><i class="fa fa-bars"></i>  <?php echo $row->getDescription(); ?></p>
-                    </div>
+        <?php foreach( $ownedEvents as $row) { ?>
+            <div class="eventCard" id="event<?php echo $row->getId()?>">
+                <div class="eventImage" style="background-image: url(img/uploaded/<?php echo str_replace(' ', '%20',$row->getPhoto()); ?>)">
                 </div>
-        <?php
-            }
-        }?>
+                <div class="eventContent">
+                    <?php if($row->getPrivate() == 0) { ?>
+                        <h2 class="subTitle"><i class="fa fa-unlock"></i>  <?php echo $row->getName(); ?></h2>
+                    <?php } else { ?>
+                        <h2 class="subTitle"><i class="fa fa-lock"></i>  <?php echo $row->getName(); ?></h2>
+                    <?php } ?>
+                    <p class="date"><i class="fa fa-calendar-check-o"></i>  <?php echo $row->getDate(); ?></p>
+                    <p class="description"><i class="fa fa-bars"></i>  <?php echo $row->getDescription(); ?></p>
+                </div>
+            </div>
+        <?php } ?>
     </div>
 
     <div id="joinedEvents" class="">
         <h1 class="title"> Events I'm in</h1>
-        <?php
-        if(count($userEvents) == 0){ ?>
-            <p>You currently have no events created!</p>
-        <?php
-        } else {
-            foreach( $resultEntered as $row) { ?>
-                <div class="eventCard">
-                    <div class="eventImage" style="background-image: url(img/uploaded/<?php echo str_replace(' ', '%20',$row->getPhoto()); ?>)">
-                    </div>
-                    <div class="eventContent">
-                        <?php if($row->getPrivate() == 0) { ?>
-                            <h2 class="subTitle"><i class="fa fa-unlock"></i>  <?php echo $row->getName(); ?></h2>
-                        <?php } else { ?>
-                            <h2 class="subTitle"><i class="fa fa-lock"></i>  <?php echo $row->getName(); ?></h2>
-                        <?php } ?>
-                        <p class="date"><i class="fa fa-calendar-check-o"></i>  <?php echo $row->getDate(); ?></p>
-                        <p class="description"><i class="fa fa-bars"></i>  <?php echo $row->getDescription(); ?></p>
-                    </div>
-                </div>
-        <?php
-            }
-        }?>
-        <div id="button">
-            <input type="submit" class="big btn" value="Find Events" />
+        <div class="eventActionCard" id="searcheventbtn">
+            <div class="eventImage eventAction eventSearch"></div>
         </div>
+        <?php foreach( $resultEntered as $row) { ?>
+            <div class="eventCard">
+                <div class="eventImage" style="background-image: url(img/uploaded/<?php echo str_replace(' ', '%20',$row->getPhoto()); ?>)">
+                </div>
+                <div class="eventContent">
+                    <?php if($row->getPrivate() == 0) { ?>
+                        <h2 class="subTitle"><i class="fa fa-unlock"></i>  <?php echo $row->getName(); ?></h2>
+                    <?php } else { ?>
+                        <h2 class="subTitle"><i class="fa fa-lock"></i>  <?php echo $row->getName(); ?></h2>
+                    <?php } ?>
+                    <p class="date"><i class="fa fa-calendar-check-o"></i>  <?php echo $row->getDate(); ?></p>
+                    <p class="description"><i class="fa fa-bars"></i>  <?php echo $row->getDescription(); ?></p>
+                </div>
+            </div>
+        <?php } ?>
     </div>
 
     <div id="invites" class="">
@@ -64,7 +50,7 @@
     </div>
 </div>
 
-<!-- Create Event Modal -->
+<!-- Create Event -->
 <div id="createEvent" class="modal">
     <div class="modal-form v-align h-align">
         <form id="createEventForm">
@@ -102,6 +88,15 @@
                 </form>
             </fieldset>
         </form>
+    </div>
+</div>
+
+<!-- Search Event -->
+<div id="searchEvent" class="modal">
+    <div class="modal-search v-align h-align">
+        <div class="buttons-box">
+            <input id="closeButton" type="button" class="submit-button" value="Close" />
+        </div>
     </div>
 </div>
 

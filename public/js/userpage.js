@@ -24,6 +24,7 @@ function setupListeners() {
     $('#createEventForm').submit(onFormSubmit);
     $('.eventCard').click(onEventClick);
     $("#createeventbtn").click(openCreateEvent);
+    $("#searcheventbtn").click(openSearchEvent);
 }
 
 /**
@@ -36,6 +37,18 @@ function openCreateEvent(event) {
 
     $("#cancelButton").click(function() {
         $("#createEvent").fadeOut(200);
+    });
+}
+
+/**
+ * Open the search event modal box
+ * @param event event of the click
+ */
+function openSearchEvent(event) {
+    $("#searchEvent").fadeIn(300);
+
+    $("#closeButton").click(function() {
+        $("#searchEvent").fadeOut(200);
     });
 }
 

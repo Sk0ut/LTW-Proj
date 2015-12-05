@@ -241,12 +241,23 @@ fieldset {
 }
 
 .modal-form {
-    width: 40rem;
+    width: 35rem;
     border-radius: 0.2rem;
 
     background-color: #01528a;
 
-    padding: 0rem 2rem;
+    padding: 0rem 4rem;
+    box-sizing: border-box;
+    -moz-box-sizing: border-box;
+    -webkit-box-sizing: border-box;
+}
+
+.modal-search {
+    width: 40rem;
+    height: 60rem;
+
+    background-color: #fff;
+
     box-sizing: border-box;
     -moz-box-sizing: border-box;
     -webkit-box-sizing: border-box;
@@ -268,19 +279,19 @@ fieldset {
     font-weight: bold;
 }
 
-.eventCard, .eventAddCard {
+.eventCard, .eventActionCard {
     width: 30%;
     height: 30rem;
     display: inline-block;
     margin: 1rem 1.4%;
     padding: 0rem;
-    border: 0.3rem solid white;
+    border: 0.2rem solid white;
     overflow:hidden;
     background-color: #c7bfaa;
     box-sizing: border-box;
 }
 
-.eventCard:hover, .eventAddCard:hover {
+.eventCard:hover, .eventActionCard:hover {
     cursor: pointer;
     border: 0rem;
 }
@@ -293,14 +304,16 @@ fieldset {
     background-size:cover;
 }
 
-.eventAdd {
-    width: 100%;
+.eventAction {
     height: 100%;
+}
+
+.eventAdd {
     background-image: url("../img/add.png");
-    background-repeat: no-repeat;
-    background-size: cover;
-    background-repeat: no-repeat;
-    background-position: 50% 50%;
+}
+
+.eventSearch {
+    background-image: url("../img/search.png");
 }
 
 .eventContent {
