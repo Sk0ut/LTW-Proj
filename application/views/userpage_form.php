@@ -9,7 +9,7 @@
         } else {
             foreach( $ownedEvents as $row) { ?>
                 <div class="eventCard">
-                    <div class="eventImage" style="background-image: url(http://lorempixel.com/600/800/)">
+                    <div class="eventImage" style="background-image: url(img/uploaded/<?php echo str_replace(' ', '%20',$row->getPhoto()); ?>)">
                     </div>
                     <div class="eventContent">
                         <?php if($row->getPrivate() == 0) { ?>
