@@ -140,7 +140,7 @@ fieldset {
     display: table;
 }
 
-.input-text {
+.input-text, .input-file {
     width: 100%;
     color: #555;
     font-family: "Open Sans", Times, serif;
@@ -157,6 +157,11 @@ fieldset {
 
 .input-text-invalid {
     border-color:#d8000c;
+}
+
+.input-file {
+    overflow: hidden;
+    text-overflow: ellipsis;
 }
 
 .label-input {
