@@ -7,18 +7,18 @@ require_once __DIR__ . "/../models/userDAO.php";
 class EventCtrl extends Controller {
 	public function index() {
 		if (!isset($_GET['id'])) {
-			$this->model("error_view");
+			$this->view("error_view");
 			return;
 		}
 		$id = $_GET['id'];
 		$event = EventDAO::getById($id);
 		if ($event == NULL) {
-			$this->model("error_view");
+			$this->view("error_view");
 			return;
 		}
 		$owner = UserDAO::getUserFromId($event->getOwnerId());
 		if ($owner == NULL) {
-			$this->model("error_view");
+			$this->view("error_view");
 			return;
 		}
 		$this->view("event_view", ['event' => $event, 'owner' => $owner]);
@@ -29,7 +29,7 @@ class EventCtrl extends Controller {
 		$missing_params = "missing_params";
 		$corrupted_file = "corrupted_file";
 		$created_event = "created_event";
-		$params = ['name' => '', 'description' => '', 'date' => '', 'type' => ''];
+		$params = ['id' => '', 'name' => '', 'description' => '', 'date' => '', 'type' => ''];
 
 		if(!$this->fillPostParameters($params)) {
             $this->printResponse($key, $missing_params);
@@ -44,17 +44,17 @@ class EventCtrl extends Controller {
 		}
 
 		if(!isset($_FILES['image'])) {
-			EventDAO::editEvent($user->getId(), $params['name'], $params['description'], NULL, $params['date'], $params['type'], $params['private']);
+			EventDAO::editEvent($params['id'],$user->getId(), $params['name'], $params['description'], NULL, $params['date'], $params['type'], $params['private']);
 		}
 
 		else {
-			$photoPath = __DIR__ . "/../../public/img/uploaded/" . time() . $_FILES['image']['name'];
+			$photo = time() . $_FILES['image']['name'];
+			$photoPath = __DIR__ . "/../../public/img/uploaded/" . $photo;
 			move_uploaded_file( $_FILES['image']['tmp_name'], $photoPath);
-			EventDAO::editEvent($user->getId(), $params['name'], $params['description'], $photoPath, $params['date'], $params['type'], $params['private']);
+			EventDAO::editEvent($params['id'],$user->getId(), $params['name'], $params['description'], $photoPath, $params['date'], $params['type'], $params['private']);
 		}
 
 		$this->printResponse($key, $created_event);
-
 	}
 	
 	public function create() {
@@ -83,13 +83,12 @@ class EventCtrl extends Controller {
 			return;
 		}
 		
-		$photoPath = __DIR__ . "/../../public/img/uploaded/" . time() . $_FILES['image']['name'];
+		$photo = time() . $_FILES['image']['name']
+		$photoPath = __DIR__ . "/../../public/img/uploaded/" . $photo;
 		if (!move_uploaded_file( $_FILES['image']['tmp_name'], $photoPath)) {
 			$this->printResponse($key, "image upload failed");
 			return;
 		}
-		
-		$photo = substr($photoPath, strrpos($imageUrl, '/') + 1);
 		
 		$event = EventDAO::createEvent($user->getId(), $params['name'], $params['description'],
 		                               $photo, $params['date'], $params['type'], $params['private']);
