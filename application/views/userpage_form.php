@@ -2,6 +2,9 @@
 <div class="container h-align">
     <div id="ownevents" class="">
         <h1 class="title">My Events</h1>
+        <div class="eventCard" id="createeventbtn">
+            <div class="eventAdd"></div>
+        </div>
         <?php
         if(count($ownedEvents) == 0){ ?>
             <p>You currently have no events created!</p>
@@ -33,19 +36,30 @@
     <div id="joinedEvents" class="">
         <h1 class="title"> Events I'm in</h1>
         <?php
-        if(count($userEvents) == 0){
-            echo '<p> You are currently not participating on any events! </p>';
-        }
-        else {
-            foreach( $resultEntered as $row) {
-                echo '<h2>' . $row['name'] . '</h1>';
-                    echo '<p>' . $row['description'] . '</p>';
-                }
-            } ?>
-
-            <div id="button">
+        if(count($userEvents) == 0){ ?>
+            <p>You currently have no events created!</p>
+        <?php
+        } else {
+            foreach( $resultEntered as $row) { ?>
+                <div class="eventCard">
+                    <div class="eventImage" style="background-image: url(img/uploaded/<?php echo str_replace(' ', '%20',$row->getPhoto()); ?>)">
+                    </div>
+                    <div class="eventContent">
+                        <?php if($row->getPrivate() == 0) { ?>
+                            <h2 class="subTitle"><i class="fa fa-unlock"></i>  <?php echo $row->getName(); ?></h2>
+                        <?php } else { ?>
+                            <h2 class="subTitle"><i class="fa fa-lock"></i>  <?php echo $row->getName(); ?></h2>
+                        <?php } ?>
+                        <p class="date"><i class="fa fa-calendar-check-o"></i>  <?php echo $row->getDate(); ?></p>
+                        <p class="description"><i class="fa fa-bars"></i>  <?php echo $row->getDescription(); ?></p>
+                    </div>
+                </div>
+        <?php
+            }
+        }?>
+        <div id="button">
             <input type="submit" class="big btn" value="Find Events" />
-            </div>
+        </div>
     </div>
 
     <div id="invites" class="">

@@ -5,8 +5,8 @@
             <li class="navbar-item"><a class="fa fa-home" href="#"></a></li>
         </ul>
         <ul class="navbar-items-right">
-            <li class="navbar-item"><a class="fa fa-calendar" href="#"></a></li>
-            <li class="navbar-item"><a class="fa fa-inbox" href="#"></a></li>
+            <li class="navbar-item"><a class="fa fa-calendar" href="#joinedEvents"></a></li>
+            <li class="navbar-item"><a class="fa fa-inbox" href="invites"></a></li>
             <li class="navbar-item"><a class="fa fa-user" href="#"></a>
                 <ul class="navbar-subitems">
                     <li class="navbar-subitem"><a href="#"><span>Photo</span></a></li>
