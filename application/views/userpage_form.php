@@ -11,7 +11,7 @@
         <?php
         } else {
             foreach( $ownedEvents as $row) { ?>
-                <div class="eventCard">
+                <div class="eventCard" id="event<?php echo $row->getId()?>">
                     <div class="eventImage" style="background-image: url(img/uploaded/<?php echo str_replace(' ', '%20',$row->getPhoto()); ?>)">
                     </div>
                     <div class="eventContent">
