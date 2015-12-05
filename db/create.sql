@@ -46,7 +46,7 @@ CREATE TABLE IF NOT EXISTS Events (
     photo VARCHAR,
     eventDate DATE,
     typeId INTEGER,
-    private BOOLEAN,
+    private INTEGER,
 
     CONSTRAINT pk_Events PRIMARY KEY (id),
     CONSTRAINT fk_Owner FOREIGN KEY (ownerId) REFERENCES Users(id),

@@ -36,8 +36,6 @@ class EventCtrl extends Controller {
             return;
         }
 		
-		$params['private'] = isset($_POST['private']);
-		
 		if (!isset($_FILES['image']) || $_FILES['image']['name'] == "") {
 			$this->printResponse($key, $missing_file);
 			return;
@@ -53,8 +51,12 @@ class EventCtrl extends Controller {
 		$photoPath = __DIR__ . "/../../public/img/uploaded/" . time() . $_FILES['image']['name'];
 		move_uploaded_file( $_FILES['image']['tmp_name'], $photoPath);
 		
+        if(isset($_POST['private']))
+            $params['private'] = 1;
+        else
+            $params['private'] = 0;
 		
-		EventDAO::createEvent($user->getId(), $params['name'], $params['description'], $photoPath, $params['date'], $params['type'], $params['private']);
+        EventDAO::createEvent($user->getId(), $params['name'], $params['description'], $photoPath, $params['date'], $params['type'], $params['private']);
 		
 		$this->printResponse($key, $created_event);
 	}
