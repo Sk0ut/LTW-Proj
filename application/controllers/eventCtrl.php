@@ -83,7 +83,7 @@ class EventCtrl extends Controller {
 			return;
 		}
 		
-		$photo = time() . $_FILES['image']['name']
+		$photo = time() . $_FILES['image']['name'];
 		$photoPath = __DIR__ . "/../../public/img/uploaded/" . $photo;
 		if (!move_uploaded_file( $_FILES['image']['tmp_name'], $photoPath)) {
 			$this->printResponse($key, "image upload failed");
