@@ -2,7 +2,7 @@
 <div class="container h-align">
     <div id="ownevents" class="">
         <h1 class="title">My Events</h1>
-        <div class="eventCard" id="createeventbtn">
+        <div class="eventAddCard" id="createeventbtn">
             <div class="eventAdd"></div>
         </div>
         <?php
@@ -11,7 +11,7 @@
         <?php
         } else {
             foreach( $ownedEvents as $row) { ?>
-                <div class="eventCard" id="event<?php echo $row->getId()?>">
+                <div class="eventCard">
                     <div class="eventImage" style="background-image: url(img/uploaded/<?php echo str_replace(' ', '%20',$row->getPhoto()); ?>)">
                     </div>
                     <div class="eventContent">
