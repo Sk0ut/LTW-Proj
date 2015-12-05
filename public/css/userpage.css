@@ -269,8 +269,8 @@ fieldset {
 }
 
 .eventCard {
-    width: 24%;
-    height: 20rem;
+    width: 32%;
+    height: 30rem;
     border-radius: 1rem;
     display: inline-block;
     margin: 1rem 0rem;
@@ -284,6 +284,12 @@ fieldset {
     background-repeat: no-repeat;
     background-position: center center;
     background-size:cover;
+}
+
+.description {
+    font-family: "Open Sans", Times, serif;
+    font-size: 18px;
+    text-align: justify;
 }
 
 #createButton {

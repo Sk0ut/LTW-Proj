@@ -9,15 +9,16 @@
         } else {
             foreach( $ownedEvents as $row) { ?>
                 <div class="eventCard">
-                    <div class="eventImage" style="background-image: url(http://www.online-image-editor.com//styles/2014/images/example_image.png)">
+                    <div class="eventImage" style="background-image: url(http://lorempixel.com/600/800/)">
                     </div>
                     <div>
-                        <?php if($row->getPrivate()) ?>
+                        <?php if($row->getPrivate()) { ?>
                             <h2 class="subTitle"><i class="fa fa-unlock"></i>  <?php echo $row->getName(); ?></h2>
-                        <?php else ?>
+                        <?php } else { ?>
                             <h2 class="subTitle"><i class="fa fa-lock"></i>  <?php echo $row->getName(); ?></h2>
+                        <?php } ?>
                         <p class="date"><i class="fa fa-calendar-check-o"></i>  <?php echo $row->getDate(); ?></p>
-                        <p class="description"><?php echo $row->getDescription(); ?></p>
+                        <p class="description"><i class="fa fa-bars"></i>  <?php echo $row->getDescription(); ?></p>
                     </div>
                 </div>
         <?php
