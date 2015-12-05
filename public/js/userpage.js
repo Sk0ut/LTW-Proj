@@ -25,6 +25,7 @@ function setupListeners() {
     $('.eventCard').click(onEventClick);
     $("#createeventbtn").click(openCreateEvent);
     $("#searcheventbtn").click(openSearchEvent);
+	$("#searchEventForm").submit(onSearchSubmit);
 }
 
 /**
@@ -114,18 +115,24 @@ function onFormSubmit(event) {
  * On submit the find event form
  */
  function onSearchSubmit(event){
-    var formData = new FormData(this);
-
+	event.preventDefault();
+	name = $(this).find("input[name='name']").val();
+	$self = $(this);
+	
     $.ajax({
         type:'GET',
         url: "?url=event/search",
-        data:formData,
-        cache:false,
-        contentType: false,
-        processData: false,
+        data: {name : name},
         success:function(data){
+			var result = "";
+			for (var i = 0; i < data['search_events'].length; ++i) {
+				event = $.parseJSON(data['search_events'][i]);
+				result += event._name + "; ";
+			}
+			$self.find(".results-box").text(result);
         },
         error: function(data){
+			console.log("error: " + data);
         }
     });
  }

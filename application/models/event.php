@@ -21,6 +21,14 @@ class Event {
 		$this->_private = $private;
 	}
 	
+	/**
+	 * JSON convertion method
+	 * @return class attributes as json object
+	 */
+	public function toJSON() {
+		return json_encode(get_object_vars($this));
+	}
+	
 	public function getId() {
 		return $this->_id;
 	}

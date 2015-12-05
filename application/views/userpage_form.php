@@ -27,7 +27,7 @@
         <div class="eventActionCard" id="searcheventbtn">
             <div class="eventImage eventAction eventSearch"></div>
         </div>
-        <?php foreach( $resultEntered as $row) { ?>
+        <?php foreach( $userEvents as $row) { ?>
             <div class="eventCard">
                 <div class="eventImage" style="background-image: url(img/uploaded/<?php echo str_replace(' ', '%20',$row->getPhoto()); ?>)">
                 </div>
@@ -94,16 +94,18 @@
 <!-- Search Event -->
 <div id="searchEvent" class="modal">
     <div class="modal-form v-align h-align">
-        <header class="logo">Search Event</header>
-        <div class="input-box">
-            <input type="text" name="event" id="event" class="input-text" placeholder="Event name"/>
-        </div>
-        <div class="results-box">
-        </div>
-        <div class="buttons-box">
-            <input id="searchButton" type="submit" class="submit-button" value="Search" />
-            <input id="closeButton" type="button" class="submit-button" value="Close" />
-        </div>
+		<form id="searchEventForm">
+		<header class="logo">Search Event</header>
+			<div class="input-box">
+				<input type="text" name="name" id="event" class="input-text" placeholder="Event name"/>
+			</div>
+			<div class="results-box">
+			</div>
+			<div class="buttons-box">
+				<input id="searchButton" type="submit" class="submit-button" value="Search" />
+				<input id="closeButton" type="button" class="submit-button" value="Close" />
+			</div>
+		</form>
     </div>
 </div>
 
