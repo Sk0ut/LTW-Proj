@@ -107,6 +107,7 @@ class EventCtrl extends Controller {
 		
 		$events = EventDAO::searchEventName($name);
 		
+		var_dump($events);
 	}
 	
     /**
