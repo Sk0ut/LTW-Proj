@@ -29,10 +29,6 @@
         }?>
     </div>
 
-    <div id="button">
-        <input type="submit" id="createeventbtn" class="big btn" value="Create an event" />
-    </div>
-
     <div id="joinedEvents" class="">
         <h1 class="title"> Events I'm in</h1>
         <?php
