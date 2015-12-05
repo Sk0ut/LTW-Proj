@@ -19,11 +19,11 @@ function onReady() {
  * Setup the listeners of the userpage
  */
 function setupListeners() {
-    $("#createeventbtn").click(openCreateEvent);
     $('a[href^="#"]').click(scrollToTag);
     $('.navbar-item').mouseover(openDropdownMenu);
     $('#createEventForm').submit(onFormSubmit);
-	$('.eventCard').click(onEventClick);
+    $('.eventCard').click(onEventClick);
+    $("#createeventbtn").click(openCreateEvent);
 }
 
 /**
