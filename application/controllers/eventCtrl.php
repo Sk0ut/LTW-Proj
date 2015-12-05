@@ -93,7 +93,7 @@ class EventCtrl extends Controller {
         else
             $params['private'] = 0;
 		
-        EventDAO::createEvent($user->getId(), $params['name'], $params['description'], $photoPath, $params['date'], $params['type'], $params['private']);
+        EventDAO::createEvent($user->getId(), $params['name'], $params['description'], $photo, $params['date'], $params['type'], $params['private']);
 		
 		$this->printResponse($key, $created_event);
 	}
