@@ -11,8 +11,8 @@
                 <div class="eventCard">
                     <div class="eventImage" style="background-image: url(http://lorempixel.com/600/800/)">
                     </div>
-                    <div>
-                        <?php if($row->getPrivate()) { ?>
+                    <div class="eventContent">
+                        <?php if($row->getPrivate() == 0) { ?>
                             <h2 class="subTitle"><i class="fa fa-unlock"></i>  <?php echo $row->getName(); ?></h2>
                         <?php } else { ?>
                             <h2 class="subTitle"><i class="fa fa-lock"></i>  <?php echo $row->getName(); ?></h2>
