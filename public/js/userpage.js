@@ -125,7 +125,7 @@ function onFormSubmit(event) {
  function onEventClick(event) {
 	var eventId = this.id.substr("event".length);
 	
-	window.location.replace("?url=event/index&id=" + eventId);
+	window.location.href ="?url=event/index&id=" + eventId;
  }
  
 /**
