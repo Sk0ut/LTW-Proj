@@ -5,11 +5,11 @@ $owner = $data['owner'];
 
 $imageUrl = str_replace(' ', '%20', $event->getPhoto());
 $imageUrl = substr($imageUrl, strrpos($imageUrl, '/') + 1);
-$imageUrl = "img/uploaded/" + $imageUrl;
+$imageUrl = "img/uploaded/" . $imageUrl;
 
 $PageTitle = $event->getName();
 function customPageHeader() { ?>
-    <meta name="description" content="<?php echo $PageTitle . ' event page' ?>">
+    <meta name="description" content="<?php echo 'Event page' ?>">
     <meta name="author" content="LTW - MIEIC">
 
     <!--[if lt IE 9]>
@@ -31,7 +31,7 @@ require_once('shared/header.php');
 	<h4 class="event_owner">
 		Created by: <?php echo $owner->getUsername(); ?>
 	</h4>
-	<img class="event_picture" src="img/uploaded/<?php echo $imageUrl ?>">
+	<img class="event_picture" src="<?php echo $imageUrl ?>">
 	<p class="event_description">
 		<?php echo $event->getDescription(); ?>
 	</p>
