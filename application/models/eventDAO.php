@@ -22,12 +22,11 @@ class EventDAO {
 		if (count($result) != 1) {
 			return NULL;
 		}
-		$row = $result[0];
 
-		$row['type'] = $typeData[0]['type'];
-		return new Event($row['id'], $row['name'], $row['description'],
-						 $row['ownerId'], $row['photo'], $row['eventDate'],
-						 $row['type'], $row['private']);
+		$eventData['type'] = $result[0]['type'];
+		return new Event($eventData['id'], $eventData['name'], $eventData['description'],
+						 $eventData['ownerId'], $eventData['photo'], $eventData['eventDate'],
+						 $eventData['type'], $eventData['private']);
 	}
 
 	public static function getOwnerEvents($ownerId) {
@@ -142,7 +141,6 @@ class EventDAO {
 		$id = $result[0]['id'];
 
 		return $self.getById($id);
-
 	}
 
 	public static function editEvent($id, $ownerId, $name, $description, $photo, $date, $typeId, $private){
