@@ -1,14 +1,19 @@
 <!-- Content of the page -->
 <div class="container h-align">
     <div id="ownevents" class="ownevents event margin">
-        <h1>My Events</h1>
+        <h1 class="title">My Events</h1>
         <?php
-        if(count($ownedEvents) == 0){
-            echo '<p> You currently have no events created! </p>';
+        if(count($ownedEvents) == 0){ ?>
+            <p>You currently have no events created!</p>
+        <?php
         } else {
-            foreach( $ownedEvents as $row) {
-            echo '<h2>' . $row->getName() . '</h2>';
-            echo '<p>' . $row->getDescription() . '</p>';
+            foreach( $ownedEvents as $row) { ?>
+                <div class="event">
+                <img src="http://lorempixel.com/400/200/" alt="<?php echo $row->getName() ?>" class="eventImage">
+                    <h2 class="subTitle"><?php echo $row->getName(); ?></h2>
+                    <p class="description"><?php echo $row->getDescription(); ?></p>
+                </div>
+        <?php
             }
         }?>
     </div>
@@ -18,7 +23,7 @@
     </div>
 
     <div id="joinedEvents" class="">
-        <h1> Events I'm in </h1>
+        <h1 class="title"> Events I'm in</h1>
         <?php
         if(count($userEvents) == 0){
             echo '<p> You are currently not participating on any events! </p>';
@@ -36,7 +41,7 @@
     </div>
 
     <div id="invites" class="">
-        <h1>My current invites</h1>
+        <h1 class="title">My current invites</h1>
         <p>You currently have no invites!</p>
     </div>
 </div>
@@ -52,7 +57,7 @@
                 </div>
 
                 <div class="input-box">
-                    <input type="text" name="description" id="description" class="input-text" placeholder="Description"/>
+                    <textarea name="description" rows="5" cols="25" id="description" class="input-text" placeholder="Description"></textarea>
                 </div>
 
                 <div class="input-box">

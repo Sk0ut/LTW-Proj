@@ -30,6 +30,7 @@ function setupListeners() {
  * @param event event of the click
  */
 function openCreateEvent(event) {
+    document.getElementById("createEventForm").reset();
     $("#createEvent").fadeIn(300);
 
     $("#cancelButton").click(function() {
@@ -50,10 +51,11 @@ function openDropdownMenu(event) {
     var subMenu = $(this).children("ul");
     var tabPosition = tabMenu.offset();
 
-    var centerX = tabPosition.left + tabMenu.width() / 2;
-    var left = centerX - subMenu.width() / 2;
+    // var centerX = tabPosition.left + tabMenu.width() / 2;
+    // var left = centerX - subMenu.width() / 2;
+    var left = tabPosition.left + tabMenu.width() - subMenu.width();
 
-    subMenu.offset({ top: tabMenu.bottom, left: left });
+    subMenu.offset({ top: tabPosition.bottom, left: left });
 }
 
 /**
@@ -76,6 +78,8 @@ function scrollToTag(event) {
  */
 function onFormSubmit(event) {
     event.preventDefault();
+    $("#createEvent").fadeOut(200);
+
     var formData = new FormData(this);
 
     $.ajax({
@@ -86,12 +90,8 @@ function onFormSubmit(event) {
         contentType: false,
         processData: false,
         success:function(data){
-            console.log("success");
-            console.log(data);
         },
         error: function(data){
-            console.log("error");
-            console.log(data);
         }
     });
 }
