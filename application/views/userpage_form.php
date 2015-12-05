@@ -81,7 +81,7 @@
                 </div>
 
                 <div class="label-input">
-                    <input type="checkbox" name="id" id="private" name="private">
+                    <input type="checkbox" id="private" name="private">
                     <label for="private">Private Event</label>
                 </div>
 
