@@ -4,12 +4,12 @@ require_once __DIR__ . "/database.php";
 require_once __DIR__ . "/thread.php";
 
 class ThreadDAO {
-    public static function createThread($eventId, $title, $description){
+    public static function createThread($eventId, $userId, $title, $description){
         $db = Database::getInstance();
 
-        $query = "INSERT INTO Threads(eventId, title, description) VALUES(?, ?, ?)";
-        $params = [$eventId, $title, $description];
-        $types = [PDO::PARAM_INT, PDO::PARAM_STR, PDO::PARAM_STR];
+        $query = "INSERT INTO Threads(eventId, userId, title, description) VALUES(?, ?, ?, ?)";
+        $params = [$eventId, $userId, $title, $description];
+        $types = [PDO::PARAM_INT, PDO::PARAM_INT, PDO::PARAM_STR, PDO::PARAM_STR];
 
         $result = $db->executeUpdate($query, $params, $types);
 
@@ -35,7 +35,7 @@ class ThreadDAO {
     public static function getThreadsFromEvent($eventId){
         $db = Database::getInstance();
 
-        $query = "SELECT * FROM Threads WHERE eventId = ?";
+        $query = "SELECT id FROM Threads WHERE eventId = ?";
 		$params = [$eventId];
 		$types = [PDO::PARAM_INT];
 
@@ -44,8 +44,7 @@ class ThreadDAO {
         $threads = [];
 
         foreach($result as $row){
-            $comments = CommentDAO::getCommentsFromThread($row['id']);
-            $threads[] = new Thread($row['id'], $row['eventId'], $row['title'], $row['description'], $comments);
+            $threads[] = $self.getById($row['id']);
         }
 
 		return $threads;
@@ -61,7 +60,12 @@ class ThreadDAO {
             return NULL;
         }
         $threadData = $result[0];
+        $user = UserDAO::getUserFromId($threadData['userId']);
+        if(is_null($user))
+            return NULL;
+
+        $comments = CommentDAO::getCommentsFromThread($id);
         
-        return new Thread($threadData['id'], $threadData['eventId'], $threadData['title'], $threadData['description']);
+        return new Thread($threadData['id'], $threadData['eventId'], $user, $threadData['title'], $threadData['description'], $comments);
     }
 }
