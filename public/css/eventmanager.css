@@ -28,6 +28,10 @@ fieldset {
     padding: 0;
 }
 
+textarea {
+    resize:none;
+}
+
 .h-align {
     margin-left: auto;
     margin-right: auto;
@@ -124,7 +128,7 @@ fieldset {
 }
 
 .container {
-    padding: 7rem 2rem;
+    padding: 7rem 4rem;
     margin: 0% 20%;
     background-color:#fff;
 
@@ -475,4 +479,52 @@ fieldset {
     text-align:center;
     font-family: "Open Sans", Times, serif;
     font-size: 14px;
+}
+
+.thread {
+    margin: 2rem auto;
+    width: 80%;
+    border-radius: 0.2rem;
+    padding: 1rem 3rem;
+    background-color: #01528a;
+    color:#fff;
+    font-family: "Open Sans", Times, serif;
+}
+
+.thread-title {
+    font-size: 2rem;
+}
+
+.thread-description {
+    font-size: 1.3rem;
+}
+
+.thread-comment {
+    background-color: #fff;
+    color: #303030;
+    border-radius: 0.2rem;
+    padding: 0.5rem 2rem;
+}
+
+.comment-who {
+    background-color: #eee;
+    border-radius: 0.2rem;
+    padding: 0rem 1rem;
+}
+
+.comment-author {
+    font-weight: bold;
+    display:inline-block;
+}
+
+.comment-date {
+    display:inline-block;
+    float:right;
+}
+
+.comment-text {
+    padding-top: 0.2rem;
+    padding-left: 1.2rem;
+    margin: 0;
+    font-size: 1.1rem;
 }

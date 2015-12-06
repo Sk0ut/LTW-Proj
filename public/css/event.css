@@ -19,6 +19,28 @@ h2, h3, h4, p {
     background-size: cover;
 }
 
+.input-box {
+    width: 90%;
+    display:inline-block;
+}
+
+.input-text {
+    font-size: 1.3rem;
+}
+
+.submit-button {
+    width: 3rem;
+    height: 3rem;
+    color: #fff;
+    margin: 0;
+    background-color: transparent;
+}
+
+.submit-button:hover {
+    color: #cecece;
+    background-color: transparent;
+}
+
 #status {
     font-size: 2rem;
     text-align: right;
@@ -37,4 +59,8 @@ h2, h3, h4, p {
 #description {
     padding: 2rem 0rem;
     box-sizing: border-box;
+}
+
+#insertComment {
+    font-size: 3rem;
 }
