@@ -203,6 +203,7 @@ class EventCtrl extends Controller {
 		$missing_params = "missing_params";
 		$added_comment = "added_comment";
         $no_users = "no_users";
+        $fail = "fail";
         $user_not_logged = "user_not_logged";
         $user_not_in_event="user_not_in_event";
 
@@ -227,7 +228,10 @@ class EventCtrl extends Controller {
 
         foreach($users as $row) {
             if($row->getId() == $user->getId()){
-                CommentDAO::addComment($user->getId(), $params['threadId'], $params['comment']);
+                if(!CommentDAO::addComment($user->getId(), $params['threadId'], $params['comment'])) {
+                    $this->printResponse($key, $fail);
+                    return;
+                }
                 $this->printResponse($key, $added_comment);
                 return;
             }

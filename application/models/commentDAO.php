@@ -10,36 +10,21 @@ class CommentDAO {
 
         $result = $db->executeUpdate($query, $params, $types);
 
-        if($result != 1){
-            return NULL;
-        }
-
-        $query = "SELECT last_insert_rowid() AS id FROM UserComment";
-        $params = [];
-        $types = [];
-
-        $result = $db->executeQuery($query, $params, $types);
-
-        if(count($result) != 1){
-            return NULL;
-        }
-
-        $id = $result[0]['id'];
-
-        return CommentDAO::getById($id);
-    }
+        if(!$result || $result <= 0)
+            return false;
+        return true;
+   }
 
     public static function getCommentsFromThread($threadId) {
         $db = Database::getInstance();
 
-        $query = "SELECT * FROM UserComment ORDER BY datetime(commentDate) WHERE threadId = ?";
+        $query = "SELECT * FROM UserComment WHERE threadId = ? ORDER BY datetime(commentdate)";
         $params = [$threadId];
         $types =[PDO::PARAM_INT];
 
         $result = $db->executeQuery($query, $params, $types);
         if($result == NULL || count($result) == 0)
             $result = array();
-
         return $result;
     }
 
