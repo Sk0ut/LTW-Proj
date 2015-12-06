@@ -98,6 +98,24 @@ class EventCtrl extends Controller {
 
 		$this->printResponse($key, $created_event);
 	}
+
+    public function delete() {
+        $key = "delete_event";
+        $missing_params = "missing_params";
+        $deleted_event = "deleted_event";
+        $failed_delete = "failed_delete";
+
+        if(!$this->fillPostParameters($params)) {
+            $this->printResponse($key, $missing_params);
+            return;
+        }
+
+        if(EventDAO::deleteEvent($params['id']) == FALSE){
+            $this->printResponse($key, $failed_delete);
+        }
+
+        $this->printResponse($key, $deleted_event);
+    }
 	
 	public function create() {
 		$key = "createEvent";

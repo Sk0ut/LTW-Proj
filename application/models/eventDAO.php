@@ -168,6 +168,22 @@ class EventDAO {
 
 		return $self.getById($id);
 	}
+
+    public static function deleteEvent($id){
+        $db = Database::getInstance();
+
+        $query = "DELETE FROM Events WHERE id = ?";
+        $params = [$id];
+        $types = [PDO::PARAM_INT];
+
+        $result = $db->executeUpdate($query, $params, $types);
+
+        if($result != 1){
+            return FALSE;
+        }
+
+        return TRUE;
+    }
 	
 	public static function searchEventName($name) {
 		$db = Database::getInstance();
