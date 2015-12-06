@@ -11,12 +11,12 @@ h3, h4, p {
     box-sizing: border-box;
 }
 
-#eventImage {
+.eventImage {
     border-radius: 1rem;
     width: 49%;
     height: 30rem;
     display: inline-block;
-    overflow: hidden;
+    background-size: cover;
 }
 
 #status {
