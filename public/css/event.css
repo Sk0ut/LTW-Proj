@@ -46,6 +46,11 @@ h2, h3, h4, p {
     text-align: right;
 }
 
+.commentForm > .input-box {
+    width: 90%;
+    display:inline-block;
+}
+
 #status {
     font-size: 2rem;
     text-align: right;

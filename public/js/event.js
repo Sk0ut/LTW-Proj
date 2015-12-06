@@ -77,7 +77,7 @@ function postComment(event) {
     var threadId = this.id.substr("insertComment".length);
 
     var comment = $(this).find("textarea").val();
-    $(this).val("");
+    $(this).find("textarea").val("");
 
     $.post(
             "?url=event/addComment",
@@ -90,7 +90,7 @@ function postComment(event) {
                 location.reload();
             })
             .fail(function(error) {
-                console.log("error");
+                console.log("Error on posting comment");
             });
 }
 

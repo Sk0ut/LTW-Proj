@@ -5,6 +5,7 @@ require_once __DIR__ . "/../models/event.php";
 require_once __DIR__ . "/../models/userDAO.php";
 require_once __DIR__ . "/../models/thread.php";
 require_once __DIR__ . "/../models/threadDAO.php";
+require_once __DIR__ . "/../models/commentDAO.php";
 
 class EventCtrl extends Controller {
 	public function index() {
@@ -226,7 +227,7 @@ class EventCtrl extends Controller {
 
         foreach($users as $row) {
             if($row->getId() == $user->getId()){
-                EventDAO::addComment($user->getId(), $params['threadId'], $params['comment']);
+                CommentDAO::addComment($user->getId(), $params['threadId'], $params['comment']);
                 $this->printResponse($key, $added_comment);
                 return;
             }
