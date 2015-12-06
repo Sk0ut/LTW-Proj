@@ -59,12 +59,31 @@
 
     <div id="threadsComments">
         <h1 class="title">Forum</h1>
+        <div class="thread">
+            <h2 class="thread-title">Bebidas que vão haver para a party</h2>
+            <h3 class="thread-description">Bem pessoal, alguém tem que comprar as bebidas se não não vai haver party! Disponibilizem-se ai nos comentários.... BTW estava a pensar em algumas Vodkas e Gin :33</h3>
+            <div class="thread-comment">
+                <div class="comment-who">
+                    <p class="comment-author">joao</p>
+                    <p class="comment-date">2015-04-03 20:08</p>
+                </div>
+                <p class="comment-text">Eu quero comprar <3</p>
+            </div>
+            <form id="insertComment">
+                <div class="input-box">
+                    <textarea class="input-text" placeholder="Write new comment"></textarea>
+                </div>
+                <input id="submit" type="submit" class="fa submit-button" value="&#xf0a9;" title="Comment" />
+            </form>
+        </div>
         <?php
-        foreach($forum as $row){
-            echo '<h2> $row->getTitle() </h2>';
-            echo '<h3> $row->getDescription</h3>';
-            foreach($comments as $comment){
-                echo '<p> $comment->getComment()</p>';
+        foreach($forum as $row){ ?>
+            <h2 class="thread-title"><?php echo $row->getTitle(); ?> </h2>
+            <h3 class="thread-description"><?php echo $row->getDescription; ?></h3>
+            <?php
+            foreach($comments as $comment){ ?>
+                <p class="thread-comment"> <?php echo $comment->getComment() ; ?></p>
+            <?php
             }
         }
         ?>
