@@ -7,7 +7,7 @@ require_once __DIR__ . "/../models/userDAO.php";
 class EventCtrl extends Controller {
 	public function index() {
 		require_once(__DIR__ . '/../../library/headerSession.php');
-        if($user == NULL) {
+        if(is_null($user)) {
 			$this->view("error_view");
 			return;
 		}
@@ -18,12 +18,12 @@ class EventCtrl extends Controller {
 		}
 		$id = $_GET['id'];
 		$event = EventDAO::getById($id);
-		if ($event == NULL) {
+		if (is_null($event)) {
 			$this->view("error_view");
 			return;
 		}
 		$owner = UserDAO::getUserFromId($event->getOwnerId());
-		if ($owner == NULL) {
+		if (is_null($owner)) {
 			$this->view("error_view");
 			return;
 		}
@@ -31,7 +31,7 @@ class EventCtrl extends Controller {
 		$isOwner = $owner->getId() == $user->getId();
 		
 		$registeredUsers = EventDAO::getRegisteredUsers($id);
-		if ($registeredUsers == NULL) {
+		if (is_null($registeredUsers)) {
 			$this->view("error_view");
 			return;
 		}

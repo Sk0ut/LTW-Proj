@@ -231,22 +231,21 @@ class EventDAO {
 		$types = [PDO::PARAM_INT];
 		
 		$result = $database->executeQuery($query, $params, $types);
-		if ($result == NULL)
-			return NULL;
-		
 		$users = [];
-		
+		if ($result == NULL)
+			return $users;
+				
 		foreach($result as $row){
 			$userId = $row['userId'];
-
+			
 			$user = UserDAO::getUserFromId($userId);
 			
 			if ($user == NULL)
-				return NULL;
+				continue;
 			
 			$users[] = $user;
 		}
-		
+
 		return $users;
 	}
 }
