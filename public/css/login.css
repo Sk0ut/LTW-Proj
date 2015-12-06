@@ -3,13 +3,19 @@ body {
     font-size: 3rem;
 }
 
+fieldset {
+    text-align: center;
+}
+
 .submit-button {
     width: 3rem;
     height: 3rem;
+    color: #fff;
     background-color: transparent;
 }
 
 .submit-button:hover {
+    color: #cecece;
     background-color: transparent;
 }
 
