@@ -98,6 +98,24 @@ class EventCtrl extends Controller {
 
 		$this->printResponse($key, $created_event);
 	}
+
+    public function delete() {
+        $key = "delete_event";
+        $missing_params = "missing_params";
+        $deleted_event = "deleted_event";
+        $failed_delete = "failed_delete";
+
+        if(!$this->fillPostParameters($params)) {
+            $this->printResponse($key, $missing_params);
+            return;
+        }
+
+        if(EventDAO::deleteEvent($params['id']) == FALSE){
+            $this->printResponse($key, $failed_delete);
+        }
+
+        $this->printResponse($key, $deleted_event);
+    }
 	
 	public function create() {
 		$key = "createEvent";
@@ -187,7 +205,7 @@ class EventCtrl extends Controller {
         $user_not_logged = "user_not_logged";
         $user_not_in_event="user_not_in_event";
 
-		$params = ['userId' => '', 'threadId' => '', 'comment' => '', 'commentDate' => ''];
+		$params = ['threadId' => '', 'comment' => ''];
 
         require_once(__DIR__ . '/../../library/headerSession.php');
         if(is_null($user)) {
@@ -208,7 +226,7 @@ class EventCtrl extends Controller {
 
         foreach($users as $row) {
             if($row->getId() == $user->getId()){
-                EventDAO::addComment($user->getId(), $params['threadId'], $params['comment'], $params['commentDate']);
+                EventDAO::addComment($user->getId(), $params['threadId'], $params['comment']);
                 $this->printResponse($key, $added_comment);
                 return;
             }
