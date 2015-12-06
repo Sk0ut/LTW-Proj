@@ -51,9 +51,11 @@ class EventCtrl extends Controller {
 		$finished = time() > strtotime($event->getDate());
 		
 		$forum = ThreadDAO::getThreadsFromEvent($id);
-
+	
+		$eventTypes = EventDAO::getEventTypesInfo();
+		
 		$this->view("event_view", ['event' => $event, 'owner' => $owner, 'registeredUsers' => $registeredUsers,
-			'isOwner' => $isOwner, 'registered' => $registered, 'finished' => $finished, 'forum' => $forum]);
+			'isOwner' => $isOwner, 'registered' => $registered, 'finished' => $finished, 'forum' => $forum, 'eventTypes' => $eventTypes]);
 	}
 	
 	public function changePassword() {
