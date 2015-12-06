@@ -169,7 +169,7 @@ class EventDAO {
 	public static function searchEventName($name) {
 		$db = Database::getInstance();
 
-		$query = "SELECT id FROM Events WHERE name LIKE ?";
+		$query = "SELECT id FROM Events WHERE name LIKE ? AND private = 0";
 		$params = ['%' . $name . '%'];
 		$types = [PDO::PARAM_STR];
 
