@@ -11,7 +11,7 @@ class UserCtrl extends Controller {
 			return;
 		}
 		
-		if(!isset($_GET['id']) {
+		if(!isset($_GET['id'])) {
 			$this->model("error_view");
 			return;
 		}
