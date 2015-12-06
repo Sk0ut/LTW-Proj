@@ -60,13 +60,16 @@ class EventDAO {
 		return $events;
 	}
 	
-	public static function getRegisteredEvents($userId) {
-
+	public static function getRegisteredEvents($userId, $includeOwn = false) {
 		$db = Database::getInstance();
-
 		$query = "SELECT * FROM Events WHERE id IN (SELECT eventId FROM UserEvents WHERE userId = ?)";
 		$params = [$userId];
 		$types = [PDO::PARAM_INT];
+		if (!$includeOwn) {
+			$query .= " AND ownerId != ?";
+			$params[] = $userId;
+			$types[] = PDO::PARAM_INT;
+		}
 
 		$result = $db->executeQuery($query, $params, $types);
 		$events = [];
