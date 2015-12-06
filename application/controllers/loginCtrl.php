@@ -177,6 +177,10 @@ class LoginCtrl extends Controller {
         $user = UserDAO::getCurrentUser();
         if($user == NULL) {
             $this->printResponse($key, $not_logged);
+
+            $link = "http://" . $_SERVER['SERVER_NAME'] . $_SERVER['REQUEST_URI'];
+            $link = substr($link, 0, strpos($link, "?"));
+            header("Location: $link");
             return;
         }
 
