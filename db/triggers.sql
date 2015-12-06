@@ -16,6 +16,7 @@ CREATE TRIGGER IF NOT EXISTS DeleteEventData
 AFTER DELETE ON Events
 FOR EACH ROW
 BEGIN
+	DELETE FROM UserEvents WHERE eventId = OLD.id;
 	DELETE FROM Albums WHERE eventId = OLD.id;
 	DELETE FROM Threads WHERE eventId = OLD.id;
 END;
