@@ -9,12 +9,18 @@
             <?php } ?>
             <!-- Status of the user (invited, is going or not) -->
             <div id="status">
-                <?php if(!$isOwner) {
-                        if($isRegistered) { ?>
-                            <i id="regStatus"class="fa fa-check"> Registered</i>
-                    <?php } else { ?>
-                            <i id="regStatus"class="fa fa-ban"> Unregistered</i>
-                <?php     }
+            <?php
+                if(!$isFinished) {
+                        if(!$isOwner) {
+                            if($isRegistered) { ?>
+                                <i id="regStatus"class="fa fa-check"> Registered</i>
+                        <?php } else { ?>
+                                <i id="regStatus"class="fa fa-ban"> Unregistered</i>
+                <?php       }
+                        } else { ?>
+                                <i id="editEvent"class="fa fa-pencil"> Edit</i>
+                <?php
+                        }
                     }
                 ?>
             </div>

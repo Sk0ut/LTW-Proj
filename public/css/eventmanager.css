@@ -490,12 +490,13 @@ textarea {
 
 .thread {
     margin: 2rem auto;
-    width: 80%;
+    width: 90%;
     border-radius: 0.2rem;
     padding: 1rem 3rem;
     background-color: #01528a;
     color:#fff;
     font-family: "Open Sans", Times, serif;
+    box-sizing:border-box;
 }
 
 .thread-title {
@@ -516,6 +517,7 @@ textarea {
     color: #303030;
     border-radius: 0.2rem;
     padding: 0.5rem 2rem;
+    margin: 0.5rem 0rem;
 }
 
 .comment-who {

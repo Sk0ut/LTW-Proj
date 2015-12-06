@@ -6,6 +6,7 @@ $forum = $data['forum'];
 $isOwner = $data['isOwner'];
 $registeredUsers = $data['registeredUsers'];
 $isRegistered = $data['registered'];
+$isFinished = $data['finished'];
 
 $imageUrl = str_replace(' ', '%20', $event->getPhoto());
 $imageUrl = "img/uploaded/" . $imageUrl;
