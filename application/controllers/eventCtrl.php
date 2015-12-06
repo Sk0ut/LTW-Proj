@@ -108,6 +108,7 @@ class EventCtrl extends Controller {
         $deleted_event = "deleted_event";
         $failed_delete = "failed_delete";
 
+        $params = ['id' => ''];
         if(!$this->fillPostParameters($params)) {
             $this->printResponse($key, $missing_params);
             return;
@@ -115,6 +116,7 @@ class EventCtrl extends Controller {
 
         if(EventDAO::deleteEvent($params['id']) == FALSE){
             $this->printResponse($key, $failed_delete);
+            return;
         }
 
         $this->printResponse($key, $deleted_event);
@@ -125,6 +127,7 @@ class EventCtrl extends Controller {
         $missing_params = "missing_params";
 		$missing_file = "missing_file";
 		$created_event = "created_event";
+		$fail = "fail";
 		$params = ['name' => '', 'description' => '', 'date' => '', 'type' => ''];
 		
 		if(!$this->fillPostParameters($params)) {
@@ -156,7 +159,10 @@ class EventCtrl extends Controller {
         else
             $params['private'] = 0;
 		
-        EventDAO::createEvent($user->getId(), $params['name'], $params['description'], $photo, $params['date'], $params['type'], $params['private']);
+        if(!EventDAO::createEvent($user->getId(), $params['name'], $params['description'], $photo, $params['date'], $params['type'], $params['private'])) {
+            $this->printResponse($key, $fail);
+            return;
+        }
 		
 		$this->printResponse($key, $created_event);
 	}

@@ -124,6 +124,7 @@ function onFormSubmit(event) {
             window.location.replace("");
         },
         error: function(data){
+            console.log("Error on create event");
         }
     });
 }

@@ -127,23 +127,7 @@ class EventDAO {
 
 		$result = $db->executeUpdate($query, $params, $types);
 
-		if($result != 1){
-			return NULL;
-		}
-
-		$query = "SELECT last_insert_rowid() AS id FROM Events";
-		$params = [];
-		$types = [];
-
-		$result = $db->executeQuery($query, $params, $types);
-
-		if(count($result) != 1){
-			return NULL;
-		}
-
-		$id = $result[0]['id'];
-
-		return $self.getById($id);
+        return $result > 0;
 	}
 
 	public static function editEvent($id, $ownerId, $name, $description, $photo, $date, $typeId, $private){

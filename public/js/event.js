@@ -15,6 +15,7 @@ function setupListeners() {
     $('#thread-create').submit(threadCreate);
     $("#editBtnEvent").click(openEditEvent);
     $('.commentForm').submit(postComment);
+    $('#deleteButton').click(deleteEvent);
 }
 
 /**
@@ -131,7 +132,26 @@ function threadCreate(event) {
             });
 }
 
+/**
+ * Delete a event
+ * @param event submit event
+ */
+function deleteEvent(event) {
+    event.preventDefault();
+    var eventId = getParameterByName('id');
 
+    $.post(
+            "?url=event/delete",
+            {
+                id: eventId
+            },
+            function(data) {
+                window.location.href = "";
+            })
+            .fail(function(error) {
+                console.log("Error on delete event");
+            });
+}
 
 /**
  * Search name in get params.

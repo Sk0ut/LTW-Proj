@@ -160,9 +160,9 @@
                 </div>
 
                 <div class="buttons-box">
-                    <input id="createButton" type="submit" class="submit-button" value="Create" />
+                    <input id="editButton" type="submit" class="submit-button" value="Edit" />
                     <input id="cancelButton" type="button" class="submit-button" value="Cancel" />
-                    <input id="deleteButton" type="submit" class="submit-button" value="Delete" />
+                    <input id="deleteButton" type="button" class="submit-button" value="Delete" />
                 </div>
             </fieldset>
         </form>
