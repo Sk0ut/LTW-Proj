@@ -134,6 +134,7 @@ function onFormSubmit(event) {
         url: "?url=event/search",
         data: {name : name},
         success:function(data){
+            resultBox.empty();
             for (var i = 0; i < data['search_events'].length; ++i) {
                 event = data['search_events'][i];
                 var div = generateResult(event);
