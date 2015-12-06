@@ -112,17 +112,3 @@ CREATE TABLE IF NOT EXISTS UserComment (
     CONSTRAINT fk_Thread FOREIGN KEY (threadId) REFERENCES Users(id),
     CONSTRAINT fk_Parent FOREIGN KEY (parentId) REFERENCES UserComment(id)
 );
-
-CREATE TRIGGER IF NOT EXISTS UpdateParentComment
-AFTER INSERT ON UserComment
-FOR EACH ROW
-WHEN NEW.parentId IS NOT NULL AND
-     (SELECT parentId FROM UserComment
-        WHERE id = NEW.parentId) IS NOT NULL
-BEGIN
-    UPDATE UserComment
-    SET parentId = (SELECT parentId
-                    FROM UserComment
-                    WHERE id = NEW.parentId)
-    WHERE id = NEW.id;
-END;

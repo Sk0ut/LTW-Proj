@@ -126,7 +126,7 @@ function onFormSubmit(event) {
         success:function(data){
 			var result = "";
 			for (var i = 0; i < data['search_events'].length; ++i) {
-				event = $.parseJSON(data['search_events'][i]);
+				event = data['search_events'][i];
 				result += event._name + "; ";
 			}
 			$self.find(".results-box").text(result);
