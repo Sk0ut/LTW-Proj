@@ -90,9 +90,94 @@
                     <input id="createButton" type="submit" class="submit-button" value="Create" />
                     <input id="cancelButton" type="button" class="submit-button" value="Cancel" />
                 </div>
-                </form>
             </fieldset>
         </form>
+    </div>
+</div>
+
+<!-- Config -->
+<div id="config" class="modal">
+    <div class="modal-form v-align h-align">
+        <form id="changePasswordForm">
+            <header class="logo">Create Event</header>
+            <fieldset>
+                <div class="input-box">
+                    <input type="text" name="name" id="name" class="input-text" autocomplete="off" placeholder="Name"/>
+                </div>
+
+                <div class="input-box">
+                    <textarea name="description" rows="5" cols="25" id="description" class="input-text" autocomplete="off" placeholder="Description"></textarea>
+                </div>
+
+                <div class="input-box">
+                    <input type="text" name="date" id="datepicker" class="input-text" autocomplete="off" placeholder="Date"/>
+                </div>
+
+                <div class="input-box">
+                    <select name="type" id="type" class="input-text" autocomplete="off" placeholder="Type">
+                        <option value="" disabled selected hidden>Type</option>
+                        <?php foreach($eventTypes as $eventType) { ?>
+                            <option value="<?php echo $eventType['id']; ?>"><?php echo $eventType['type']; ?></option>
+                        <?php }?>
+                    </select>
+                </div>
+
+                <div class="input-box">
+                    <input type="file" name="image" id="image" class="input-file" placeholder="Image">
+                </div>
+
+                <div class="label-input">
+                    <input type="checkbox" id="private" name="private">
+                    <label for="private">Private Event</label>
+                </div>
+
+                <div class="buttons-box">
+                    <input id="createButton" type="submit" class="submit-button" value="Create" />
+                    <input id="cancelButton" type="button" class="submit-button" value="Cancel" />
+                </div>
+            </fieldset>
+        </form>
+
+        <form id="changePhotoForm">
+            <header class="logo">Create Event</header>
+            <fieldset>
+                <div class="input-box">
+                    <input type="text" name="name" id="name" class="input-text" autocomplete="off" placeholder="Name"/>
+                </div>
+
+                <div class="input-box">
+                    <textarea name="description" rows="5" cols="25" id="description" class="input-text" autocomplete="off" placeholder="Description"></textarea>
+                </div>
+
+                <div class="input-box">
+                    <input type="text" name="date" id="datepicker" class="input-text" autocomplete="off" placeholder="Date"/>
+                </div>
+
+                <div class="input-box">
+                    <select name="type" id="type" class="input-text" autocomplete="off" placeholder="Type">
+                        <option value="" disabled selected hidden>Type</option>
+                        <?php foreach($eventTypes as $eventType) { ?>
+                            <option value="<?php echo $eventType['id']; ?>"><?php echo $eventType['type']; ?></option>
+                        <?php }?>
+                    </select>
+                </div>
+
+                <div class="input-box">
+                    <input type="file" name="image" id="image" class="input-file" placeholder="Image">
+                </div>
+
+                <div class="label-input">
+                    <input type="checkbox" id="private" name="private">
+                    <label for="private">Private Event</label>
+                </div>
+
+                <div class="buttons-box">
+                    <input id="createButton" type="submit" class="submit-button" value="Create" />
+                    <input id="cancelButton" type="button" class="submit-button" value="Cancel" />
+                </div>
+            </fieldset>
+        </form>
+
     </div>
 </div>
 
