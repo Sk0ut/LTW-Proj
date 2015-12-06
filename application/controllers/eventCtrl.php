@@ -186,7 +186,7 @@ class EventCtrl extends Controller {
 
         foreach($users as $row) {
             if($row->getId() == $user->getId()){
-                EventDAO::createThread($user->getId(), $params['eventId'], $params['title'], $params['description']);
+                ThreadDAO::createThread($user->getId(), $params['eventId'], $params['title'], $params['description']);
                 $this->printResponse($key, $created_thread);
                 return;
             }
