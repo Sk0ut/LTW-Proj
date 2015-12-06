@@ -46,8 +46,11 @@
         <?php
         foreach($registeredUsers as $user) {
         ?>
-            <div class"">
-                
+            <div class="userCard" id="user<?php echo $user->getId(); ?>">
+                <div class="userImage" style="background-image: url(img/uploaded/lock.png)"></div>
+                <div class="userContent">
+                    <h2 class="subTitle"><?php echo $user->getUsername(); ?></h2>
+                </div>
             </div>
         <?php
         }

@@ -16,6 +16,7 @@ h3, h4, p {
     width: 49%;
     height: 30rem;
     display: inline-block;
+    overflow: hidden;
 }
 
 #status {
