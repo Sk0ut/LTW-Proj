@@ -13,7 +13,8 @@ class AlbumDAO {
             return NULL;
         }
         $albumData = $result[0];
-        return new Album($albumData['id'], $albumData['eventId'], $albumData['title']);
+        $photos = $self.getPhotosFromAlbum($id);
+        return new Album($albumData['id'], $albumData['eventId'], $albumData['title'], $photos);
     }
 
     public static function getPhotosFromAlbum($albumId){
@@ -29,6 +30,46 @@ class AlbumDAO {
         }
 
         return $photos;
+    }
+
+    public static function getPhotoById($photoId){
+        $database = Database::getInstance();
+        $query = "SELECT * FROM Album WHERE id = ?";
+        $params = [ $photoId ];
+        $types = [ PDO::PARAM_INT ];
+        $result = $database->executeQuery($query, $params, $types);
+        if (count($result) != 1) {
+            return NULL;
+        }
+        return $result['path'];
+    }
+
+    public static function createPhoto($albumId, $path){
+        $db = Database::getInstance();
+
+        $query = "INSERT INTO Photo(albumId, path) VALUES(?, ?)";
+        $params = [$albumId, $path];
+        $types = [PDO::PARAM_INT, PDO::PARAM_STR];
+
+        $result = $db->executeUpdate($query, $params, $types);
+
+        if($result != 1){
+            return NULL;
+        }
+
+        $query = "SELECT last_insert_rowid() AS id FROM Photo";
+        $params = [];
+        $types = [];
+
+        $result = $db->executeQuery($query, $params, $types);
+
+        if(count($result) != 1){
+            return NULL;
+        }
+
+        $id = $result[0]['id'];
+
+        return $self.getPhotoById($id);
     }
 
     public static function createAlbum($eventId, $title){

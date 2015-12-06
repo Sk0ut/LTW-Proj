@@ -19,8 +19,7 @@ class Album {
      * @param $_title
      * @param $_photos
      */
-    public function __construct($id, $eventId, $title, $photos)
-    {
+    public function __construct($id, $eventId, $title, $photos) {
         $this->_id = $id;
         $this->_eventId = $eventId;
         $this->_title = $title;
