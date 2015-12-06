@@ -21,7 +21,14 @@ class EventCtrl extends Controller {
 			$this->view("error_view");
 			return;
 		}
-		$this->view("event_view", ['event' => $event, 'owner' => $owner]);
+		
+		$registeredUsers = EventDAO::getRegisteredUsers($id);
+		if ($registeredUsers == NULL) {
+			$this->view("error_view");
+			return;
+		}
+		
+		$this->view("event_view", ['event' => $event, 'owner' => $owner, 'registerUsers' => $registeredUsers]);
 	}
 
 	public function edit() {
@@ -97,7 +104,36 @@ class EventCtrl extends Controller {
 		
 		$this->printResponse($key, $created_event);
 	}
-	
+
+	public function createThread() {
+		$key = 'createThread';
+		$missing_params = "missing_params";
+		$created_thread = "created_thread";
+		$params = ['eventId' => '', 'title' => '', 'description' => ''];
+
+		if(!$this->fillPostParameters($params)) {
+            $this->printResponse($key, $missing_params);
+            return;
+        }
+
+        EventDAO::createThread($params['eventId'], $params['title'], $params['description']);
+        $this->printResponse($key, $created_thread);
+	}
+
+	public function addComment() {
+		$key = 'addComment';
+		$missing_params = "missing_params";
+		$added_comment = "added_comment";
+		$params = ['userId' => '', 'threadId' => '', 'comment' => '', 'commentDate' => '', 'parentId' => ''];
+
+		if(!$this->fillPostParameters($params)) {
+            $this->printResponse($key, $missing_params);
+            return;
+        }
+
+        EventDAO::addComment($params['userId'], $params['threadId'], $params['comment'], $params['commentDate'], $params['parentId']);
+        $this->printResponse($key, $added_comment);
+	}
 	
 	public function search() {
 		$name = $_GET['name'];
@@ -135,6 +171,30 @@ class EventCtrl extends Controller {
 		}
 		
 		$this->printResponse($key, "registered");		
+	}
+	
+	public function unregister() {
+		$key = "unregister event";
+		
+		require_once(__DIR__ . '/../../library/headerSession.php');
+		if ($user == NULL) {
+			$this->printResponse($key, "no user");
+			return;
+		}
+
+		$params = ['eventId' => ''];
+		if (!$this->fillPostParameters($params))
+		{
+			$this->printResponse($key, "mising parameters");
+			return;
+		}
+		
+		if (!EventDAO::unregister($user->getId(), $params['eventId'])) {
+			$this->printResponse($key, "unregister fail");
+			return;
+		}
+		
+		$this->printResponse($key, "unregistered");		
 	}
 	
     /**
