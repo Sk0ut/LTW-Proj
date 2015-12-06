@@ -4,7 +4,7 @@ class CommentDAO {
     public static function addComment($userId, $threadId, $comment){
         $db = Database::getInstance();
 
-        $query = "INSERT INTO Comments(userId, threadId, comment, commentDate) VALUES(?, ?, ?, datetime('now'))";
+        $query = "INSERT INTO UserComment(userId, threadId, comment, commentDate) VALUES(?, ?, ?, datetime('now'))";
         $params = [$userId, $threadId, $comment];
         $types = [PDO::PARAM_INT, PDO::PARAM_INT, PDO::PARAM_STR];
 
@@ -14,7 +14,7 @@ class CommentDAO {
             return NULL;
         }
 
-        $query = "SELECT last_insert_rowid() AS id FROM Comments";
+        $query = "SELECT last_insert_rowid() AS id FROM UserComment";
         $params = [];
         $types = [];
 
@@ -26,13 +26,13 @@ class CommentDAO {
 
         $id = $result[0]['id'];
 
-        return $self.getById($id);
+        return CommentDAO::getById($id);
     }
 
     public static function getCommentsFromThread($threadId) {
         $db = Database::getInstance();
 
-        $query = "SELECT * FROM Comments ORDER BY datetime(commentDate) WHERE threadId = ?";
+        $query = "SELECT * FROM UserComment ORDER BY datetime(commentDate) WHERE threadId = ?";
         $params = [$threadId];
         $types =[PDO::PARAM_INT];
 
@@ -45,7 +45,7 @@ class CommentDAO {
 
     public static function getById($id) {
         $database = Database::getInstance();
-        $query = "SELECT * FROM Comments WHERE id = ?";
+        $query = "SELECT * FROM UserComment WHERE id = ?";
         $params = [ $id ];
         $types = [ PDO::PARAM_INT ];
         $result = $database->executeQuery($query, $params, $types);
