@@ -41,6 +41,11 @@ h2, h3, h4, p {
     background-color: transparent;
 }
 
+.commentForm, #thread-create {
+    font-size: 3rem;
+    text-align: right;
+}
+
 #status {
     font-size: 2rem;
     text-align: right;
@@ -59,10 +64,6 @@ h2, h3, h4, p {
 #eventDescription {
     padding: 2rem 0rem;
     box-sizing: border-box;
-}
-
-#insertComment {
-    font-size: 3rem;
 }
 
 #thread-create-div {

@@ -73,7 +73,7 @@ function changeRegisterStatus(event) {
  */
 function postComment(event) {
     event.preventDefault();
-    var threadId = this.id.subtract("insertComment".length);
+    var threadId = this.id.substr("insertComment".length);
 
     var comment = $(this).find("textarea").val();
 
