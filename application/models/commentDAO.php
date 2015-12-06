@@ -34,7 +34,7 @@ class CommentDAO {
 
         $query = "SELECT * FROM Comments ORDER BY datetime(commentDate) WHERE threadId = ?";
         $params = [$threadId];
-        $types = [$PDO::PARAM_INT];
+        $types =[PDO::PARAM_INT];
 
         $result = $db->executeQuery($query, $params, $types);
 

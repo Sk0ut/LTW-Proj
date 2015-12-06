@@ -77,27 +77,30 @@
 
         <?php
         foreach($forum as $row){ ?>
-        <h2 class="thread-title"><?php echo $row->getTitle(); ?> </h2>
-        <h3 class="thread-description"><?php echo $row->getDescription; ?></h3>
-        <h4 class="thread-author"><?php echo $row->getUser()->getUsername(); ?></h4>
-            <?php
-            foreach($comments as $comment){ ?>
-            <div class="thread-comment">
-                <div class="comment-who">
-                <p class="comment-author"><?php echo $comment->getUser()->getUsername(); ?></p>
-                <p class="comment-date"><?php echo $comment->getCommentDate(); ?></p>
+        <div class="thread">
+            <h2 class="thread-title"><?php echo $row->getTitle(); ?> </h2>
+            <h3 class="thread-description"><?php echo $row->getDescription(); ?></h3>
+            <h4 class="thread-author"><?php echo $row->getUser()->getUsername(); ?></h4>
+                <?php
+                $comments = $row->getComments();
+                foreach($comments as $comment){ ?>
+                <div class="thread-comment">
+                    <div class="comment-who">
+                    <p class="comment-author"><?php echo $comment->getUser()->getUsername(); ?></p>
+                    <p class="comment-date"><?php echo $comment->getCommentDate(); ?></p>
+                    </div>
+                    <p class="comment-text"><?php echo $comment->getComment(); ?></p>
                 </div>
-                <p class="comment-text"><?php echo $comment->getComment(); ?></p>
-            </div>
-            <?php
-            }
-            ?>
-            <form class="commentForm" id="insertComment<?php echo $row->getId(); ?>">
-                <div class="input-box">
-                    <textarea class="input-text" placeholder="Write new comment"></textarea>
-                </div>
-                <input id="postComment" type="submit" class="fa submit-button" value="&#xf0a9;" title="Comment" />
-            </form>
+                <?php
+                }
+                ?>
+                <form class="commentForm" id="insertComment<?php echo $row->getId(); ?>">
+                    <div class="input-box">
+                        <textarea class="input-text" placeholder="Write new comment"></textarea>
+                    </div>
+                    <input id="postComment" type="submit" class="fa submit-button" value="&#xf0a9;" title="Comment" />
+                </form>
+        </div>
         <?php
         }
         ?>

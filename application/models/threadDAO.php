@@ -2,6 +2,7 @@
 
 require_once __DIR__ . "/database.php";
 require_once __DIR__ . "/thread.php";
+require_once __DIR__ . "/commentDAO.php";
 
 class ThreadDAO {
     public static function createThread($eventId, $userId, $title, $description){
@@ -44,7 +45,7 @@ class ThreadDAO {
         $threads = [];
 
         foreach($result as $row){
-            $threads[] = $self.getById($row['id']);
+            $threads[] = ThreadDAO::getById($row['id']);
         }
 
 		return $threads;
