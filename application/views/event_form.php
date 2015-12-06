@@ -46,7 +46,9 @@
         <?php
         foreach($registeredUsers as $user) {
         ?>
-            <div 
+            <div class"">
+                
+            </div>
         <?php
         }
         ?>
