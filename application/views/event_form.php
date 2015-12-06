@@ -3,9 +3,9 @@
     <div id="description">
         <div id="header">
             <?php if($event->getPrivate() == 0) { ?>
-                    <h1 class="title" id="event<?php echo $event->getid(); ?>"<i class="fa fa-unlock"></i>  <?php echo $event->getName(); ?></h2>
+                    <h1 class="title"><i class="fa fa-unlock"></i>  <?php echo $event->getName(); ?></h2>
             <?php } else { ?>
-                    <h1 class="title" id="event<?php echo $event->getid(); ?>"<i class="fa fa-lock"></i>  <?php echo $event->getName(); ?></h2>
+                    <h1 class="title"><i class="fa fa-lock"></i>  <?php echo $event->getName(); ?></h2>
             <?php } ?>
             <!-- Status of the user (invited, is going or not) -->
             <div id="status">
