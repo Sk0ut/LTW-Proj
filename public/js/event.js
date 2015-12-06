@@ -12,6 +12,7 @@ function setupListeners() {
     $('a[href^="#"]').click(scrollToTag);
     $('.navbar-item').mouseover(openDropdownMenu);
     $('#regStatus').click(changeRegisterStatus);
+    $('.commentForm').click(postComment);
 }
 
 /**
@@ -38,31 +39,53 @@ function openDropdownMenu(event) {
  */
 function changeRegisterStatus(event) {
     var regStatus = $(this);
-	var id = getParameterByName('id');
-	
+    var id = getParameterByName('id');
+
     if(regStatus.hasClass("fa-check")) {
-		 $.ajax({
-			type:'POST',
-			url: "?url=event/unregister",
-			data: {eventId : id},
-			success:function(data){
-				if (data['unregister event'] == "unregistered") {
-					location.reload();
-				}
-			}
-		});        
+         $.ajax({
+            type:'POST',
+            url: "?url=event/unregister",
+            data: {eventId : id},
+            success:function(data){
+                if (data['unregister event'] == "unregistered") {
+                    location.reload();
+                }
+            }
+        });
     } else {
-		$.ajax({
-			type:'POST',
-			url: "?url=event/register",
-			data: {eventId : id},
-			success:function(data){
-				if (data['register event'] == "registered") {
-					location.reload();
-				}
-			}
-		});
+        $.ajax({
+            type:'POST',
+            url: "?url=event/register",
+            data: {eventId : id},
+            success:function(data){
+                if (data['register event'] == "registered") {
+                    location.reload();
+                }
+            }
+        });
     }
+}
+
+/**
+ * Post a comment in a thread
+ * @param event submit event
+ */
+function postComment(event) {
+    var threadId = this.id.subtract("insertComment".length);
+
+    var comment = $(this).find("textarea").val();
+
+    $.post(
+            "?url=event/addComment",
+            {
+                threadId: threadId,
+                comment: comment
+            }
+            function(data) {
+                location.reload();
+            })
+            .fail(function(error)) {
+            }
 }
 
 /**

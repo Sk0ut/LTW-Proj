@@ -59,32 +59,30 @@
 
     <div id="threadsComments">
         <h1 class="title">Forum</h1>
-        <div class="thread">
-            <h2 class="thread-title">Bebidas que vão haver para a party</h2>
-            <h3 class="thread-description">Bem pessoal, alguém tem que comprar as bebidas se não não vai haver party! Disponibilizem-se ai nos comentários.... BTW estava a pensar em algumas Vodkas e Gin :33</h3>
+        <?php
+        foreach($forum as $row){ ?>
+        <h2 class="thread-title"><?php echo $row->getTitle(); ?> </h2>
+        <h3 class="thread-description"><?php echo $row->getDescription; ?></h3>
+        <h4 class="thread-author"><?php echo $row->getUser()->getUsername(); ?></h4>
+            <?php
+            foreach($comments as $comment){ ?>
             <div class="thread-comment">
                 <div class="comment-who">
-                    <p class="comment-author">joao</p>
-                    <p class="comment-date">2015-04-03 20:08</p>
+                <p class="comment-author"><?php echo $comment->getUser()->getUsername(); ?></p>
+                <p class="comment-date"><?php echo $comment->getCommentDate(); ?></p>
                 </div>
-                <p class="comment-text">Eu quero comprar <3</p>
+                <p class="comment-text"><?php echo $comment->getComment(); ?></p>
             </div>
-            <form id="insertComment">
+            <?php
+            }
+            ?>
+            <form class="commentForm" id="insertComment<?php echo $row->getId(); ?>">
                 <div class="input-box">
                     <textarea class="input-text" placeholder="Write new comment"></textarea>
                 </div>
                 <input id="submit" type="submit" class="fa submit-button" value="&#xf0a9;" title="Comment" />
             </form>
-        </div>
         <?php
-        foreach($forum as $row){ ?>
-            <h2 class="thread-title"><?php echo $row->getTitle(); ?> </h2>
-            <h3 class="thread-description"><?php echo $row->getDescription; ?></h3>
-            <?php
-            foreach($comments as $comment){ ?>
-                <p class="thread-comment"> <?php echo $comment->getComment() ; ?></p>
-            <?php
-            }
         }
         ?>
     </div>

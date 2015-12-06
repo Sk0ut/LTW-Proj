@@ -499,6 +499,11 @@ textarea {
     font-size: 1.3rem;
 }
 
+.thread-author {
+    font-size: 1.2rem;
+    text-align: right;
+}
+
 .thread-comment {
     background-color: #fff;
     color: #303030;
