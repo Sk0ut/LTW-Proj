@@ -6,7 +6,23 @@ class Comment {
     private $_threadId;
     private $_comment;
     private $_commentDate;
-    private $_parentId;
+
+    /**
+     * Comment constructor.
+     * @param $_id
+     * @param $_user
+     * @param $_threadId
+     * @param $_comment
+     * @param $_commentDate
+     * @param $_parentId
+     */
+    public function __construct($_id, $_user, $_threadId, $_comment, $_commentDate){
+        $this->_id = $_id;
+        $this->_user = $_user;
+        $this->_threadId = $_threadId;
+        $this->_comment = $_comment;
+        $this->_commentDate = $_commentDate;
+    }
 
     /**
      * @return mixed
@@ -86,21 +102,5 @@ class Comment {
     public function setCommentDate($commentDate)
     {
         $this->_commentDate = $commentDate;
-    }
-
-    /**
-     * @return mixed
-     */
-    public function getParentId()
-    {
-        return $this->_parentId;
-    }
-
-    /**
-     * @param mixed $parentId
-     */
-    public function setParentId($parentId)
-    {
-        $this->_parentId = $parentId;
     }
 }
