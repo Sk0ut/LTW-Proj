@@ -71,8 +71,6 @@ function openDropdownMenu(event) {
     var subMenu = $(this).children("ul");
     var tabPosition = tabMenu.offset();
 
-    // var centerX = tabPosition.left + tabMenu.width() / 2;
-    // var left = centerX - subMenu.width() / 2;
     var left = tabPosition.left + tabMenu.width() - subMenu.width();
 
     subMenu.offset({ top: tabPosition.bottom, left: left });
