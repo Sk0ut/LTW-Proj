@@ -1,5 +1,7 @@
 <?php
 
+require_once __DIR__ . "/comment.php";
+
 class CommentDAO {
     public static function addComment($userId, $threadId, $comment){
         $db = Database::getInstance();
@@ -55,7 +57,7 @@ class CommentDAO {
             $comments[] = $comment;
         }
 
-        return $result;
+        return $comments;
     }
 
     public static function getById($id) {
