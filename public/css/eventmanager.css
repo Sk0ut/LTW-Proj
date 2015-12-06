@@ -164,6 +164,7 @@ fieldset {
     padding: 0.5rem 0.2rem;
     border-bottom: 0.1rem solid #808080;
     cursor: pointer;
+    font-family: "Open Sans", Times, serif;
 }
 
 .result-image {
