@@ -69,12 +69,12 @@
                 </div>
 
                 <div class="input-box">
-					<select name="type" id="type" class="input-text" autocomplete="off" placeholder="Type">
-						<option value="" disabled selected hidden>Type</option>
-						<?php foreach($eventTypes as $eventType) { ?>
-							<option value="<?php echo $eventType['id']; ?>"><?php echo $eventType['type']; ?></option>
-						<?php }?>
-					</select>
+                    <select name="type" id="type" class="input-text" autocomplete="off" placeholder="Type">
+                        <option value="" disabled selected hidden>Type</option>
+                        <?php foreach($eventTypes as $eventType) { ?>
+                            <option value="<?php echo $eventType['id']; ?>"><?php echo $eventType['type']; ?></option>
+                        <?php }?>
+                    </select>
                 </div>
 
                 <div class="input-box">

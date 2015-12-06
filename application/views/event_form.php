@@ -18,7 +18,7 @@
                                 <i id="regStatus"class="fa fa-ban"> Unregistered</i>
                 <?php       }
                         } else { ?>
-                                <i id="editEvent"class="fa fa-pencil"> Edit</i>
+                                <i id="editBtnEvent"class="fa fa-pencil"> Edit</i>
                 <?php
                         }
                     }
@@ -110,6 +110,56 @@
         <?php
         }
         ?>
+    </div>
+</div>
+
+<!-- Edit Event -->
+<div id="editEvent" class="modal">
+    <div class="modal-form v-align h-align">
+        <form id="editEventForm">
+            <header class="logo">Edit Event</header>
+            <fieldset>
+                <div class="input-box">
+                <input type="text" name="name" id="name" class="input-text" autocomplete="off" placeholder="Name" value="<?php echo $event->getName(); ?>"/>
+                </div>
+
+                <div class="input-box">
+                <textarea name="description" rows="5" cols="25" id="description" class="input-text" autocomplete="off" placeholder="Description" value="<?php echo $event->getDescription(); ?>"></textarea>
+                </div>
+
+                <div class="input-box">
+                <input type="text" name="date" id="datepicker" class="input-text" autocomplete="off" placeholder="Date" value="<?php echo $event->getDate(); ?>"/>
+                </div>
+
+                <div class="input-box">
+                    <select name="type" id="type" class="input-text" autocomplete="off" placeholder="Type">
+                        <option value="" disabled selected hidden>Type</option>
+                        <?php foreach($eventTypes as $eventType) { ?>
+                            <option value="<?php echo $eventType['id']; ?>"><?php echo $eventType['type']; ?></option>
+                        <?php }?>
+                    </select>
+                </div>
+
+                <div class="input-box">
+                    <input type="file" name="image" id="image" class="input-file" placeholder="Image">
+                </div>
+
+                <div class="label-input">
+                <?php if($event->getPrivate() == 0) { ?>
+                        <input type="checkbox" id="private" name="private" check="check">
+                <?php } else { ?>
+                        <input type="checkbox" id="private" name="private">
+                <?php } ?>
+                    <label for="private">Private Event</label>
+                </div>
+
+                <div class="buttons-box">
+                    <input id="createButton" type="submit" class="submit-button" value="Create" />
+                    <input id="cancelButton" type="button" class="submit-button" value="Cancel" />
+                    <input id="deleteButton" type="submit" class="submit-button" value="Delete" />
+                </div>
+            </fieldset>
+        </form>
     </div>
 </div>
 

@@ -13,7 +13,20 @@ function setupListeners() {
     $('.navbar-item').mouseover(openDropdownMenu);
     $('#regStatus').click(changeRegisterStatus);
     $('#thread-create').submit(threadCreate);
+    $("#editBtnEvent").click(openEditEvent);
     $('.commentForm').submit(postComment);
+}
+
+/**
+ * Open the edit event modal box
+ * @param event event of the click
+ */
+function openEditEvent(event) {
+    $("#editEvent").fadeIn(300);
+
+    $("#cancelButton").click(function() {
+        $("#editEvent").fadeOut(200);
+    });
 }
 
 /**
