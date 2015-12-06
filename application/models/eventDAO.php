@@ -201,7 +201,7 @@ class EventDAO {
 		$params = [$userId, $eventId];
 		$types = [PDO::PARAM_INT, PDO::PARAM_INT];
 		
-		return $result = $database->executeUpdate($query, $params, $types);
+		return $database->executeUpdate($query, $params, $types);
 	}
 	
 	/**
@@ -212,10 +212,41 @@ class EventDAO {
 	public static function unregister($userId, $eventId) {
 		$database = Database::getInstance();
 		
-		$query = "REMOVE FROM UserEvents WHERE userId = ? AND eventId = ?";
+		$query = "DELETE FROM UserEvents WHERE userId = ? AND eventId = ?";
 		$params = [$userId, $eventId];
 		$types = [PDO::PARAM_INT, PDO::PARAM_INT];
 		
-		return $result = $database->executeUpdate($query, $params, $types);
+		return $database->executeUpdate($query, $params, $types);
+	}
+	
+	/**
+	 * Get users registered in event.
+	 * @param eventId id of the event
+	 */
+	public static function getRegisteredUsers($eventId) {
+		$database = Database::getInstance();
+			
+		$query = "SELECT userId FROM UserEvents WHERE eventId = ?";
+		$params = [$eventId];
+		$types = [PDO::PARAM_INT];
+		
+		$result = $database->executeQuery($query, $params, $types);
+		if ($result == NULL)
+			return NULL;
+		
+		$users = [];
+		
+		foreach($result as $row){
+			$userId = $row['userId'];
+
+			$user = UserDAO::getUserFromId($userId);
+			
+			if ($user == NULL)
+				return NULL;
+			
+			$users[] = $user;
+		}
+		
+		return $users;
 	}
 }
