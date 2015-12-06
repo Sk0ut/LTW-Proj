@@ -110,6 +110,7 @@ function onFormSubmit(event) {
         contentType: false,
         processData: false,
         success:function(data){
+            window.location.replace("");
         },
         error: function(data){
         }

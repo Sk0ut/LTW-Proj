@@ -57,19 +57,19 @@
             <header class="logo">Create Event</header>
             <fieldset>
                 <div class="input-box">
-                    <input type="text" name="name" id="name" class="input-text" placeholder="Name"/>
+                    <input type="text" name="name" id="name" class="input-text" autocomplete="off" placeholder="Name"/>
                 </div>
 
                 <div class="input-box">
-                    <textarea name="description" rows="5" cols="25" id="description" class="input-text" placeholder="Description"></textarea>
+                    <textarea name="description" rows="5" cols="25" id="description" class="input-text" autocomplete="off" placeholder="Description"></textarea>
                 </div>
 
                 <div class="input-box">
-                    <input type="text" name="date" id="datepicker" class="input-text" placeholder="Date"/>
+                    <input type="text" name="date" id="datepicker" class="input-text" autocomplete="off" placeholder="Date"/>
                 </div>
 
                 <div class="input-box">
-                    <input type="text" name="type" id="type" class="input-text" placeholder="Type" />
+                    <input type="text" name="type" id="type" autocomplete="off" class="input-text" placeholder="Type" />
                 </div>
 
                 <div class="input-box">
