@@ -70,6 +70,7 @@
 
                 <div class="input-box">
 					<select name="type" id="type" class="input-text" autocomplete="off" placeholder="Type">
+						<option value="" disabled selected>Type</option>
 						<?php foreach($eventTypes as $eventType) { ?>
 							<option value="<?php echo $eventType['id']; ?>"><?php echo $eventType['type']; ?></option>
 						<?php }?>
