@@ -5,7 +5,7 @@ function onReady() {
     $("#datepicker").datetimepicker({
         yearRange: "2015:2060",
         dateFormat: "yy-mm-dd",
-        timeFormat: "hh:mm",
+        timeFormat: "HH:mm",
         changeMonth: true,//this option for allowing user to select month
         changeYear: true, //this option for allowing user to select from year range
         addSliderAccess: true,

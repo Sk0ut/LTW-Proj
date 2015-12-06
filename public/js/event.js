@@ -12,7 +12,8 @@ function setupListeners() {
     $('a[href^="#"]').click(scrollToTag);
     $('.navbar-item').mouseover(openDropdownMenu);
     $('#regStatus').click(changeRegisterStatus);
-    $('.commentForm').click(postComment);
+    $('#thread-create').submit(threadCreate);
+    $('.commentForm').submit(postComment);
 }
 
 /**
@@ -71,6 +72,7 @@ function changeRegisterStatus(event) {
  * @param event submit event
  */
 function postComment(event) {
+    event.preventDefault();
     var threadId = this.id.subtract("insertComment".length);
 
     var comment = $(this).find("textarea").val();
@@ -80,13 +82,39 @@ function postComment(event) {
             {
                 threadId: threadId,
                 comment: comment
-            }
+            },
             function(data) {
                 location.reload();
             })
-            .fail(function(error)) {
-            }
+            .fail(function(error) {
+            });
 }
+
+/**
+ * Create a new thread in a event
+ * @param event submit event
+ */
+function threadCreate(event) {
+    event.preventDefault();
+    var id = getParameterByName('id');
+    var title = $(this).find("#titleThread").val();
+    var description = $(this).find("textarea").val();
+
+    $.post(
+            "?url=event/createThread",
+            {
+                eventId: id,
+                title: title,
+                description: description
+            },
+            function(data) {
+                location.reload();
+            })
+            .fail(function(error) {
+            });
+}
+
+
 
 /**
  * Search name in get params.
