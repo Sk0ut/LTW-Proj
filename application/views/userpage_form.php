@@ -1,6 +1,6 @@
 <!-- Content of the page -->
 <div class="container h-align">
-    <div id="ownevents" class="">
+    <div id="ownEvents">
         <h1 class="title">My Events</h1>
         <div class="eventActionCard" id="createeventbtn">
             <div class="eventImage eventAction eventAdd"></div>
@@ -22,7 +22,7 @@
         <?php } ?>
     </div>
 
-    <div id="joinedEvents" class="">
+    <div id="joinedEvents">
         <h1 class="title"> Events I'm in</h1>
         <div class="eventActionCard" id="searcheventbtn">
             <div class="eventImage eventAction eventSearch"></div>
@@ -44,7 +44,7 @@
         <?php } ?>
     </div>
 
-    <div id="invites" class="">
+    <div id="invites">
         <h1 class="title">My current invites</h1>
         <p>You currently have no invites!</p>
     </div>

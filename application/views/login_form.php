@@ -34,7 +34,7 @@
                 <input type="radio" id="typeForgotPassword" name="type"/>
                 <label for="typeForgotPassword">Forgot my password</label>
             </div>
-            <input id="submit" type="submit" class="submit-button arrow-icon" value="" title="Login" />
+            <input id="submit" type="submit" class="fa submit-button" value="&#xf0a9;" title="Login" />
         </fieldset>
 
     </form>

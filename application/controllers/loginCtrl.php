@@ -145,7 +145,8 @@ class LoginCtrl extends Controller {
 
         $subject = 'Event Manager - Confirm your account';
 
-        $css = file_get_contents(__DIR__ . '/../../public/css/confirmAccount.css');
+        $css = file_get_contents(__DIR__ . '/../../public/css/eventmanager.css');
+        $css .= file_get_contents(__DIR__ . '/../../public/css/mail.css');
         $message = file_get_contents(__DIR__ . '/../../public/confirmAccount.html');
         $message = str_replace('%css%', $css, $message);
         $message = str_replace('%username%', $username, $message);
@@ -243,7 +244,8 @@ class LoginCtrl extends Controller {
             // Send the email
             $subject = 'Event Manager - Forgot your password';
 
-            $css = file_get_contents(__DIR__ . '/../../public/css/forgotPassword.css');
+            $css = file_get_contents(__DIR__ . '/../../public/css/eventmanager.css');
+            $css .= file_get_contents(__DIR__ . '/../../public/css/mail.css');
             $message = file_get_contents(__DIR__ . '/../../public/forgotPassword.html');
             $message = str_replace('%css%', $css, $message);
             $message = str_replace('%username%', $username, $message);
