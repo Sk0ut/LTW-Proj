@@ -185,4 +185,19 @@ class EventDAO {
 
 		return $events;
 	}
+	
+	/**
+	 * Register user in event.
+	 * @param userId id of the user
+	 * @param eventId id of the event
+	 */
+	public static function register($userId, $eventId) {
+		$database = Database::getInstance();
+		
+		$query = "INSERT INTO UserEvents(userId, eventId) VALUES (?, ?)";
+		$params = [$userId, $eventId];
+		$types = [PDO::PARAM_INT, PDO::PARAM_INT];
+		
+		return $result = $database->executeUpdate($query, $params, $types);
+	}
 }
