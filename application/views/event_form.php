@@ -56,6 +56,18 @@
         }
         ?>
     </div>
+
+    <div id="threadsComments">
+        <?php
+            foreach($forum as $row){
+                echo '<h2> $row->getTitle() </h2>';
+                echo '<h3> $row->getDescription</h3>';
+                foreach($comments as $comment){
+                    echo '<p> $comment->getComment()</p>';
+                }
+            }
+        ?>
+    </div>
 </div>
 
 <script src="js/jquery-1.11.3.min.js" type="text/javascript"></script>

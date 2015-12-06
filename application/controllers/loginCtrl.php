@@ -237,7 +237,7 @@ class LoginCtrl extends Controller {
             $link .= "?url=login/resetPassword&username=$username&token=$token";
 
             // Save in the database
-            if(!UserDAO::addRecoverPasswordToken($user->, $token)) {
+            if(!UserDAO::addRecoverPasswordToken($user->getId(), $token)) {
                 $this->printResponse($key, $fail_forgot_password);
                 return;
             }

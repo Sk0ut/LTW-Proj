@@ -2,6 +2,7 @@
 
 $event = $data['event'];
 $owner = $data['owner'];
+$forum = $data['forum'];
 $isOwner = $data['isOwner'];
 $registeredUsers = $data['registeredUsers'];
 $isRegistered = $data['registered'];

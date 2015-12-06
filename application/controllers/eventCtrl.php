@@ -3,6 +3,8 @@ require_once __DIR__ . "/../core/controller.php";
 require_once __DIR__ . "/../models/eventDAO.php";
 require_once __DIR__ . "/../models/event.php";
 require_once __DIR__ . "/../models/userDAO.php";
+require_once __DIR__ . "/../models/thread.php";
+require_once __DIR__ . "/../models/threadDAO.php";
 
 class EventCtrl extends Controller {
 	public function index() {
@@ -44,9 +46,11 @@ class EventCtrl extends Controller {
 				break;
 			}
 		}
-		
+
+		$forum = ThreadDAO::getThreadsFromEvent($id);
+
 		$this->view("event_view", ['event' => $event, 'owner' => $owner, 'registeredUsers' => $registeredUsers,
-			'isOwner' => $isOwner, 'registered' => $registered]);
+			'isOwner' => $isOwner, 'registered' => $registered, 'forum' => $forum]);
 	}
 
 	public function edit() {
