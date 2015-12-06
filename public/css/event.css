@@ -28,7 +28,12 @@ h2, h3, h4, p {
     font-size: 1.3rem;
 }
 
-.submit-button {
+.commentForm > .input-box {
+    width: 90%;
+    display:inline-block;
+}
+
+#postComment, #createThread {
     width: 3rem;
     height: 3rem;
     color: #fff;
@@ -36,19 +41,13 @@ h2, h3, h4, p {
     background-color: transparent;
 }
 
-.submit-button:hover {
-    color: #cecece;
+#postComment:hover, #createThread {
     background-color: transparent;
 }
 
 .commentForm, #thread-create {
     font-size: 3rem;
     text-align: right;
-}
-
-.commentForm > .input-box {
-    width: 90%;
-    display:inline-block;
 }
 
 #status {
