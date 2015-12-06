@@ -73,13 +73,16 @@ function changeRegisterStatus(event) {
  */
 function postComment(event) {
     event.preventDefault();
+    var eventId = getParameterByName('id');
     var threadId = this.id.substr("insertComment".length);
 
     var comment = $(this).find("textarea").val();
+    $(this).val("");
 
     $.post(
             "?url=event/addComment",
             {
+                eventId: eventId,
                 threadId: threadId,
                 comment: comment
             },
@@ -87,6 +90,7 @@ function postComment(event) {
                 location.reload();
             })
             .fail(function(error) {
+                console.log("error");
             });
 }
 
