@@ -43,11 +43,11 @@ class User {
     }
 	
 	/**
-	 * JSON convertion method
-	 * @return class attributes as json object
+	 * method that retrieves the object attributes as an associative array
+	 * @return class attributes as associative array
 	 */
-	public function toJSON() {
-		return json_encode(get_object_vars($this));
+	public function expose() {
+		return get_object_vars($this);
 	}
 
     /**

@@ -107,7 +107,7 @@ class EventCtrl extends Controller {
 		$eventsJSON = [];
 		
 		foreach ($events as $event) {
-			$eventsJSON[] = $event->toJSON();
+			$eventsJSON[] = $event->expose();
 		}
 		
 		$this->printResponse("search_events", $eventsJSON);
