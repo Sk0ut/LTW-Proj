@@ -54,6 +54,18 @@ class EventCtrl extends Controller {
 		$this->view("event_view", ['event' => $event, 'owner' => $owner, 'registeredUsers' => $registeredUsers,
 			'isOwner' => $isOwner, 'registered' => $registered, 'finished' => $finished, 'forum' => $forum]);
 	}
+	
+	public function changePassword() {
+		$key = 'change password';
+		
+		require_once(__DIR__ . '/../../library/headerSession.php');
+        if(is_null($user)) {
+			$this->printResponse($key, "missing params");
+			return;
+		}
+		
+		
+	}
 
 	public function edit() {
 		$key = "editEvent";
@@ -77,7 +89,6 @@ class EventCtrl extends Controller {
 		if(!isset($_FILES['image'])) {
 			EventDAO::editEvent($params['id'],$user->getId(), $params['name'], $params['description'], NULL, $params['date'], $params['type'], $params['private']);
 		}
-
 		else {
 			$photo = time() . $_FILES['image']['name'];
 			$photoPath = __DIR__ . "/../../public/img/uploaded/" . $photo;
