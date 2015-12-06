@@ -275,7 +275,7 @@ class UserDAO {
 
         // Update user's password in the database
         $newPassword = generateToken(10);
-        return $self.changePassword($user, $newPassword);
+        return UserDAO::changePassword($user, $newPassword);
     }
 	
 	/**
