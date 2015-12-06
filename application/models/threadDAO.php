@@ -59,6 +59,6 @@ class ThreadDAO {
         }
         $threadData = $result[0];
         
-        return new Thread($threadData['id'], $threadData['eventId'], $threadData['title'], $threadData['description'];
+        return new Thread($threadData['id'], $threadData['eventId'], $threadData['title'], $threadData['description']);
     }
 }
