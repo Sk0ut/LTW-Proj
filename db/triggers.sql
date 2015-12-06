@@ -1,15 +1,8 @@
-CREATE TRIGGER IF NOT EXISTS UpdateParentComment
-AFTER INSERT ON UserComment
+CREATE TRIGGER IF NOT EXISTS RegisterOwnEvent
+AFTER INSERT ON Events
 FOR EACH ROW
-WHEN NEW.parentId IS NOT NULL AND
-     (SELECT parentId FROM UserComment
-        WHERE id = NEW.parentId) IS NOT NULL
 BEGIN
-    UPDATE UserComment
-    SET parentId = (SELECT parentId
-                    FROM UserComment
-                    WHERE id = NEW.parentId)
-    WHERE id = NEW.id;
+	INSERT INTO UserEvents(userId, eventId) VALUES (New.ownerId, New.id);
 END;
 
 CREATE TRIGGER IF NOT EXISTS LoadDefaultAlbum
