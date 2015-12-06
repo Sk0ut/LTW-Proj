@@ -1,6 +1,6 @@
 <div class="container h-align">
     <!-- Description of the event -->
-    <div id="description">
+    <div id="eventDescription">
         <div id="header">
             <?php if($event->getPrivate() == 0) { ?>
                     <h1 class="title"><i class="fa fa-unlock"></i>  <?php echo $event->getName(); ?></h2>
@@ -41,6 +41,7 @@
         </div>
     </div>
 
+    <!-- Members -->
     <div id="members">
         <h1 class="title">Members</h1>
         <?php
@@ -57,8 +58,23 @@
         ?>
     </div>
 
+    <!-- Threads -->
     <div id="threadsComments">
         <h1 class="title">Forum</h1>
+
+        <div id="thread-create-div">
+            <h1 class="subTitle">Create Thread</h1>
+            <form id="thread-create">
+                <div class="input-box">
+                    <input type="text" id="titleThread" class="input-text" autocomplete="off" placeholder="Title"/>
+                </div>
+                <div class="input-box">
+                    <textarea type="text" id="description" class="input-text" autocomplete="off" placeholder="Description"></textarea>
+                </div>
+                <input id="createThread" type="submit" class="fa submit-button" value="&#xf0a9;" title="Create Thread" />
+            </form>
+        </div>
+
         <?php
         foreach($forum as $row){ ?>
         <h2 class="thread-title"><?php echo $row->getTitle(); ?> </h2>
@@ -80,7 +96,7 @@
                 <div class="input-box">
                     <textarea class="input-text" placeholder="Write new comment"></textarea>
                 </div>
-                <input id="submit" type="submit" class="fa submit-button" value="&#xf0a9;" title="Comment" />
+                <input id="postComment" type="submit" class="fa submit-button" value="&#xf0a9;" title="Comment" />
             </form>
         <?php
         }

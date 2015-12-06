@@ -19,7 +19,7 @@ h2, h3, h4, p {
     background-size: cover;
 }
 
-.input-box {
+.comment .input-box {
     width: 90%;
     display:inline-block;
 }
@@ -51,16 +51,25 @@ h2, h3, h4, p {
     cursor: pointer;
 }
 
-#description, #members {
+#eventDescription, #members {
     margin: 2rem 0rem;
     border-bottom: 0.1rem solid #808080;
 }
 
-#description {
+#eventDescription {
     padding: 2rem 0rem;
     box-sizing: border-box;
 }
 
 #insertComment {
+    font-size: 3rem;
+}
+
+#thread-create-div {
+    width: 80%;
+    margin: 0rem auto;
+    padding: 2rem 4rem;
+    background-color: #01528a;
+    box-sizing: border-box;
     font-size: 3rem;
 }
