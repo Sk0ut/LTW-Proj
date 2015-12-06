@@ -2,6 +2,7 @@
 $user = $data['user'];
 $ownedEvents = $data['ownedEvents'];
 $userEvents = $data['userEvents'];
+$eventTypes = $data['eventTypes'];
 
 $PageTitle = "Event Manager";
 function customPageHeader() { ?>
