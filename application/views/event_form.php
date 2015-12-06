@@ -9,8 +9,14 @@
             <?php } ?>
             <!-- Status of the user (invited, is going or not) -->
             <div id="status">
-                <i class="fa fa-check"> Registered</i>
-                <i class="fa fa-ban"> Unregistered</i>
+                <?php if(!$isOwner) {
+                        if($isRegistered) { ?>
+                            <i id="regStatus"class="fa fa-check"> Registered</i>
+                    <?php } else { ?>
+                            <i id="regStatus"class="fa fa-ban"> Unregistered</i>
+                <?php     }
+                    }
+                ?>
             </div>
         </div>
 
@@ -26,7 +32,7 @@
             </h3>
             <h4 id="event_owner">
                 <i class="fa fa-user"></i>
-                Created by: <?php echo $owner->getUsername(); ?>
+                Hosted by: <?php echo $owner->getUsername(); ?>
             </h4>
             <p id="event_description">
                 <i class="fa fa-bars"></i>
@@ -37,6 +43,18 @@
 
     <div id="members">
         <h1 class="title">Members</h1>
+        <?php
+        foreach($registeredUsers as $user) {
+        ?>
+            <div class="userCard" id="user<?php echo $user->getId(); ?>">
+                <div class="userImage" style="background-image: url(img/uploaded/lock.png)"></div>
+                <div class="userContent">
+                    <h2 class="subTitle"><?php echo $user->getUsername(); ?></h2>
+                </div>
+            </div>
+        <?php
+        }
+        ?>
     </div>
 
     <div id="threadsComments">

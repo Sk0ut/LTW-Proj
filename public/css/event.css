@@ -16,11 +16,13 @@ h3, h4, p {
     width: 49%;
     height: 30rem;
     display: inline-block;
+    overflow: hidden;
 }
 
 #status {
     font-size: 2rem;
     text-align: right;
+    margin: 3rem 0rem;
 }
 
 #status > i {
