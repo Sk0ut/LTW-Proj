@@ -46,10 +46,7 @@ function changeRegisterStatus(event) {
 			data: {eventId : id},
 			success:function(data){
 				if (data['unregister event'] == "unregistered") {
-					regStatus.removeClass();
-					regStatus.addClass("fa");
-					regStatus.addClass("fa-ban");
-					regStatus.text(" Unregistered");
+					location.reload();
 				}
 			}
 		});        
@@ -60,10 +57,7 @@ function changeRegisterStatus(event) {
 			data: {eventId : id},
 			success:function(data){
 				if (data['register event'] == "registered") {
-					regStatus.removeClass();
-					regStatus.addClass("fa");
-					regStatus.addClass("fa-check");
-					regStatus.text(" Registered");
+					location.reload();
 				}
 			}
 		});

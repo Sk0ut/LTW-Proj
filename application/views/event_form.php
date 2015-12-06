@@ -20,7 +20,7 @@
             </div>
         </div>
 
-        <img id="eventImage" src="<?php echo $imageUrl ?>">
+        <div class="eventImage" style="background-image: url(<?php echo $imageUrl; ?>)"></div>
         <div class="description">
             <h3 id="event_type">
                 <i class="fa fa-hashtag"></i>
@@ -58,7 +58,7 @@
     </div>
 
     <div id="threadsComments">
-        <h1 class="title">Comments</h1>
+        <h1 class="title">Forum</h1>
         <?php
             foreach($forum as $row){
                 echo '<h2> $row->getTitle() </h2>';
