@@ -11,6 +11,10 @@ function customPageHeader() { ?>
     <meta name="description" content="<?php echo 'Event page' ?>">
     <meta name="author" content="LTW - MIEIC">
 
+    <link rel="stylesheet" type="text/css" href="css/eventmanager.css" />
+    <link rel="stylesheet" type="text/css" href="css/event.css" />
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.5.0/css/font-awesome.min.css">
+
     <!--[if lt IE 9]>
       <script src="http://html5shiv.googlecode.com/svn/trunk/html5.js"></script>
     <![endif]-->
@@ -18,27 +22,7 @@ function customPageHeader() { ?>
 }
 
 require_once('shared/header.php');
-?>
-
-<div id="event_header">
-	<h1 id="event_name">
-		<?php echo $event->getName(); ?>
-	</h1>
-	<h3 id="event_type">
-		<?php echo $event->getType(); ?>
-	</h3>
-	<h3 class="event_date">
-		<?php echo $event->getDate(); ?>
-	</h3>
-	<h4 id="event_owner">
-		Created by: <?php echo $owner->getUsername(); ?>
-	</h4>
-	<img id="event_picture" src="<?php echo $imageUrl ?>">
-	<p id="event_description">
-		<?php echo $event->getDescription(); ?>
-	</p>
-</div>
-
-<?php
+require_once('shared/navbar_event.php');
+require_once('event_form.php');
 require_once('shared/footer.php');
 ?>
