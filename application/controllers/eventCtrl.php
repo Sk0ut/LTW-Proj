@@ -21,7 +21,14 @@ class EventCtrl extends Controller {
 			$this->view("error_view");
 			return;
 		}
-		$this->view("event_view", ['event' => $event, 'owner' => $owner]);
+		
+		$registeredUsers = EventDAO::getRegisteredUsers($id);
+		if ($registeredUsers == NULL) {
+			$this->view("error_view");
+			return;
+		}
+		
+		$this->view("event_view", ['event' => $event, 'owner' => $owner, 'registerUsers' => $registeredUsers]);
 	}
 
 	public function edit() {
