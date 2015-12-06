@@ -151,6 +151,32 @@ fieldset {
     margin:0;
     padding: 1rem 1rem;
     box-sizing: border-box;
+    overflow-y: scroll;
+    overflow-x: hidden;
+}
+
+.result-box {
+    width: 100%;
+    height: 2rem;
+    display: block;
+    padding: 0.5rem 0.2rem;
+    border-bottom: 0.1rem solid #808080;
+    cursor: pointer;
+}
+
+.result-image {
+    width: 2rem;
+    height: 100%;
+    display: inline-block;
+    padding: 0;
+}
+
+.result-description {
+    height: 100%;
+    display: inline-block;
+    vertical-align: top;
+    padding: 0.3rem 0.5rem;
+    margin: 0;
 }
 
 .input-text, .input-file {
@@ -329,10 +355,14 @@ fieldset {
     text-align: justify;
 }
 
-#createButton, #searchButton {
+#createButton {
     float:left;
 }
 
-#cancelButton, #closeButton {
+#cancelButton {
     float:right;
+}
+
+#closeButton {
+    width: 100%;
 }

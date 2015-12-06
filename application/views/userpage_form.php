@@ -94,18 +94,17 @@
 <!-- Search Event -->
 <div id="searchEvent" class="modal">
     <div class="modal-form v-align h-align">
-		<form id="searchEventForm">
-		<header class="logo">Search Event</header>
-			<div class="input-box">
-				<input type="text" name="name" id="event" class="input-text" placeholder="Event name"/>
-			</div>
-			<div class="results-box">
-			</div>
-			<div class="buttons-box">
-				<input id="searchButton" type="submit" class="submit-button" value="Search" />
-				<input id="closeButton" type="button" class="submit-button" value="Close" />
-			</div>
-		</form>
+        <div id="searchEventForm">
+        <header class="logo">Search Event</header>
+            <div class="input-box">
+                <input type="text" name="name" id="event" class="input-text" autocomplete="off" placeholder="Event name"/>
+            </div>
+            <div id="results" class="results-box">
+            </div>
+            <div class="buttons-box">
+                <input id="closeButton" type="button" class="submit-button" value="Close" />
+            </div>
+        </div>
     </div>
 </div>
 

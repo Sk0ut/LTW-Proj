@@ -25,7 +25,7 @@ function setupListeners() {
     $('.eventCard').click(onEventClick);
     $("#createeventbtn").click(openCreateEvent);
     $("#searcheventbtn").click(openSearchEvent);
-	$("#searchEventForm").submit(onSearchSubmit);
+    $("#event").keyup(onSearchKeyPress);
 }
 
 /**
@@ -46,6 +46,11 @@ function openCreateEvent(event) {
  * @param event event of the click
  */
 function openSearchEvent(event) {
+    // Clear inputs
+    $("#event").val("");
+    $("#results").empty();
+
+    // Show modal
     $("#searchEvent").fadeIn(300);
 
     $("#closeButton").click(function() {
@@ -112,30 +117,60 @@ function onFormSubmit(event) {
 }
 
 /**
- * On submit the find event form
+ * On key press on the find event form
+ * @param event key press event
  */
- function onSearchSubmit(event){
-	event.preventDefault();
-	name = $(this).find("input[name='name']").val();
-	$self = $(this);
-	
+ function onSearchKeyPress(event){
+    event.preventDefault();
+    var name = $(this).val();
+    var resultBox = $("#results");
+    resultBox.empty();
+    if(name.length < 1)
+        return;
+
+
     $.ajax({
         type:'GET',
         url: "?url=event/search",
         data: {name : name},
         success:function(data){
-			var result = "";
-			for (var i = 0; i < data['search_events'].length; ++i) {
-				event = data['search_events'][i];
-				result += event._name + "; ";
-			}
-			$self.find(".results-box").text(result);
+            for (var i = 0; i < data['search_events'].length; ++i) {
+                event = data['search_events'][i];
+                var div = generateResult(event);
+                resultBox.append(div);
+            }
         },
         error: function(data){
-			console.log("error: " + data);
+            console.log("error: " + data);
         }
     });
- }
+}
+
+/**
+ * Generate a event result
+ * @param event user event to generate a result
+ * @return generated HTML block
+ */
+function generateResult(event) {
+    var $div = $("<div>");
+    $div.addClass("result-box");
+    $div.attr("id", "event" + event._id);
+
+    var $image = $("<img>");
+    $image.addClass("result-image");
+    $image.attr("src", "img/uploaded/" + event._photo);
+
+    var $desc = $("<h3>");
+    $desc.addClass("result-description");
+    $desc.text(event._name);
+
+    $div.append($image);
+    $div.append($desc);
+
+    $div.click(onEventClick);
+
+    return $div;
+}
 
  /**
   * Event when clicking an event card.
@@ -143,9 +178,9 @@ function onFormSubmit(event) {
   * @param event event of the click
   */
  function onEventClick(event) {
-	var eventId = this.id.substr("event".length);
-	
-	window.location.href ="?url=event/index&id=" + eventId;
+    var eventId = this.id.substr("event".length);
+
+    window.location.href ="?url=event/index&id=" + eventId;
  }
  
 /**
@@ -153,4 +188,3 @@ function onFormSubmit(event) {
  * client browser
  */
 $(document).ready(onReady);
-
