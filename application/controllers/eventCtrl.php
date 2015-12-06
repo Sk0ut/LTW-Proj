@@ -187,7 +187,7 @@ class EventCtrl extends Controller {
         $user_not_logged = "user_not_logged";
         $user_not_in_event="user_not_in_event";
 
-		$params = ['userId' => '', 'threadId' => '', 'comment' => '', 'commentDate' => ''];
+		$params = ['threadId' => '', 'comment' => ''];
 
         require_once(__DIR__ . '/../../library/headerSession.php');
         if(is_null($user)) {
@@ -208,7 +208,7 @@ class EventCtrl extends Controller {
 
         foreach($users as $row) {
             if($row->getId() == $user->getId()){
-                EventDAO::addComment($user->getId(), $params['threadId'], $params['comment'], $params['commentDate']);
+                EventDAO::addComment($user->getId(), $params['threadId'], $params['comment']);
                 $this->printResponse($key, $added_comment);
                 return;
             }
