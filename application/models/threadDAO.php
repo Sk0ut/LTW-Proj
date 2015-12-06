@@ -41,6 +41,24 @@ class ThreadDAO {
 
 		$result = $db->executeQuery($query, $params, $types);
 
-		return $result;
+        foreach($result as $row){
+            $threads[] = new Thread($row['id'], $row['eventId'], $row['title'], $row['description']);
+        }
+
+		return $threads;
 	}
+
+    public static function getById($id) {
+        $database = Database::getInstance();
+        $query = "SELECT * FROM Threads WHERE id = ?";
+        $params = [ $id ];
+        $types = [ PDO::PARAM_INT ];
+        $result = $database->executeQuery($query, $params, $types);
+        if (count($result) != 1) {
+            return NULL;
+        }
+        $threadData = $result[0];
+        
+        return new Thread($threadData['id'], $threadData['eventId'], $threadData['title'], $threadData['description'];
+    }
 }
