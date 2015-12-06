@@ -1,1 +1,13 @@
+.description {
+    margin: 3rem 1rem;
+    display: inline-block;
+    vertical-align: top;
+}
 
+#eventImage {
+    margin: 3rem 1rem;
+    border-radius: 5rem;
+    width: 50%;
+    height: 30rem;
+    display: inline-block;
+}
