@@ -37,6 +37,8 @@ class CommentDAO {
         $types =[PDO::PARAM_INT];
 
         $result = $db->executeQuery($query, $params, $types);
+        if($result == NULL || count($result) == 0)
+            $result = array();
 
         return $result;
     }
