@@ -33,7 +33,8 @@ class LoginCtrl extends Controller {
 
         $ownedEvents = EventDAO::getOwnerEvents($user->getId());
         $userEvents = EventDAO::getRegisteredEvents($user->getId());
-        $this->view("homepage_view", ['user' => $user, 'ownedEvents' => $ownedEvents, 'userEvents' => $userEvents]);
+		$eventTypes = EventDAO::getEventTypesInfo();
+        $this->view("homepage_view", ['user' => $user, 'ownedEvents' => $ownedEvents, 'userEvents' => $userEvents, 'eventTypes' => $eventTypes]);
     }
 
     /**
@@ -145,7 +146,8 @@ class LoginCtrl extends Controller {
 
         $subject = 'Event Manager - Confirm your account';
 
-        $css = file_get_contents(__DIR__ . '/../../public/css/confirmAccount.css');
+        $css = file_get_contents(__DIR__ . '/../../public/css/eventmanager.css');
+        $css .= file_get_contents(__DIR__ . '/../../public/css/mail.css');
         $message = file_get_contents(__DIR__ . '/../../public/confirmAccount.html');
         $message = str_replace('%css%', $css, $message);
         $message = str_replace('%username%', $username, $message);
@@ -177,6 +179,10 @@ class LoginCtrl extends Controller {
         $user = UserDAO::getCurrentUser();
         if($user == NULL) {
             $this->printResponse($key, $not_logged);
+
+            $link = "http://" . $_SERVER['SERVER_NAME'] . $_SERVER['REQUEST_URI'];
+            $link = substr($link, 0, strpos($link, "?"));
+            header("Location: $link");
             return;
         }
 
@@ -239,7 +245,8 @@ class LoginCtrl extends Controller {
             // Send the email
             $subject = 'Event Manager - Forgot your password';
 
-            $css = file_get_contents(__DIR__ . '/../../public/css/forgotPassword.css');
+            $css = file_get_contents(__DIR__ . '/../../public/css/eventmanager.css');
+            $css .= file_get_contents(__DIR__ . '/../../public/css/mail.css');
             $message = file_get_contents(__DIR__ . '/../../public/forgotPassword.html');
             $message = str_replace('%css%', $css, $message);
             $message = str_replace('%username%', $username, $message);

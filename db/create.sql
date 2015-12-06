@@ -80,6 +80,15 @@ CREATE TABLE IF NOT EXISTS UserEvents (
     CONSTRAINT fk_Event FOREIGN KEY (eventId) REFERENCES Events(id)
 );
 
+CREATE TABLE IF NOT EXISTS EventInvites (
+	userId INTEGER,
+	eventId INTEGER,
+	
+	CONSTRAINT pk_UserInvites PRIMARY KEY (userId, eventId),
+	CONSTRAINT fk_User FOREIGN KEY (userId) REFERENCES Users(id),
+	CONSTRAINT fk_Event FOREIGN KEY (eventId) REFERENCES Events(id)
+);
+
 CREATE TABLE IF NOT EXISTS UserSessions (
     userId INTEGER,
     footprint VARCHAR,

@@ -40,3 +40,10 @@ FOR EACH ROW
 BEGIN
 	DELETE FROM UserComment WHERE threadID = OLD.id;
 END;
+
+CREATE TRIGGER IF NOT EXISTS RemoveInvite
+AFTER INSERT ON UserEvents
+FOR EACH ROW
+BEGIN
+	DELETE FROM EventInvites WHERE userId = NEW.userId AND eventId = NEW.eventId;
+END;

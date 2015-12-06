@@ -1,6 +1,6 @@
 <!-- Content of the page -->
 <div class="container h-align">
-    <div id="ownevents" class="">
+    <div id="ownEvents">
         <h1 class="title">My Events</h1>
         <div class="eventActionCard" id="createeventbtn">
             <div class="eventImage eventAction eventAdd"></div>
@@ -22,7 +22,7 @@
         <?php } ?>
     </div>
 
-    <div id="joinedEvents" class="">
+    <div id="joinedEvents">
         <h1 class="title"> Events I'm in</h1>
         <div class="eventActionCard" id="searcheventbtn">
             <div class="eventImage eventAction eventSearch"></div>
@@ -44,7 +44,7 @@
         <?php } ?>
     </div>
 
-    <div id="invites" class="">
+    <div id="invites">
         <h1 class="title">My current invites</h1>
         <p>You currently have no invites!</p>
     </div>
@@ -57,19 +57,24 @@
             <header class="logo">Create Event</header>
             <fieldset>
                 <div class="input-box">
-                    <input type="text" name="name" id="name" class="input-text" placeholder="Name"/>
+                    <input type="text" name="name" id="name" class="input-text" autocomplete="off" placeholder="Name"/>
                 </div>
 
                 <div class="input-box">
-                    <textarea name="description" rows="5" cols="25" id="description" class="input-text" placeholder="Description"></textarea>
+                    <textarea name="description" rows="5" cols="25" id="description" class="input-text" autocomplete="off" placeholder="Description"></textarea>
                 </div>
 
                 <div class="input-box">
-                    <input type="text" name="date" id="datepicker" class="input-text" placeholder="Date"/>
+                    <input type="text" name="date" id="datepicker" class="input-text" autocomplete="off" placeholder="Date"/>
                 </div>
 
                 <div class="input-box">
-                    <input type="text" name="type" id="type" class="input-text" placeholder="Type" />
+					<select name="type" id="type" class="input-text" autocomplete="off" placeholder="Type">
+						<option value="" disabled selected hidden>Type</option>
+						<?php foreach($eventTypes as $eventType) { ?>
+							<option value="<?php echo $eventType['id']; ?>"><?php echo $eventType['type']; ?></option>
+						<?php }?>
+					</select>
                 </div>
 
                 <div class="input-box">
@@ -94,18 +99,17 @@
 <!-- Search Event -->
 <div id="searchEvent" class="modal">
     <div class="modal-form v-align h-align">
-		<form id="searchEventForm">
-		<header class="logo">Search Event</header>
-			<div class="input-box">
-				<input type="text" name="name" id="event" class="input-text" placeholder="Event name"/>
-			</div>
-			<div class="results-box">
-			</div>
-			<div class="buttons-box">
-				<input id="searchButton" type="submit" class="submit-button" value="Search" />
-				<input id="closeButton" type="button" class="submit-button" value="Close" />
-			</div>
-		</form>
+        <div id="searchEventForm">
+        <header class="logo">Search Event</header>
+            <div class="input-box">
+                <input type="text" name="name" id="event" class="input-text" autocomplete="off" placeholder="Event name"/>
+            </div>
+            <div id="results" class="results-box">
+            </div>
+            <div class="buttons-box">
+                <input id="closeButton" type="button" class="submit-button" value="Close" />
+            </div>
+        </div>
     </div>
 </div>
 
