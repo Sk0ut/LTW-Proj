@@ -150,7 +150,7 @@ class EventDAO {
 			return NULL;
 		}
 
-		return $self.getById($id);
+		return EventDAO::getById($id);
 	}
 
     public static function deleteEvent($id){

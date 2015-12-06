@@ -2,6 +2,16 @@
  * Setup the Javascript
  */
 function onReady() {
+    $("#datepicker").datetimepicker({
+        yearRange: "2015:2060",
+        dateFormat: "yy-mm-dd",
+        timeFormat: "HH:mm",
+        changeMonth: true,//this option for allowing user to select month
+        changeYear: true, //this option for allowing user to select from year range
+        addSliderAccess: true,
+        sliderAccessArgs: { touchonly: false  }
+    });
+
     setupListeners();
 }
 
@@ -15,6 +25,7 @@ function setupListeners() {
     $('#thread-create').submit(threadCreate);
     $("#editBtnEvent").click(openEditEvent);
     $('.commentForm').submit(postComment);
+    $('#editEventForm').submit(onFormSubmit);
     $('#deleteButton').click(deleteEvent);
 }
 
@@ -130,6 +141,32 @@ function threadCreate(event) {
             })
             .fail(function(error) {
             });
+}
+
+/**
+ * On submit the edit event form
+ */
+function onFormSubmit(event) {
+    event.preventDefault();
+    $("#editEvent").fadeOut(200);
+
+    var formData = new FormData(this);
+    formData.append("id", getParameterByName('id'));
+
+    $.ajax({
+        type:'POST',
+        url: "?url=event/edit",
+        data:formData,
+        cache:false,
+        contentType: false,
+        processData: false,
+        success:function(data){
+            window.location.reload();
+        },
+        error: function(data){
+            console.log("Error on edit event");
+        }
+    });
 }
 
 /**

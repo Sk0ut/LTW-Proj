@@ -124,7 +124,7 @@
                 </div>
 
                 <div class="input-box">
-                <textarea name="description" rows="5" cols="25" id="description" class="input-text" autocomplete="off" placeholder="Description" value="<?php echo $event->getDescription(); ?>"></textarea>
+                <textarea name="description" rows="5" cols="25" id="description" class="input-text" autocomplete="off" placeholder="Description"><?php echo $event->getDescription(); ?></textarea>
                 </div>
 
                 <div class="input-box">
@@ -171,3 +171,6 @@
 
 <script src="js/jquery-1.11.3.min.js" type="text/javascript"></script>
 <script src="js/event.js" type="text/javascript"></script>
+<script src="//code.jquery.com/ui/1.11.3/jquery-ui.js"></script>
+<script src="//cdnjs.cloudflare.com/ajax/libs/jquery-ui-timepicker-addon/1.4.5/jquery-ui-timepicker-addon.min.js"></script>
+<script src="//cdnjs.cloudflare.com/ajax/libs/jquery-ui-timepicker-addon/1.4.5/jquery-ui-sliderAccess.js"></script>
