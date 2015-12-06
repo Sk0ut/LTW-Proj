@@ -2,20 +2,38 @@
 	/**
 	* 
 	*/
-	class ClassName	{
+	class Thread {
 		private $_id;
 		private $_eventId;
 		private $_title;
 		private $_description;
         private $_comments;
+        private $_user;
 		
-		public function __construct($id, $eventId, $title, $description, $comments) {
+		public function __construct($id, $eventId, $user, $title, $description, $comments) {
 			$this->_id = $id;
 			$this->_eventId = $eventId;
 			$this->_title = $title;
 			$this->_description = $description;
 			$this->_comments = $comments;
+            $this->_user = $user;
 		}
+
+        /**
+         * @return mixed
+         */
+        public function getUser()
+        {
+            return $this->_user;
+        }
+
+        /**
+         * @param mixed $user
+         */
+        public function setUser($user)
+        {
+            $this->_user = $user;
+        }
 
 		/**
 		 * @return mixed
@@ -118,4 +136,4 @@
                     $this->_title
                 ]);
         }
-	}
+    }

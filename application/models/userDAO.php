@@ -275,7 +275,17 @@ class UserDAO {
 
         // Update user's password in the database
         $newPassword = generateToken(10);
-        $password = Bcrypt::hashPassword($newPassword);
+        return $self.changePassword($user, $newPassword);
+    }
+	
+	/**
+	 * Change a password acccount
+	 * @param user user to set password
+	 * @param newPassword new password
+	 * @return new user password if successfull, false otherwise
+	 */
+	 public static function changePassword($user, $newPassword) {
+		$password = Bcrypt::hashPassword($newPassword);
         $query = "UPDATE Users SET password = ? WHERE id = ?";
         $params = [$password , $user->getId() ];
         $types = [ PDO::PARAM_STR, PDO::PARAM_INT ];
@@ -283,7 +293,21 @@ class UserDAO {
         if($result <= 0)
             return false;
         return $newPassword;
-    }
+	 }
+	 
+	 /**
+	 * Change a user photo
+	 * @param user user to set password
+	 * @param newPhoto new photo
+	 * @return true if successfull, false otherwise
+	 */
+	 public static function changePhoto($user, $newPhoto) {
+        $query = "UPDATE Users SET photo = ? WHERE id = ?";
+        $params = [$newPhoto , $user->getId() ];
+        $types = [ PDO::PARAM_STR, PDO::PARAM_INT ];
+        $result = $database->executeUpdate($query, $params, $types);
+        return $result > 0;
+	 }
 
     /**
      * Validate a token

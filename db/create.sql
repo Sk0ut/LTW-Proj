@@ -100,11 +100,13 @@ CREATE TABLE IF NOT EXISTS UserSessions (
 
 CREATE TABLE IF NOT EXISTS Threads (
     id INTEGER,
+    userId INTEGER,
     eventId INTEGER,
     title VARCHAR,
     description VARCHAR,
 
     CONSTRAINT pk_Threads PRIMARY KEY (id),
+    CONSTRAINT fk_User FOREIGN KEY(userId) REFERENCES Users(id),
     CONSTRAINT fk_Event FOREIGN KEY (eventId) REFERENCES Events(id)
 );
 

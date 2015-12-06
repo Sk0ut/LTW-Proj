@@ -47,10 +47,24 @@ class EventCtrl extends Controller {
 			}
 		}
 
+		$finished = time() > strtotime($event->getDate());
+		
 		$forum = ThreadDAO::getThreadsFromEvent($id);
 
 		$this->view("event_view", ['event' => $event, 'owner' => $owner, 'registeredUsers' => $registeredUsers,
-			'isOwner' => $isOwner, 'registered' => $registered, 'forum' => $forum]);
+			'isOwner' => $isOwner, 'registered' => $registered, 'finished' => $finished, 'forum' => $forum]);
+	}
+	
+	public function changePassword() {
+		$key = 'change password';
+		
+		require_once(__DIR__ . '/../../library/headerSession.php');
+        if(is_null($user)) {
+			$this->printResponse($key, "missing params");
+			return;
+		}
+		
+		
 	}
 
 	public function edit() {
@@ -75,7 +89,6 @@ class EventCtrl extends Controller {
 		if(!isset($_FILES['image'])) {
 			EventDAO::editEvent($params['id'],$user->getId(), $params['name'], $params['description'], NULL, $params['date'], $params['type'], $params['private']);
 		}
-
 		else {
 			$photo = time() . $_FILES['image']['name'];
 			$photoPath = __DIR__ . "/../../public/img/uploaded/" . $photo;
@@ -131,30 +144,78 @@ class EventCtrl extends Controller {
 		$key = 'createThread';
 		$missing_params = "missing_params";
 		$created_thread = "created_thread";
+        $no_users = "no_users";
+        $user_not_logged = "user_not_logged";
+        $user_not_in_event="user_not_in_event";
 		$params = ['eventId' => '', 'title' => '', 'description' => ''];
 
-		if(!$this->fillPostParameters($params)) {
+        require_once(__DIR__ . '/../../library/headerSession.php');
+        if(is_null($user)) {
+            $this->printResponse($key, $user_not_logged);
+            return;
+        }
+
+        if(!$this->fillPostParameters($params)) {
             $this->printResponse($key, $missing_params);
             return;
         }
 
-        EventDAO::createThread($params['eventId'], $params['title'], $params['description']);
-        $this->printResponse($key, $created_thread);
+        $users = EventDAO::getRegisteredUsers($params['eventId']);
+        if(is_null($users)){
+            $this->printResponse($key, $no_users);
+            return;
+        }
+
+        foreach($users as $row) {
+            if($row->getId() == $user->getId()){
+                EventDAO::createThread($user->getId(), $params['eventId'], $params['title'], $params['description']);
+                $this->printResponse($key, $created_thread);
+                return;
+            }
+        }
+
+        $this->printResponse($key, $user_not_in_event);
+        return;
 	}
+
 
 	public function addComment() {
 		$key = 'addComment';
 		$missing_params = "missing_params";
 		$added_comment = "added_comment";
-		$params = ['userId' => '', 'threadId' => '', 'comment' => '', 'commentDate' => '', 'parentId' => ''];
+        $no_users = "no_users";
+        $user_not_logged = "user_not_logged";
+        $user_not_in_event="user_not_in_event";
+
+		$params = ['userId' => '', 'threadId' => '', 'comment' => '', 'commentDate' => ''];
+
+        require_once(__DIR__ . '/../../library/headerSession.php');
+        if(is_null($user)) {
+            $this->printResponse($key, $user_not_logged);
+            return;
+        }
 
 		if(!$this->fillPostParameters($params)) {
             $this->printResponse($key, $missing_params);
             return;
         }
 
-        EventDAO::addComment($params['userId'], $params['threadId'], $params['comment'], $params['commentDate'], $params['parentId']);
-        $this->printResponse($key, $added_comment);
+        $users = EventDAO::getRegisteredUsers($params['eventId']);
+        if(is_null($users)){
+            $this->printResponse($key, $no_users);
+            return;
+        }
+
+        foreach($users as $row) {
+            if($row->getId() == $user->getId()){
+                EventDAO::addComment($user->getId(), $params['threadId'], $params['comment'], $params['commentDate']);
+                $this->printResponse($key, $added_comment);
+                return;
+            }
+        }
+
+        $this->printResponse($key, $user_not_in_event);
+        return;
 	}
 	
 	/**
