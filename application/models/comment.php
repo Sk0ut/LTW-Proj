@@ -2,7 +2,7 @@
 
 class Comment {
     private $_id;
-    private $_userId;
+    private $_user;
     private $_threadId;
     private $_comment;
     private $_commentDate;
@@ -27,17 +27,17 @@ class Comment {
     /**
      * @return mixed
      */
-    public function getUserId()
+    public function getUser()
     {
-        return $this->_userId;
+        return $this->_user;
     }
 
     /**
      * @param mixed $userId
      */
-    public function setUserId($userId)
+    public function setUser($userId)
     {
-        $this->_userId = $userId;
+        $this->_user = $userId;
     }
 
     /**
