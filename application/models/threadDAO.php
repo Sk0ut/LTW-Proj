@@ -42,7 +42,8 @@ class ThreadDAO {
 		$result = $db->executeQuery($query, $params, $types);
 
         foreach($result as $row){
-            $threads[] = new Thread($row['id'], $row['eventId'], $row['title'], $row['description']);
+            $comments = CommentDAO::getCommentsFromThread($row['id']);
+            $threads[] = new Thread($row['id'], $row['eventId'], $row['title'], $row['description'], $comments);
         }
 
 		return $threads;

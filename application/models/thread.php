@@ -7,12 +7,30 @@
 		private $_eventId;
 		private $_title;
 		private $_description;
+        private $_comments;
 		
-		public function __construct($id, $eventId, $title, $description) {
+		public function __construct($id, $eventId, $title, $description, $comments) {
 			$this->_id = $id;
 			$this->_eventId = $eventId;
 			$this->_title = $title;
 			$this->_description = $description;
+			$this->_comments = $comments;
+		}
+
+		/**
+		 * @return mixed
+		 */
+		public function getComments()
+		{
+			return $this->_comments;
+		}
+
+		/**
+		 * @param mixed $comments
+		 */
+		public function setComments($comments)
+		{
+			$this->_comments = $comments;
 		}
 
         /**
