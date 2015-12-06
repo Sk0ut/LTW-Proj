@@ -1,21 +1,12 @@
 <?php
 
 class CommentDAO {
-    public static function addComment($userId, $threadId, $comment, $parentId){
+    public static function addComment($userId, $threadId, $comment){
         $db = Database::getInstance();
 
-
-        if($parentId == NULL){
-            $query = "INSERT INTO Comments(userId, threadId, comment, commentDate) VALUES(?, ?, ?, datetime(now))";
-            $params = [$userId, $threadId, $comment];
-            $types = [PDO::PARAM_INT, PDO::PARAM_INT, PDO::PARAM_STR];
-        }
-
-        else {
-            $query = "INSERT INTO Comments(userId, threadId, comment, commentDate, parentId) VALUES(?, ?, ?, datetime(now), ?)";
-            $params = [$userId, $threadId, $comment, $commentDate, $parentId];
-            $types = [PDO::PARAM_INT, PDO::PARAM_INT, PDO::PARAM_STR, PDO::PARAM_INT];
-        }
+        $query = "INSERT INTO Comments(userId, threadId, comment, commentDate) VALUES(?, ?, ?, datetime('now'))";
+        $params = [$userId, $threadId, $comment];
+        $types = [PDO::PARAM_INT, PDO::PARAM_INT, PDO::PARAM_STR];
 
         $result = $db->executeUpdate($query, $params, $types);
 
@@ -41,7 +32,7 @@ class CommentDAO {
     public static function getCommentsFromThread($threadId) {
         $db = Database::getInstance();
 
-        $query = "SELECT * FROM Comments WHERE threadId = ?";
+        $query = "SELECT * FROM Comments ORDER BY datetime(commentDate) WHERE threadId = ?";
         $params = [$threadId];
         $types = [$PDO::PARAM_INT];
 
@@ -61,6 +52,6 @@ class CommentDAO {
         }
         $commentData = $result[0];
         
-        return new Thread($commentData['id'], $commentData['userId'], $commentData['threadId'], $commentData['comment'], $commentData['commentDate'], $commentData['parentId'];
+        return new Thread($commentData['id'], $commentData['userId'], $commentData['threadId'], $commentData['comment'], $commentData['commentDate']);
     }
 }
