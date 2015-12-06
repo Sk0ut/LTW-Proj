@@ -113,6 +113,30 @@ class EventCtrl extends Controller {
 		$this->printResponse("search_events", $eventsJSON);
 	}
 	
+	public function register() {
+		$key = "register event";
+		
+		require_once(__DIR__ . '/../../library/headerSession.php');
+		if ($user == NULL) {
+			$this->printResponse($key, "no user");
+			return;
+		}
+
+		$params = ['eventId' => ''];
+		if (!$this->fillPostParameters($params))
+		{
+			$this->printResponse($key, "mising parameters");
+			return;
+		}
+		
+		if (!EventDAO::register($user->getId(), $params['eventId'])) {
+			$this->printResponse($key, "register fail");
+			return;
+		}
+		
+		$this->printResponse($key, "registered");		
+	}
+	
     /**
      * Fill the expected post parameters
      * @param params array map with params
