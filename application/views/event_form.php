@@ -32,7 +32,7 @@
             </h3>
             <h4 id="event_owner">
                 <i class="fa fa-user"></i>
-                Created by: <?php echo $owner->getUsername(); ?>
+                Hosted by: <?php echo $owner->getUsername(); ?>
             </h4>
             <p id="event_description">
                 <i class="fa fa-bars"></i>
@@ -43,6 +43,13 @@
 
     <div id="members">
         <h1 class="title">Members</h1>
+        <?php
+        foreach($registeredUsers as $user) {
+        ?>
+            <div 
+        <?php
+        }
+        ?>
     </div>
 </div>
 
