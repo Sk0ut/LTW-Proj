@@ -24,8 +24,21 @@ function setupListeners() {
     $('#createEventForm').submit(onFormSubmit);
     $('.eventCard').click(onEventClick);
     $("#createeventbtn").click(openCreateEvent);
+    $("#configButton").click(openConfig);
     $("#searcheventbtn").click(openSearchEvent);
     $("#event").keyup(onSearchKeyPress);
+}
+
+/**
+ *
+ */
+function openConfig() {
+    document.getElementById("createEventForm").reset();
+    $("#config").fadeIn(300);
+
+    $("#cancelButtonForm").click(function() {
+        $("#config").fadeOut(200);
+    });
 }
 
 /**

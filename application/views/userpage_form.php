@@ -99,84 +99,36 @@
 <div id="config" class="modal">
     <div class="modal-form v-align h-align">
         <form id="changePasswordForm">
-            <header class="logo">Create Event</header>
+            <header class="logo">Change Password</header>
             <fieldset>
                 <div class="input-box">
-                    <input type="text" name="name" id="name" class="input-text" autocomplete="off" placeholder="Name"/>
+                    <input type="password" name="newPassword" id="newPassword" class="input-text" autocomplete="off" placeholder="New Password"/>
                 </div>
 
                 <div class="input-box">
-                    <textarea name="description" rows="5" cols="25" id="description" class="input-text" autocomplete="off" placeholder="Description"></textarea>
-                </div>
-
-                <div class="input-box">
-                    <input type="text" name="date" id="datepicker" class="input-text" autocomplete="off" placeholder="Date"/>
-                </div>
-
-                <div class="input-box">
-                    <select name="type" id="type" class="input-text" autocomplete="off" placeholder="Type">
-                        <option value="" disabled selected hidden>Type</option>
-                        <?php foreach($eventTypes as $eventType) { ?>
-                            <option value="<?php echo $eventType['id']; ?>"><?php echo $eventType['type']; ?></option>
-                        <?php }?>
-                    </select>
-                </div>
-
-                <div class="input-box">
-                    <input type="file" name="image" id="image" class="input-file" placeholder="Image">
-                </div>
-
-                <div class="label-input">
-                    <input type="checkbox" id="private" name="private">
-                    <label for="private">Private Event</label>
+                    <input type="password" name="confirmNewPassword" id="confirmNewPassword" class="input-text" autocomplete="off" placeholder="Confirm New Password"/>
                 </div>
 
                 <div class="buttons-box">
-                    <input id="createButton" type="submit" class="submit-button" value="Create" />
-                    <input id="cancelButton" type="button" class="submit-button" value="Cancel" />
-                </div>
+                    <input id="submitButtonPassword" type="submit" class="submit-button" value="Change Password" /></div>
+
             </fieldset>
         </form>
 
         <form id="changePhotoForm">
-            <header class="logo">Create Event</header>
+            <header class="logo">Change Photo</header>
             <fieldset>
-                <div class="input-box">
-                    <input type="text" name="name" id="name" class="input-text" autocomplete="off" placeholder="Name"/>
-                </div>
-
-                <div class="input-box">
-                    <textarea name="description" rows="5" cols="25" id="description" class="input-text" autocomplete="off" placeholder="Description"></textarea>
-                </div>
-
-                <div class="input-box">
-                    <input type="text" name="date" id="datepicker" class="input-text" autocomplete="off" placeholder="Date"/>
-                </div>
-
-                <div class="input-box">
-                    <select name="type" id="type" class="input-text" autocomplete="off" placeholder="Type">
-                        <option value="" disabled selected hidden>Type</option>
-                        <?php foreach($eventTypes as $eventType) { ?>
-                            <option value="<?php echo $eventType['id']; ?>"><?php echo $eventType['type']; ?></option>
-                        <?php }?>
-                    </select>
-                </div>
-
                 <div class="input-box">
                     <input type="file" name="image" id="image" class="input-file" placeholder="Image">
                 </div>
 
-                <div class="label-input">
-                    <input type="checkbox" id="private" name="private">
-                    <label for="private">Private Event</label>
-                </div>
-
                 <div class="buttons-box">
-                    <input id="createButton" type="submit" class="submit-button" value="Create" />
-                    <input id="cancelButton" type="button" class="submit-button" value="Cancel" />
+                    <input id="submitButtonPhoto" type="submit" class="submit-button" value="Change Photo" />
                 </div>
             </fieldset>
         </form>
+
+        <input id="cancelButtonForm" type="button" class="submit-button" value="Cancel" />
 
     </div>
 </div>
