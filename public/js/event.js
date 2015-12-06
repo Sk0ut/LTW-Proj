@@ -9,6 +9,7 @@ function onReady() {
  * Setup the listeners of the userpage
  */
 function setupListeners() {
+    $('a[href^="#"]').click(scrollToTag);
     $('.navbar-item').mouseover(openDropdownMenu);
     $('#regStatus').click(changeRegisterStatus);
 }
@@ -74,6 +75,21 @@ function getParameterByName(name) {
     var regex = new RegExp("[\\?&]" + name + "=([^&#]*)"),
         results = regex.exec(location.search);
     return results === null ? "" : decodeURIComponent(results[1].replace(/\+/g, " "));
+}
+
+/**
+ * Scroll to a html tag
+ * @param event event of the click
+ */
+function scrollToTag(event) {
+    var target = $( $(this).attr('href') );
+
+    if( target.length ) {
+        event.preventDefault();
+        $('html, body').animate({
+            scrollTop: -40 + target.offset().top
+        }, 500);
+    }
 }
 
 /**

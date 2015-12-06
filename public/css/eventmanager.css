@@ -354,9 +354,7 @@ fieldset {
     font-weight: bold;
 }
 
-.eventCard, .eventActionCard {
-    width: 30%;
-    height: 20rem;
+.eventCard, .eventActionCard, .userCard {
     display: inline-block;
     margin: 1rem 1.4%;
     padding: 0rem;
@@ -367,17 +365,34 @@ fieldset {
     font-family: "Open Sans", Times, serif;
 }
 
-.eventCard:hover, .eventActionCard:hover {
+.eventCard, .eventActionCard {
+    width: 30%;
+    height: 20rem;
+}
+
+.userCard {
+    width: 10rem;
+    height: 10rem;
+}
+
+.eventCard:hover, .eventActionCard:hover, .userCard:hover {
     cursor: pointer;
     border: 0rem;
 }
 
-.eventImage {
+.eventImage, .userImage {
     width: 100%;
-    height: 33%;
     background-repeat: no-repeat;
     background-position: center center;
     background-size:cover;
+}
+
+.eventImage {
+    height: 33%;
+}
+
+.userImage {
+    height: 50%;
 }
 
 .eventAction {
@@ -392,7 +407,7 @@ fieldset {
     background-image: url("../img/search.png");
 }
 
-.eventContent {
+.eventContent, .userContent {
     width: 100%;
     height: 70%;
     border: 1rem solid #c7bfaa;
