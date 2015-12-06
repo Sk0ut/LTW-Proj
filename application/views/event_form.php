@@ -20,7 +20,7 @@
             </div>
         </div>
 
-        <img id="eventImage" src="<?php echo $imageUrl ?>">
+        <div class="eventImage" style="background-image: url(<?php echo $imageUrl; ?>)"></div>
         <div class="description">
             <h3 id="event_type">
                 <i class="fa fa-hashtag"></i>
@@ -49,7 +49,7 @@
             <div class="userCard" id="user<?php echo $user->getId(); ?>">
                 <div class="userImage" style="background-image: url(img/uploaded/lock.png)"></div>
                 <div class="userContent">
-                    <h2 class="subTitle"><?php echo $user->getUsername(); ?></h2>
+                    <h2 class="subTitle"><i class="fa fa-user"></i> <?php echo $user->getUsername(); ?></h2>
                 </div>
             </div>
         <?php
@@ -58,14 +58,15 @@
     </div>
 
     <div id="threadsComments">
+        <h1 class="title">Forum</h1>
         <?php
-            foreach($forum as $row){
-                echo '<h2> $row->getTitle() </h2>';
-                echo '<h3> $row->getDescription</h3>';
-                foreach($comments as $comment){
-                    echo '<p> $comment->getComment()</p>';
-                }
+        foreach($forum as $row){
+            echo '<h2> $row->getTitle() </h2>';
+            echo '<h3> $row->getDescription</h3>';
+            foreach($comments as $comment){
+                echo '<p> $comment->getComment()</p>';
             }
+        }
         ?>
     </div>
 </div>
