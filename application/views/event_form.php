@@ -1,10 +1,18 @@
 <div class="container h-align">
+    <!-- Description of the event -->
     <div id="description">
-        <?php if($event->getPrivate() == 0) { ?>
-                <h1 class="title"><i class="fa fa-unlock"></i>  <?php echo $event->getName(); ?></h2>
-        <?php } else { ?>
-                <h1 class="title"><i class="fa fa-lock"></i>  <?php echo $event->getName(); ?></h2>
-        <?php } ?>
+        <div id="header">
+            <?php if($event->getPrivate() == 0) { ?>
+                    <h1 class="title"><i class="fa fa-unlock"></i>  <?php echo $event->getName(); ?></h2>
+            <?php } else { ?>
+                    <h1 class="title"><i class="fa fa-lock"></i>  <?php echo $event->getName(); ?></h2>
+            <?php } ?>
+            <!-- Status of the user (invited, is going or not) -->
+            <div id="status">
+                <i class="fa fa-check"> Registered</i>
+                <i class="fa fa-ban"> Unregistered</i>
+            </div>
+        </div>
 
         <img id="eventImage" src="<?php echo $imageUrl ?>">
         <div class="description">
@@ -28,6 +36,9 @@
     </div>
 
     <div id="members">
-
+        <h1 class="title">Members</h1>
     </div>
 </div>
+
+<script src="js/jquery-1.11.3.min.js" type="text/javascript"></script>
+<script src="js/event.js" type="text/javascript"></script>

@@ -18,6 +18,21 @@ h3, h4, p {
     display: inline-block;
 }
 
+#status {
+    font-size: 2rem;
+    text-align: right;
+}
+
+#status > i {
+    cursor: pointer;
+}
+
+#description, #members {
+    margin: 2rem 0rem;
+    border-bottom: 0.1rem solid #808080;
+}
+
 #description {
-    margin: 3rem 3rem;
+    padding: 2rem 0rem;
+    box-sizing: border-box;
 }
