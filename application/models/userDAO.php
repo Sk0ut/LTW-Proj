@@ -300,6 +300,9 @@ class UserDAO {
             return NULL;
 
         $footprint = UserDAO::getFootPrint($user->getId(), $token);
+		if($footprint == NULL)
+			return NULL;
+
         if(!Bcrypt::checkPassword($_SERVER['HTTP_USER_AGENT'].$_SERVER['REMOTE_ADDR'], $footprint))
             return NULL;
         return $user;

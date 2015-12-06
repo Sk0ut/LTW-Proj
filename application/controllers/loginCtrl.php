@@ -34,7 +34,7 @@ class LoginCtrl extends Controller {
         $ownedEvents = EventDAO::getOwnerEvents($user->getId());
         $userEvents = EventDAO::getRegisteredEvents($user->getId());
 		$eventTypes = EventDAO::getEventTypesInfo();
-        $this->view("userpage_view", ['user' => $user, 'ownedEvents' => $ownedEvents, 'userEvents' => $userEvents, 'eventTypes' => $eventTypes]);
+        $this->view("homepage_view", ['user' => $user, 'ownedEvents' => $ownedEvents, 'userEvents' => $userEvents, 'eventTypes' => $eventTypes]);
     }
 
     /**
