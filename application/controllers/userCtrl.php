@@ -4,13 +4,21 @@ require_once __DIR__ . "/../models/userDAO.php";
 require_once __DIR__ . "/../models/eventDAO.php";
 
 class UserCtrl extends Controller {
-    public function index($params) {
-        if(count($params) != 1)
-            return NULL;
-        $id = $params[0];
-        $user = UserDAO::getUserFromId($id);
+	public function index() {
+		require_once(__DIR__ . '/../../library/headerSession.php');
+        if(is_null($user)) {
+			$this->view("error_view");
+			return;
+		}
+		
+		if(!isset($_GET['id']) {
+			$this->model("error_view");
+			return;
+		}
+        
+		$user = UserDAO::getUserFromId($id);
         $ownedEvents = EventDAO::getOwnerEvents($id);
-        $userEvents = EventDAO::getRegisteredEvents($id);
+        $userEvents = EventDAO::getRegisteredEvents($id, true);
         $this->view("userpage_view", ['user' => $user, 'ownedEvents' => $ownedEvents, 'userEvents' => $userEvents]);
     }
 	
