@@ -37,17 +37,49 @@ function openDropdownMenu(event) {
  */
 function changeRegisterStatus(event) {
     var regStatus = $(this);
+	var id = getParameterByName('id');
+	
     if(regStatus.hasClass("fa-check")) {
-        regStatus.removeClass();
-        regStatus.addClass("fa");
-        regStatus.addClass("fa-ban");
-        regStatus.text(" Unregistered");
+		 $.ajax({
+			type:'POST',
+			url: "?url=event/unregister",
+			data: {eventId : id},
+			success:function(data){
+				if (data['unregister event'] == "unregistered") {
+					regStatus.removeClass();
+					regStatus.addClass("fa");
+					regStatus.addClass("fa-ban");
+					regStatus.text(" Unregistered");
+				}
+			}
+		});        
     } else {
-        regStatus.removeClass();
-        regStatus.addClass("fa");
-        regStatus.addClass("fa-check");
-        regStatus.text(" Registered");
+		$.ajax({
+			type:'POST',
+			url: "?url=event/register",
+			data: {eventId : id},
+			success:function(data){
+				if (data['register event'] == "registered") {
+					regStatus.removeClass();
+					regStatus.addClass("fa");
+					regStatus.addClass("fa-check");
+					regStatus.text(" Registered");
+				}
+			}
+		});
     }
+}
+
+/**
+ * Search name in get params.
+ * @param name name to search
+ * @return value associated with name
+ */
+function getParameterByName(name) {
+    name = name.replace(/[\[]/, "\\[").replace(/[\]]/, "\\]");
+    var regex = new RegExp("[\\?&]" + name + "=([^&#]*)"),
+        results = regex.exec(location.search);
+    return results === null ? "" : decodeURIComponent(results[1].replace(/\+/g, " "));
 }
 
 /**
