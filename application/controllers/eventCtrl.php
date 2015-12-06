@@ -6,6 +6,12 @@ require_once __DIR__ . "/../models/userDAO.php";
 
 class EventCtrl extends Controller {
 	public function index() {
+		require_once(__DIR__ . '/../../library/headerSession.php');
+        if($user == NULL) {
+			$this->view("error_view");
+			return;
+		}
+		
 		if (!isset($_GET['id'])) {
 			$this->view("error_view");
 			return;
@@ -22,13 +28,25 @@ class EventCtrl extends Controller {
 			return;
 		}
 		
+		$isOwner = $owner->getId() == $user->getId();
+		
 		$registeredUsers = EventDAO::getRegisteredUsers($id);
 		if ($registeredUsers == NULL) {
 			$this->view("error_view");
 			return;
 		}
 		
-		$this->view("event_view", ['event' => $event, 'owner' => $owner, 'registerUsers' => $registeredUsers]);
+		$registered = False;
+		
+		foreach($registeredUsers as $registeredUser) {
+			if ($registeredUser->getId() == $user->getId()) {
+				$registered = True;
+				break;
+			}
+		}
+		
+		$this->view("event_view", ['event' => $event, 'owner' => $owner, 'registerUsers' => $registeredUsers,
+			'isOwner' => $isOwner, 'registered' => $registered]);
 	}
 
 	public function edit() {
