@@ -3,14 +3,17 @@ h3, h4, p {
 }
 
 .description {
-    margin: 0rem 2rem;
+    margin: 0rem;
+    padding-left: 1rem;
     display: inline-block;
     vertical-align: top;
+    width: 49%;
+    box-sizing: border-box;
 }
 
 #eventImage {
     border-radius: 1rem;
-    width: 50%;
+    width: 49%;
     height: 30rem;
     display: inline-block;
 }
