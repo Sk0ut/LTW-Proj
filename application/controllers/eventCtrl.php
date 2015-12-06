@@ -205,7 +205,7 @@ class EventCtrl extends Controller {
         $user_not_logged = "user_not_logged";
         $user_not_in_event="user_not_in_event";
 
-		$params = ['threadId' => '', 'comment' => ''];
+		$params = ['eventId' => '', 'threadId' => '', 'comment' => ''];
 
         require_once(__DIR__ . '/../../library/headerSession.php');
         if(is_null($user)) {
