@@ -364,6 +364,7 @@ fieldset {
     overflow:hidden;
     background-color: #c7bfaa;
     box-sizing: border-box;
+    font-family: "Open Sans", Times, serif;
 }
 
 .eventCard:hover, .eventActionCard:hover {
