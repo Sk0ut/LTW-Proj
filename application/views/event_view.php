@@ -2,6 +2,9 @@
 
 $event = $data['event'];
 $owner = $data['owner'];
+$isOwner = $data['isOwner'];
+$registeredUsers = $data['registeredUsers'];
+$isRegistered = $data['registered'];
 
 $imageUrl = str_replace(' ', '%20', $event->getPhoto());
 $imageUrl = "img/uploaded/" . $imageUrl;

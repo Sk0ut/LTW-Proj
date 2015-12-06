@@ -21,6 +21,7 @@ h3, h4, p {
 #status {
     font-size: 2rem;
     text-align: right;
+    margin: 3rem 0rem;
 }
 
 #status > i {
