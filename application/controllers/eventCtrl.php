@@ -45,7 +45,7 @@ class EventCtrl extends Controller {
 			}
 		}
 		
-		$this->view("event_view", ['event' => $event, 'owner' => $owner, 'registerUsers' => $registeredUsers,
+		$this->view("event_view", ['event' => $event, 'owner' => $owner, 'registeredUsers' => $registeredUsers,
 			'isOwner' => $isOwner, 'registered' => $registered]);
 	}
 
@@ -153,6 +153,9 @@ class EventCtrl extends Controller {
         $this->printResponse($key, $added_comment);
 	}
 	
+	/**
+	 * Search for event.
+	 */
 	public function search() {
 		$name = $_GET['name'];
 		
@@ -167,6 +170,9 @@ class EventCtrl extends Controller {
 		$this->printResponse("search_events", $eventsJSON);
 	}
 	
+	/**
+	 * Register user in event.
+	 */
 	public function register() {
 		$key = "register event";
 		
@@ -191,6 +197,10 @@ class EventCtrl extends Controller {
 		$this->printResponse($key, "registered");		
 	}
 	
+	
+	/**
+	 * Unregister user from event.
+	 */
 	public function unregister() {
 		$key = "unregister event";
 		
