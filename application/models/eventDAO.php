@@ -203,4 +203,19 @@ class EventDAO {
 		
 		return $result = $database->executeUpdate($query, $params, $types);
 	}
+	
+	/**
+	 * Unregister user from event.
+	 * @param userId id of the user
+	 * @param eventId id of the event
+	 */
+	public static function unregister($userId, $eventId) {
+		$database = Database::getInstance();
+		
+		$query = "REMOVE FROM UserEvents WHERE userId = ? AND eventId = ?";
+		$params = [$userId, $eventId];
+		$types = [PDO::PARAM_INT, PDO::PARAM_INT];
+		
+		return $result = $database->executeUpdate($query, $params, $types);
+	}
 }

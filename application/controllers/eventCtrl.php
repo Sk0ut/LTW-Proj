@@ -137,6 +137,30 @@ class EventCtrl extends Controller {
 		$this->printResponse($key, "registered");		
 	}
 	
+	public function unregister() {
+		$key = "unregister event";
+		
+		require_once(__DIR__ . '/../../library/headerSession.php');
+		if ($user == NULL) {
+			$this->printResponse($key, "no user");
+			return;
+		}
+
+		$params = ['eventId' => ''];
+		if (!$this->fillPostParameters($params))
+		{
+			$this->printResponse($key, "mising parameters");
+			return;
+		}
+		
+		if (!EventDAO::unregister($user->getId(), $params['eventId'])) {
+			$this->printResponse($key, "unregister fail");
+			return;
+		}
+		
+		$this->printResponse($key, "unregistered");		
+	}
+	
     /**
      * Fill the expected post parameters
      * @param params array map with params
